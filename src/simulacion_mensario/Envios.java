@@ -40,9 +40,12 @@ public class Envios extends javax.swing.JFrame {
         btnEliminarMoviles = new javax.swing.JButton();
         IFMensaje = new javax.swing.JInternalFrame();
         lblTexto = new javax.swing.JLabel();
+        jScrollPaneTexto = new javax.swing.JScrollPane();
+        txtAreaMensaje = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        lblNombreUsr.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNombreUsr.setText("NombreUsr(KFSJS123FKSL5LG32)");
         lblNombreUsr.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Esta utilizando la licencia:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 11))); // NOI18N
 
@@ -71,7 +74,7 @@ public class Envios extends javax.swing.JFrame {
             IFDestinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(IFDestinatarioLayout.createSequentialGroup()
                 .addComponent(lblContador)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
                 .addComponent(btnAñadirMovil)
                 .addGap(66, 66, 66)
                 .addComponent(btnEliminarMoviles)
@@ -95,13 +98,17 @@ public class Envios extends javax.swing.JFrame {
                     .addComponent(lblContador)
                     .addComponent(btnAñadirMovil)
                     .addComponent(btnEliminarMoviles))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         IFMensaje.setTitle("Mensaje");
         IFMensaje.setVisible(true);
 
-        lblTexto.setText("Texto");
+        lblTexto.setText("Texto:");
+
+        txtAreaMensaje.setColumns(20);
+        txtAreaMensaje.setRows(5);
+        jScrollPaneTexto.setViewportView(txtAreaMensaje);
 
         javax.swing.GroupLayout IFMensajeLayout = new javax.swing.GroupLayout(IFMensaje.getContentPane());
         IFMensaje.getContentPane().setLayout(IFMensajeLayout);
@@ -109,48 +116,50 @@ public class Envios extends javax.swing.JFrame {
             IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(IFMensajeLayout.createSequentialGroup()
                 .addComponent(lblTexto)
-                .addGap(0, 652, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPaneTexto)
         );
         IFMensajeLayout.setVerticalGroup(
             IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(IFMensajeLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(lblTexto)
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPaneTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 160, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(IFMensaje)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(lblNombreRemitente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1)
-                .addGap(79, 79, 79))
-            .addComponent(IFDestinatario)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lblNombreUsr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(lblNombreRemitente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(IFMensaje))
                 .addContainerGap())
+            .addComponent(IFDestinatario)
+            .addComponent(jSeparator1)
+            .addComponent(lblNombreUsr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lblNombreUsr)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(IFDestinatario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IFMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(333, Short.MAX_VALUE))
+                .addGap(254, 254, 254))
         );
 
         pack();
@@ -197,12 +206,14 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JButton btnAñadirMovil;
     private javax.swing.JButton btnEliminarMoviles;
     private javax.swing.JScrollPane jScrollPaneMoviles;
+    private javax.swing.JScrollPane jScrollPaneTexto;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblContador;
     private javax.swing.JLabel lblMoviles;
     private javax.swing.JLabel lblNombreRemitente;
     private javax.swing.JLabel lblNombreUsr;
     private javax.swing.JLabel lblTexto;
+    private javax.swing.JTextArea txtAreaMensaje;
     private javax.swing.JTextArea txtAreaMoviles;
     private javax.swing.JTextField txtNombreRemitente;
     // End of variables declaration//GEN-END:variables
