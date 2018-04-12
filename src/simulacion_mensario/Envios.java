@@ -42,8 +42,17 @@ public class Envios extends javax.swing.JFrame {
         lblTexto = new javax.swing.JLabel();
         jScrollPaneTexto = new javax.swing.JScrollPane();
         txtAreaMensaje = new javax.swing.JTextArea();
+        lblNumMensajes = new javax.swing.JLabel();
+        lblNumCaracteres = new javax.swing.JLabel();
+        btnEliminarTexto = new javax.swing.JButton();
+        CheckEnvioProgramado = new javax.swing.JCheckBox();
+        lblHoraEnvio = new javax.swing.JLabel();
+        txtHoraEnvio = new javax.swing.JTextField();
+        btnEnviar = new javax.swing.JButton();
+        lblSaldo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(600, 720));
 
         lblNombreUsr.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNombreUsr.setText("NombreUsr(KFSJS123FKSL5LG32)");
@@ -60,7 +69,7 @@ public class Envios extends javax.swing.JFrame {
         txtAreaMoviles.setRows(5);
         jScrollPaneMoviles.setViewportView(txtAreaMoviles);
 
-        lblContador.setText("Numero de moviles insertados: 0");
+        lblContador.setText("Número de moviles insertados: 0");
 
         btnAñadirMovil.setText("Añadir movil");
         btnAñadirMovil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -73,19 +82,20 @@ public class Envios extends javax.swing.JFrame {
         IFDestinatarioLayout.setHorizontalGroup(
             IFDestinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(IFDestinatarioLayout.createSequentialGroup()
-                .addComponent(lblContador)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
-                .addComponent(btnAñadirMovil)
-                .addGap(66, 66, 66)
-                .addComponent(btnEliminarMoviles)
-                .addGap(29, 29, 29))
-            .addGroup(IFDestinatarioLayout.createSequentialGroup()
                 .addGroup(IFDestinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneMoviles)
                     .addGroup(IFDestinatarioLayout.createSequentialGroup()
-                        .addComponent(lblMoviles)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap()
+                        .addComponent(lblContador, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
+                        .addComponent(btnAñadirMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(btnEliminarMoviles, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPaneMoviles))
                 .addContainerGap())
+            .addGroup(IFDestinatarioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblMoviles)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         IFDestinatarioLayout.setVerticalGroup(
             IFDestinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,7 +108,7 @@ public class Envios extends javax.swing.JFrame {
                     .addComponent(lblContador)
                     .addComponent(btnAñadirMovil)
                     .addComponent(btnEliminarMoviles))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGap(5, 5, 5))
         );
 
         IFMensaje.setTitle("Mensaje");
@@ -110,14 +120,30 @@ public class Envios extends javax.swing.JFrame {
         txtAreaMensaje.setRows(5);
         jScrollPaneTexto.setViewportView(txtAreaMensaje);
 
+        lblNumMensajes.setText("Número de mensajes: 1");
+
+        lblNumCaracteres.setText("Número de caracteres: 0");
+
+        btnEliminarTexto.setText("Limpiar texto");
+        btnEliminarTexto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
         javax.swing.GroupLayout IFMensajeLayout = new javax.swing.GroupLayout(IFMensaje.getContentPane());
         IFMensaje.getContentPane().setLayout(IFMensajeLayout);
         IFMensajeLayout.setHorizontalGroup(
             IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(IFMensajeLayout.createSequentialGroup()
-                .addComponent(lblTexto)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jScrollPaneTexto)
+            .addGroup(IFMensajeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(IFMensajeLayout.createSequentialGroup()
+                        .addComponent(lblNumMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(lblNumCaracteres, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEliminarTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(IFMensajeLayout.createSequentialGroup()
+                        .addComponent(lblTexto)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         IFMensajeLayout.setVerticalGroup(
             IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,41 +151,71 @@ public class Envios extends javax.swing.JFrame {
                 .addComponent(lblTexto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPaneTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 160, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNumMensajes)
+                    .addComponent(lblNumCaracteres)
+                    .addComponent(btnEliminarTexto))
+                .addGap(5, 5, 5))
         );
+
+        CheckEnvioProgramado.setText("Envio programado");
+
+        lblHoraEnvio.setText("Hora de envio:");
+
+        btnEnviar.setText("Enviar");
+        btnEnviar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        lblSaldo.setText("Saldo disponible: 20.0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(lblNombreRemitente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(IFMensaje))
-                .addContainerGap())
             .addComponent(IFDestinatario)
             .addComponent(jSeparator1)
             .addComponent(lblNombreUsr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(IFMensaje)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(CheckEnvioProgramado, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(lblHoraEnvio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblNombreRemitente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lblNombreUsr)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(IFDestinatario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IFMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(254, 254, 254))
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CheckEnvioProgramado)
+                    .addComponent(lblHoraEnvio)
+                    .addComponent(txtHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEnviar))
+                .addContainerGap())
         );
 
         pack();
@@ -201,20 +257,28 @@ public class Envios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox CheckEnvioProgramado;
     private javax.swing.JInternalFrame IFDestinatario;
     private javax.swing.JInternalFrame IFMensaje;
     private javax.swing.JButton btnAñadirMovil;
     private javax.swing.JButton btnEliminarMoviles;
+    private javax.swing.JButton btnEliminarTexto;
+    private javax.swing.JButton btnEnviar;
     private javax.swing.JScrollPane jScrollPaneMoviles;
     private javax.swing.JScrollPane jScrollPaneTexto;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblContador;
+    private javax.swing.JLabel lblHoraEnvio;
     private javax.swing.JLabel lblMoviles;
     private javax.swing.JLabel lblNombreRemitente;
     private javax.swing.JLabel lblNombreUsr;
+    private javax.swing.JLabel lblNumCaracteres;
+    private javax.swing.JLabel lblNumMensajes;
+    private javax.swing.JLabel lblSaldo;
     private javax.swing.JLabel lblTexto;
     private javax.swing.JTextArea txtAreaMensaje;
     private javax.swing.JTextArea txtAreaMoviles;
+    private javax.swing.JTextField txtHoraEnvio;
     private javax.swing.JTextField txtNombreRemitente;
     // End of variables declaration//GEN-END:variables
 }
