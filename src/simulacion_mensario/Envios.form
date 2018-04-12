@@ -4,6 +4,9 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="Mensario 2"/>
+    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+    </Property>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[600, 720]"/>
     </Property>
@@ -35,7 +38,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="CheckEnvioProgramado" min="-2" pref="146" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jCalendar1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="lblHoraEnvio" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="comboHoraEnvio" min="-2" max="-2" attributes="0"/>
@@ -43,7 +48,7 @@
                       <Component id="comboMinEnvio" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="comboSegEnvio" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Component id="btnEnviar" min="-2" pref="114" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -74,20 +79,28 @@
                   <Component id="lblSaldoName" alignment="3" max="32767" attributes="0"/>
                   <Component id="lblSaldo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="10" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="IFDestinatario" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="IFMensaje" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="CheckEnvioProgramado" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblHoraEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEnviar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="comboHoraEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="comboMinEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="comboSegEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="CheckEnvioProgramado" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblHoraEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnEnviar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboHoraEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboMinEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboSegEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jCalendar1" min="-2" pref="129" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -114,6 +127,9 @@
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
     <Component class="javax.swing.JTextField" name="txtNombreRemitente">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
     </Component>
     <Container class="javax.swing.JInternalFrame" name="IFDestinatario">
       <Properties>
@@ -131,7 +147,7 @@
                           <Component id="lblMovilesInsertadosName" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblMovilesInsertados" min="-2" pref="56" max="-2" attributes="0"/>
-                          <EmptySpace pref="192" max="32767" attributes="0"/>
+                          <EmptySpace pref="202" max="32767" attributes="0"/>
                           <Component id="btnAñadirMovil" min="-2" pref="114" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                           <Component id="btnEliminarMoviles" min="-2" pref="114" max="-2" attributes="0"/>
@@ -155,7 +171,7 @@
                   <Component id="jScrollPaneMoviles" min="-2" pref="159" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblMovilesInsertados" alignment="0" min="-2" pref="19" max="-2" attributes="0"/>
+                      <Component id="lblMovilesInsertados" alignment="1" min="-2" pref="19" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblMovilesInsertadosName" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnAñadirMovil" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -543,6 +559,14 @@
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
+    </Component>
+    <Component class="com.toedter.calendar.JCalendar" name="jCalendar1">
+      <Properties>
+        <Property name="decorationBordersVisible" type="boolean" value="true"/>
+      </Properties>
+      <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
     </Component>
