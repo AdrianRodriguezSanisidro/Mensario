@@ -64,8 +64,9 @@ public class Hilo extends Thread {
             btnEnviar.setEnabled(false);
         }
     }
-    public static boolean comprobarBooleans(Boolean[] array){
+    public boolean comprobarBooleans(Boolean[] array){
     for(boolean b : array) if(!b) return false;
     return true;
 }
+    
 }
