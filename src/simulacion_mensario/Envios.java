@@ -40,6 +40,7 @@ public class Envios extends javax.swing.JFrame {
         //Inicio del hilo
         Hilo objHilo = new Hilo();
         objHilo.start();
+        mostrarDatosT();
         TPEscribirSms.setIconAt(0, new ImageIcon(""));
         //Quitar autoscroll horizontal
         txtAreaMensaje.setLineWrap(true);
@@ -108,6 +109,7 @@ public class Envios extends javax.swing.JFrame {
         btnBuscarLicencia = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnUtilizarLicencia = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mensario 2");
@@ -386,12 +388,20 @@ public class Envios extends javax.swing.JFrame {
         lblClave.setText("Clave:");
 
         btnAñadirLicencia.setText("Añadir licencia");
+        btnAñadirLicencia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAñadirLicenciaMouseClicked(evt);
+            }
+        });
 
         btnBuscarLicencia.setText("Buscar");
 
         btnLimpiar.setText("Limpiar campos");
 
         btnUtilizarLicencia.setText("Utilizar licencia");
+        btnUtilizarLicencia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        btnEliminar.setText("Eliminar licencia");
 
         javax.swing.GroupLayout panelLicenciasLayout = new javax.swing.GroupLayout(panelLicencias);
         panelLicencias.setLayout(panelLicenciasLayout);
@@ -406,42 +416,45 @@ public class Envios extends javax.swing.JFrame {
                             .addComponent(lblUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtLicencia)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(89, 89, 89)
-                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblClave, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtClave)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLicenciasLayout.createSequentialGroup()
-                        .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(116, 116, 116)
-                        .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)))
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelLicenciasLayout.createSequentialGroup()
+                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtLicencia)
+                                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(89, 89, 89)
+                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblClave, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtClave)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelLicenciasLayout.createSequentialGroup()
+                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(104, 104, 104)))))
                 .addContainerGap())
         );
         panelLicenciasLayout.setVerticalGroup(
             panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLicenciasLayout.createSequentialGroup()
+                .addComponent(scrollTable, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelLicenciasLayout.createSequentialGroup()
-                        .addComponent(scrollTable, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panelLicenciasLayout.createSequentialGroup()
-                        .addGap(365, 365, 365)
+                        .addGap(13, 13, 13)
                         .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -451,10 +464,13 @@ public class Envios extends javax.swing.JFrame {
                     .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(254, Short.MAX_VALUE))
+                    .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         TPEscribirSms.addTab("Licencias", panelLicencias);
@@ -528,6 +544,17 @@ public class Envios extends javax.swing.JFrame {
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void btnAñadirLicenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirLicenciaMouseClicked
+        añadirT();
+    }//GEN-LAST:event_btnAñadirLicenciaMouseClicked
+    /*
+    *
+    *
+    *Inicio de metodos para el programa
+    *
+    *
+    */
     public String conseguirFecha() {
         String fechaDefinitiva = "";
         if (CheckEnvioProgramado.isSelected() == true) {
@@ -630,6 +657,7 @@ public class Envios extends javax.swing.JFrame {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
         }
+        
         public static void mostrarDatosT(){
          Connection c = null;
          Statement stmt = null;
@@ -645,7 +673,7 @@ public class Envios extends javax.swing.JFrame {
                 Object[] linea=new Object[5];
                 linea[0]=rs.getString("nlicencia");
                 linea[1]=rs.getString("usuario");
-                linea[2]=rs.getInt("clave");
+                linea[2]=rs.getString("clave");
                 linea[3]=rs.getString("nombre");
                 modelo.addRow(linea);
                 tablaLicencias.setModel(modelo);
@@ -658,6 +686,39 @@ public class Envios extends javax.swing.JFrame {
             System.exit(0);
         }
 }
+        public static void añadirT(){
+        String nlicencia =txtLicencia.getText();
+        String usuario =txtUsuario.getText();
+        String clave =txtClave.getText();
+        String nombre =txtNombre.getText();
+        
+
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+            System.out.println("Conexion realizada");
+            c.setAutoCommit(false);
+
+            stmt = c.createStatement();
+            String sql = "INSERT INTO licencias VALUES (" + "'" + nlicencia + "'," + "'" + usuario + "','" + clave + "','" + nombre  + "');";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            c.commit();
+            c.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        DefaultTableModel modelo=(DefaultTableModel) tablaLicencias.getModel();
+         for (int i = 0; i < tablaLicencias.getRowCount(); i++) {
+           modelo.removeRow(i);
+           i-=1;
+       }
+        mostrarDatosT();
+        System.out.println("Insercion realizada con exito");
+    }
     
 
     /**
@@ -704,6 +765,7 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JButton btnAñadirLicencia;
     private javax.swing.JButton btnAñadirMovil;
     private javax.swing.JButton btnBuscarLicencia;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnEliminarMoviles;
     private javax.swing.JButton btnEliminarTexto;
     public static javax.swing.JButton btnEnviar;
@@ -739,10 +801,10 @@ public class Envios extends javax.swing.JFrame {
     public static javax.swing.JTable tablaLicencias;
     public static javax.swing.JTextArea txtAreaMensaje;
     public static javax.swing.JTextArea txtAreaMoviles;
-    private javax.swing.JTextField txtClave;
-    private javax.swing.JTextField txtLicencia;
-    private javax.swing.JTextField txtNombre;
+    public static javax.swing.JTextField txtClave;
+    public static javax.swing.JTextField txtLicencia;
+    public static javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreRemitente;
-    private javax.swing.JTextField txtUsuario;
+    public static javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
