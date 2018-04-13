@@ -367,6 +367,11 @@ public class Envios extends javax.swing.JFrame {
                 "Número de serie", "Usuario", "Clave", "Nombre"
             }
         ));
+        tablaLicencias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaLicenciasMouseClicked(evt);
+            }
+        });
         scrollTable.setViewportView(tablaLicencias);
 
         lblLicencia.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -548,6 +553,10 @@ public class Envios extends javax.swing.JFrame {
     private void btnAñadirLicenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirLicenciaMouseClicked
         añadirT();
     }//GEN-LAST:event_btnAñadirLicenciaMouseClicked
+
+    private void tablaLicenciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaLicenciasMouseClicked
+        seleccionarLinea();
+    }//GEN-LAST:event_tablaLicenciasMouseClicked
     /*
     *
     *
@@ -718,6 +727,14 @@ public class Envios extends javax.swing.JFrame {
        }
         mostrarDatosT();
         System.out.println("Insercion realizada con exito");
+    }
+        public static void seleccionarLinea(){
+        if(tablaLicencias.getSelectedRow()!=-1){
+            txtLicencia.setText( (String) tablaLicencias.getValueAt(tablaLicencias.getSelectedRow(), 0));
+            txtUsuario.setText((String) tablaLicencias.getValueAt(tablaLicencias.getSelectedRow(), 1));
+            txtClave.setText((String) tablaLicencias.getValueAt(tablaLicencias.getSelectedRow(), 2));
+            txtNombre.setText((String) tablaLicencias.getValueAt(tablaLicencias.getSelectedRow(), 3));
+        }
     }
     
 
