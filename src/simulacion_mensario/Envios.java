@@ -6,12 +6,23 @@
 package simulacion_mensario;
 
 import com.sun.glass.events.KeyEvent;
+import es.xilon.semApi.*;
+import es.xilon.semApi.beans.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+//import es.xilon.semApi.beans.ApiResponseBean;
 
 /**
  *
  * @author adrys
  */
 public class Envios extends javax.swing.JFrame {
+
+    public static ApiResponseBean apiResponse = null;
+    public static ApiResponseBean apiResponseSaldo = null;
+    public static SemApi semApi;
 
     /**
      * Creates new form Envios
@@ -20,15 +31,18 @@ public class Envios extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);//Centrar ventana
         //Inicio del hilo
-        Hilo objHilo=new Hilo();
+        Hilo objHilo = new Hilo();
         objHilo.start();
+        
         //Quitar autoscroll horizontal
         txtAreaMensaje.setLineWrap(true);
         txtAreaMensaje.setWrapStyleWord(true);
         txtAreaMoviles.setLineWrap(true);
         txtAreaMoviles.setWrapStyleWord(true);
-        
-        
+        semApi = new SemApi("LSTD04182162B5196645", "ipbu7578", "mnuisul7", "es.servicios.mensario.com", 443);
+        semApi.setTimezone("Europe/Madrid");
+        lblNombreUsr.setText("LSTD04182162B5196645");
+        refrescarSaldo();
     }
 
     /**
@@ -120,9 +134,9 @@ public class Envios extends javax.swing.JFrame {
                     .addGroup(IFDestinatarioLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblMovilesInsertadosName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblMovilesInsertados, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAñadirMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43)
                         .addComponent(btnEliminarMoviles, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -140,12 +154,11 @@ public class Envios extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPaneMoviles, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(IFDestinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMovilesInsertados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(IFDestinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblMovilesInsertadosName)
-                        .addComponent(btnAñadirMovil)
-                        .addComponent(btnEliminarMoviles)))
+                .addGroup(IFDestinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAñadirMovil)
+                    .addComponent(btnEliminarMoviles)
+                    .addComponent(lblMovilesInsertadosName, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMovilesInsertados, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
         );
 
@@ -217,10 +230,13 @@ public class Envios extends javax.swing.JFrame {
 
         btnEnviar.setText("Enviar");
         btnEnviar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEnviar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEnviarMouseClicked(evt);
+            }
+        });
 
         lblSaldoName.setText("Saldo disponible:");
-
-        lblSaldo.setText("20.0");
 
         comboHoraEnvio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" }));
 
@@ -241,8 +257,9 @@ public class Envios extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 6, Short.MAX_VALUE)
                         .addComponent(CheckEnvioProgramado, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblHoraEnvio)
@@ -276,25 +293,27 @@ public class Envios extends javax.swing.JFrame {
                     .addComponent(lblNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSaldoName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblSaldo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IFDestinatario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IFMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
+                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(CheckEnvioProgramado)
                             .addComponent(lblHoraEnvio)
                             .addComponent(btnEnviar)
                             .addComponent(comboHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboMinEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboSegEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(5, 5, 5))
+                            .addComponent(comboSegEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(58, 58, 58))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(CheckEnvioProgramado)
+                        .addGap(53, 53, 53))))
         );
 
         pack();
@@ -309,22 +328,125 @@ public class Envios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarTextoMouseClicked
 
     private void btnAñadirMovilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirMovilMouseClicked
-        txtAreaMoviles.setText("678111234,"+txtAreaMoviles.getText());
+        txtAreaMoviles.setText("678111234," + txtAreaMoviles.getText());
     }//GEN-LAST:event_btnAñadirMovilMouseClicked
-    
-    public static void comprobarCheck(){
-        if(CheckEnvioProgramado.isSelected()==false){
+
+    private void btnEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMouseClicked
+        try {
+            String[] contador = txtAreaMoviles.getText().split(",");
+            //Set recipients
+            ArrayList<ApiRecipientBean> recipients = new ArrayList<ApiRecipientBean>();
+            for (int i = 0; i < Integer.parseInt(Hilo.comprobarTelefonos()); i++) {
+                ApiRecipientBean recipient = new ApiRecipientBean();
+                recipient.setCode("34");
+                recipient.setPhone(contador[i]);
+                recipients.add(recipient);
+            }
+            //Set message data
+            ArrayList<ApiMessageBean> sendings = new ArrayList<ApiMessageBean>();
+            ApiMessageBean message = new ApiMessageBean();
+            message.setRecipients(recipients);
+            message.setSender(txtNombreRemitente.getText());
+            message.setText(txtAreaMensaje.getText());
+            message.setDate(conseguirFecha());
+            sendings.add(message);
+
+            apiResponse = semApi.executeSending(sendings);
+            refrescarSaldo();
+            if (apiResponse.getResult().equals("OK")) {
+
+                JOptionPane.showMessageDialog(this, "Id de petición: " + apiResponse.getRequest() + "\n" + "Id de mensaje: " + apiResponse.getIds().get(0), "Envío", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                System.err.println(apiResponse.getResult());
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnEnviarMouseClicked
+    public String conseguirFecha() {
+        String fechaDefinitiva = "";
+        if (CheckEnvioProgramado.isSelected() == true) {
+            String fechaString = "" + jCalendar1.getDate();
+            System.out.println("----------" + fechaString + "----------");
+            String[] fecha = fechaString.split(" ");
+            fecha[1] = convertirMes(fecha[1]);
+            fechaDefinitiva = (fecha[5] + fecha[1] + fecha[2]
+                    + comboHoraEnvio.getItemAt(comboHoraEnvio.getSelectedIndex())
+                    + comboMinEnvio.getItemAt(comboMinEnvio.getSelectedIndex())
+                    + comboSegEnvio.getItemAt(comboSegEnvio.getSelectedIndex()));
+        } else {
+            fechaDefinitiva = "00000000000000";
+        }
+        return fechaDefinitiva;
+    }
+
+    public String convertirMes(String fecha1) {
+        String mesAux = fecha1;
+        switch (mesAux) {
+            case "Jan":
+                fecha1 = "01";
+                break;
+            case "Feb":
+                fecha1 = "02";
+                break;
+            case "Mar":
+                fecha1 = "03";
+                break;
+            case "Apr":
+                fecha1 = "04";
+                break;
+            case "May":
+                fecha1 = "05";
+                break;
+            case "Jun":
+                fecha1 = "06";
+                break;
+            case "Jul":
+                fecha1 = "07";
+                break;
+            case "Aug":
+                fecha1 = "08";
+                break;
+            case "Sep":
+                fecha1 = "09";
+                break;
+            case "Oct":
+                fecha1 = "10";
+                break;
+            case "Nov":
+                fecha1 = "11";
+                break;
+            case "Dec":
+                fecha1 = "12";
+                break;
+        }
+        return fecha1;
+    }
+
+    public static void comprobarCheck() {
+        if (CheckEnvioProgramado.isSelected() == false) {
             comboHoraEnvio.setEnabled(false);
             comboMinEnvio.setEnabled(false);
             comboSegEnvio.setEnabled(false);
             jCalendar1.setEnabled(false);
-        }else{
+        } else {
             comboHoraEnvio.setEnabled(true);
             comboMinEnvio.setEnabled(true);
             comboSegEnvio.setEnabled(true);
             jCalendar1.setEnabled(true);
         }
     }
+        public void refrescarSaldo(){
+        try {
+            apiResponseSaldo=semApi.executeBalanceEnquiry();
+            lblSaldo.setText(""+apiResponseSaldo.getQuantity());
+        } catch (Exception ex) {
+            Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+
     /**
      * @param args the command line arguments
      */
@@ -386,7 +508,7 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JLabel lblNumCaracteresName;
     public static javax.swing.JLabel lblNumMensajes;
     private javax.swing.JLabel lblNumMensajesName;
-    private javax.swing.JLabel lblSaldo;
+    public static javax.swing.JLabel lblSaldo;
     private javax.swing.JLabel lblSaldoName;
     private javax.swing.JLabel lblTexto;
     public static javax.swing.JTextArea txtAreaMensaje;
