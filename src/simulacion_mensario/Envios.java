@@ -8,11 +8,18 @@ package simulacion_mensario;
 import com.sun.glass.events.KeyEvent;
 import es.xilon.semApi.*;
 import es.xilon.semApi.beans.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-//import es.xilon.semApi.beans.ApiResponseBean;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -33,7 +40,7 @@ public class Envios extends javax.swing.JFrame {
         //Inicio del hilo
         Hilo objHilo = new Hilo();
         objHilo.start();
-        
+        TPEscribirSms.setIconAt(0, new ImageIcon(""));
         //Quitar autoscroll horizontal
         txtAreaMensaje.setLineWrap(true);
         txtAreaMensaje.setWrapStyleWord(true);
@@ -54,10 +61,14 @@ public class Envios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        TPEscribirSms = new javax.swing.JTabbedPane();
+        panelEnvios = new javax.swing.JPanel();
         lblNombreUsr = new javax.swing.JLabel();
         lblNombreRemitente = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
+        lblSaldoName = new javax.swing.JLabel();
+        lblSaldo = new javax.swing.JLabel();
         txtNombreRemitente = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
         IFDestinatario = new javax.swing.JInternalFrame();
         lblMoviles = new javax.swing.JLabel();
         jScrollPaneMoviles = new javax.swing.JScrollPane();
@@ -78,23 +89,44 @@ public class Envios extends javax.swing.JFrame {
         CheckEnvioProgramado = new javax.swing.JCheckBox();
         lblHoraEnvio = new javax.swing.JLabel();
         btnEnviar = new javax.swing.JButton();
-        lblSaldoName = new javax.swing.JLabel();
-        lblSaldo = new javax.swing.JLabel();
         comboHoraEnvio = new javax.swing.JComboBox<>();
         comboMinEnvio = new javax.swing.JComboBox<>();
         comboSegEnvio = new javax.swing.JComboBox<>();
         jCalendar1 = new com.toedter.calendar.JCalendar();
+        panelLicencias = new javax.swing.JPanel();
+        scrollTable = new javax.swing.JScrollPane();
+        tablaLicencias = new javax.swing.JTable();
+        lblLicencia = new javax.swing.JLabel();
+        txtLicencia = new javax.swing.JTextField();
+        lblUsuario = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        lblNombre = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        lblClave = new javax.swing.JLabel();
+        txtClave = new javax.swing.JTextField();
+        btnAñadirLicencia = new javax.swing.JButton();
+        btnBuscarLicencia = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        btnUtilizarLicencia = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mensario 2");
         setBackground(new java.awt.Color(255, 255, 255));
         setSize(new java.awt.Dimension(600, 720));
 
+        TPEscribirSms.setBackground(new java.awt.Color(255, 255, 255));
+        TPEscribirSms.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TPEscribirSms.setOpaque(true);
+
         lblNombreUsr.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNombreUsr.setText("NombreUsr(KFSJS123FKSL5LG32)");
         lblNombreUsr.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Esta utilizando la licencia:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 11))); // NOI18N
 
+        lblNombreRemitente.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNombreRemitente.setText("Nombre de remitente:");
+
+        lblSaldoName.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblSaldoName.setText("Saldo disponible:");
 
         txtNombreRemitente.setToolTipText("");
 
@@ -107,6 +139,7 @@ public class Envios extends javax.swing.JFrame {
         txtAreaMoviles.setRows(5);
         jScrollPaneMoviles.setViewportView(txtAreaMoviles);
 
+        lblMovilesInsertadosName.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMovilesInsertadosName.setText("Número de moviles insertados:");
 
         btnAñadirMovil.setText("Añadir movil");
@@ -154,11 +187,12 @@ public class Envios extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPaneMoviles, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(IFDestinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAñadirMovil)
-                    .addComponent(btnEliminarMoviles)
-                    .addComponent(lblMovilesInsertadosName, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMovilesInsertados, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(IFDestinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMovilesInsertadosName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMovilesInsertados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(IFDestinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAñadirMovil)
+                        .addComponent(btnEliminarMoviles)))
                 .addGap(5, 5, 5))
         );
 
@@ -224,8 +258,10 @@ public class Envios extends javax.swing.JFrame {
                 .addGap(5, 5, 5))
         );
 
+        CheckEnvioProgramado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         CheckEnvioProgramado.setText("Envio programado");
 
+        lblHoraEnvio.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblHoraEnvio.setText("Hora de envio:");
 
         btnEnviar.setText("Enviar");
@@ -236,8 +272,6 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        lblSaldoName.setText("Saldo disponible:");
-
         comboHoraEnvio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" }));
 
         comboMinEnvio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" }));
@@ -246,75 +280,201 @@ public class Envios extends javax.swing.JFrame {
 
         jCalendar1.setDecorationBordersVisible(true);
 
+        javax.swing.GroupLayout panelEnviosLayout = new javax.swing.GroupLayout(panelEnvios);
+        panelEnvios.setLayout(panelEnviosLayout);
+        panelEnviosLayout.setHorizontalGroup(
+            panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblNombreUsr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator1)
+            .addGroup(panelEnviosLayout.createSequentialGroup()
+                .addComponent(lblNombreRemitente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblSaldoName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEnviosLayout.createSequentialGroup()
+                .addComponent(IFDestinatario)
+                .addGap(0, 0, 0))
+            .addGroup(panelEnviosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(CheckEnvioProgramado)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblHoraEnvio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(comboHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboMinEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboSegEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(panelEnviosLayout.createSequentialGroup()
+                .addComponent(IFMensaje)
+                .addGap(0, 0, 0))
+        );
+        panelEnviosLayout.setVerticalGroup(
+            panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEnviosLayout.createSequentialGroup()
+                .addComponent(lblNombreUsr)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEnviosLayout.createSequentialGroup()
+                        .addGroup(panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSaldoName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(2, 2, 2))
+                    .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(IFDestinatario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(IFMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEnviosLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addGroup(panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEnviar)
+                            .addComponent(comboSegEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboMinEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblHoraEnvio))
+                        .addGap(40, 40, 40))
+                    .addGroup(panelEnviosLayout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(CheckEnvioProgramado))
+                    .addGroup(panelEnviosLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21))
+        );
+
+        TPEscribirSms.addTab("Envios", panelEnvios);
+
+        tablaLicencias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Número de serie", "Usuario", "Clave", "Nombre"
+            }
+        ));
+        scrollTable.setViewportView(tablaLicencias);
+
+        lblLicencia.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblLicencia.setText("Licencia:");
+
+        lblUsuario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblUsuario.setText("Usuario:");
+
+        lblNombre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblNombre.setText("Nombre:");
+
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+
+        lblClave.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblClave.setText("Clave:");
+
+        btnAñadirLicencia.setText("Añadir licencia");
+
+        btnBuscarLicencia.setText("Buscar");
+
+        btnLimpiar.setText("Limpiar campos");
+
+        btnUtilizarLicencia.setText("Utilizar licencia");
+
+        javax.swing.GroupLayout panelLicenciasLayout = new javax.swing.GroupLayout(panelLicencias);
+        panelLicencias.setLayout(panelLicenciasLayout);
+        panelLicenciasLayout.setHorizontalGroup(
+            panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLicenciasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollTable)
+                    .addGroup(panelLicenciasLayout.createSequentialGroup()
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtLicencia)
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(89, 89, 89)
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblClave, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtClave)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLicenciasLayout.createSequentialGroup()
+                        .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(116, 116, 116)
+                        .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)))
+                .addContainerGap())
+        );
+        panelLicenciasLayout.setVerticalGroup(
+            panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLicenciasLayout.createSequentialGroup()
+                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLicenciasLayout.createSequentialGroup()
+                        .addComponent(scrollTable, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelLicenciasLayout.createSequentialGroup()
+                        .addGap(365, 365, 365)
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblClave, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49)
+                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(254, Short.MAX_VALUE))
+        );
+
+        TPEscribirSms.addTab("Licencias", panelLicencias);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(IFDestinatario)
-            .addComponent(jSeparator1)
-            .addComponent(lblNombreUsr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(IFMensaje)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 6, Short.MAX_VALUE)
-                        .addComponent(CheckEnvioProgramado, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblHoraEnvio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboMinEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboSegEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNombreRemitente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblSaldoName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)))
-                .addContainerGap())
+                .addComponent(TPEscribirSms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lblNombreUsr)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombreRemitente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSaldoName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(IFDestinatario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(IFMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblHoraEnvio)
-                            .addComponent(btnEnviar)
-                            .addComponent(comboHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboMinEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboSegEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(58, 58, 58))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(CheckEnvioProgramado)
-                        .addGap(53, 53, 53))))
+                .addComponent(TPEscribirSms, javax.swing.GroupLayout.PREFERRED_SIZE, 794, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        TPEscribirSms.getAccessibleContext().setAccessibleName("Envios");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -364,6 +524,10 @@ public class Envios extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnEnviarMouseClicked
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
     public String conseguirFecha() {
         String fechaDefinitiva = "";
         if (CheckEnvioProgramado.isSelected() == true) {
@@ -445,6 +609,55 @@ public class Envios extends javax.swing.JFrame {
             Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+        public void crearTabla(){
+        try {
+            Connection c = null;
+            Statement stmt = null;
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+            stmt = c.createStatement();
+            String sql = "CREATE TABLE licencias "
+                    + "(nlicencia TEXT PRIMARY KEY NOT NULL,"
+                    + "usuario TEXT UNIQUE NOT NULL,"
+                    + "clave TEXT UNIQUE NOT NULL, "
+                    + "nombre TEXT UNIQUE NOT NULL)";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            c.close();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        public static void mostrarDatosT(){
+         Connection c = null;
+         Statement stmt = null;
+         DefaultTableModel modelo=(DefaultTableModel) tablaLicencias.getModel();
+         try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+            c.setAutoCommit(false);
+            
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM licencias;");
+            while(rs.next()){
+                Object[] linea=new Object[5];
+                linea[0]=rs.getString("nlicencia");
+                linea[1]=rs.getString("usuario");
+                linea[2]=rs.getInt("clave");
+                linea[3]=rs.getString("nombre");
+                modelo.addRow(linea);
+                tablaLicencias.setModel(modelo);
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+    }catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+}
     
 
     /**
@@ -487,10 +700,15 @@ public class Envios extends javax.swing.JFrame {
     public static javax.swing.JCheckBox CheckEnvioProgramado;
     private javax.swing.JInternalFrame IFDestinatario;
     private javax.swing.JInternalFrame IFMensaje;
+    private javax.swing.JTabbedPane TPEscribirSms;
+    private javax.swing.JButton btnAñadirLicencia;
     private javax.swing.JButton btnAñadirMovil;
+    private javax.swing.JButton btnBuscarLicencia;
     private javax.swing.JButton btnEliminarMoviles;
     private javax.swing.JButton btnEliminarTexto;
     public static javax.swing.JButton btnEnviar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnUtilizarLicencia;
     public static javax.swing.JComboBox<String> comboHoraEnvio;
     public static javax.swing.JComboBox<String> comboMinEnvio;
     public static javax.swing.JComboBox<String> comboSegEnvio;
@@ -498,10 +716,13 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPaneMoviles;
     private javax.swing.JScrollPane jScrollPaneTexto;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblClave;
     private javax.swing.JLabel lblHoraEnvio;
+    private javax.swing.JLabel lblLicencia;
     private javax.swing.JLabel lblMoviles;
     public static javax.swing.JLabel lblMovilesInsertados;
     private javax.swing.JLabel lblMovilesInsertadosName;
+    private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNombreRemitente;
     private javax.swing.JLabel lblNombreUsr;
     public static javax.swing.JLabel lblNumCaracteres;
@@ -511,8 +732,17 @@ public class Envios extends javax.swing.JFrame {
     public static javax.swing.JLabel lblSaldo;
     private javax.swing.JLabel lblSaldoName;
     private javax.swing.JLabel lblTexto;
+    private javax.swing.JLabel lblUsuario;
+    private javax.swing.JPanel panelEnvios;
+    private javax.swing.JPanel panelLicencias;
+    private javax.swing.JScrollPane scrollTable;
+    public static javax.swing.JTable tablaLicencias;
     public static javax.swing.JTextArea txtAreaMensaje;
     public static javax.swing.JTextArea txtAreaMoviles;
+    private javax.swing.JTextField txtClave;
+    private javax.swing.JTextField txtLicencia;
+    private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreRemitente;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
