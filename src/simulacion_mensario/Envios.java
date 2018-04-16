@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
  * @author adrys
  */
 public class Envios extends javax.swing.JFrame {
-
+    public static final String alfabetoRemitente="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ";
     public static final String alfabetoGSM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÄÖÜÉØÅÆÑÇäöüàèìòùéøåæñ§ßΓ∆ΘΛΞΠΣΦΨΩ .,'?!_:;\"¿¡+-*/=\\<>()[]{}^~|@%#&¤$£€¥\n\r";
     public static ApiResponseBean apiResponse = null;
     public static ApiResponseBean apiResponseSaldo = null;
@@ -533,7 +533,7 @@ public class Envios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAñadirMovilMouseClicked
 
     private void btnEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMouseClicked
-        if (comprobarGSM(cambiarCaracteres(txtAreaMensaje.getText())) == true) {
+        if ((comprobarGSM(cambiarCaracteres(txtAreaMensaje.getText())) == true)&&(comprobarRemitente(txtNombreRemitente.getText())==true)) {
             try {
                 //Separar el contenido para comprobar los telefonos de forma individual
                 String[] contador = txtAreaMoviles.getText().split(",");
@@ -566,7 +566,7 @@ public class Envios extends javax.swing.JFrame {
                 Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Hay caracteres invalidos en el mensaje,los caracteres validos son:\n" + alfabetoGSM);
+            JOptionPane.showMessageDialog(null, "Hay caracteres invalidos en el mensaje o el remitene,los caracteres validos son:\nPara el remitente: "+alfabetoRemitente+"\nPara el mensaje: "+ alfabetoGSM);
         }
     }//GEN-LAST:event_btnEnviarMouseClicked
 
@@ -849,6 +849,15 @@ public class Envios extends javax.swing.JFrame {
         char[] charArray = mensaje.toCharArray();
         for (int i = 0; i < charArray.length; i++) {
             if (alfabetoGSM.indexOf(charArray[i]) < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static boolean comprobarRemitente(String remitente){
+        char[] charArray=remitente.toCharArray();
+        for(int i=0;i<charArray.length;i++){
+            if(alfabetoRemitente.indexOf(charArray[i])<0){
                 return false;
             }
         }
