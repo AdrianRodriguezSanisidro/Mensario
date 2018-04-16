@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Envios extends javax.swing.JFrame {
 
+    public static final String alfabetoGSM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÄÖÜÉØÅÆÑÇäöüàèìòùéøåæñ§ßΓ∆ΘΛΞΠΣΦΨΩ .,'?!_:;\"¿¡+-*/=\\<>()[]{}^~|@%#&¤$£€¥\n\r";
     public static ApiResponseBean apiResponse = null;
     public static ApiResponseBean apiResponseSaldo = null;
     public static SemApi semApi;
@@ -45,7 +46,7 @@ public class Envios extends javax.swing.JFrame {
         txtAreaMensaje.setWrapStyleWord(true);
         txtAreaMoviles.setLineWrap(true);
         txtAreaMoviles.setWrapStyleWord(true);
-        
+
     }
 
     /**
@@ -532,37 +533,41 @@ public class Envios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAñadirMovilMouseClicked
 
     private void btnEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMouseClicked
-        try {
-            String[] contador = txtAreaMoviles.getText().split(",");
-            //Set recipients
-            ArrayList<ApiRecipientBean> recipients = new ArrayList<ApiRecipientBean>();
-            for (int i = 0; i < Integer.parseInt(Hilo.comprobarTelefonos()); i++) {
-                ApiRecipientBean recipient = new ApiRecipientBean();
-                recipient.setCode("34");
-                recipient.setPhone(contador[i]);
-                recipients.add(recipient);
-            }
-            //Set message data
-            ArrayList<ApiMessageBean> sendings = new ArrayList<ApiMessageBean>();
-            ApiMessageBean message = new ApiMessageBean();
-            message.setRecipients(recipients);
-            message.setSender(txtNombreRemitente.getText());
-            message.setText(txtAreaMensaje.getText());
-            message.setDate(conseguirFecha());
-            sendings.add(message);
+        if (comprobarGSM(cambiarCaracteres(txtAreaMensaje.getText())) == true) {
+            try {
+                //Separar el contenido para comprobar los telefonos de forma individual
+                String[] contador = txtAreaMoviles.getText().split(",");
+                //Set recipients
+                ArrayList<ApiRecipientBean> recipients = new ArrayList<ApiRecipientBean>();
+                for (int i = 0; i < Integer.parseInt(Hilo.comprobarTelefonos()); i++) {
+                    ApiRecipientBean recipient = new ApiRecipientBean();
+                    recipient.setCode("34");
+                    recipient.setPhone(contador[i]);
+                    recipients.add(recipient);
+                }
+                //Set message data
+                ArrayList<ApiMessageBean> sendings = new ArrayList<ApiMessageBean>();
+                ApiMessageBean message = new ApiMessageBean();
+                message.setRecipients(recipients);
+                message.setSender(txtNombreRemitente.getText());
+                message.setText(cambiarCaracteres(txtAreaMensaje.getText()));
+                message.setDate(conseguirFecha());
+                sendings.add(message);
 
-            apiResponse = semApi.executeSending(sendings);
-            refrescarSaldo();
-            if (apiResponse.getResult().equals("OK")) {
+                apiResponse = semApi.executeSending(sendings);
+                refrescarSaldo();
+                if (apiResponse.getResult().equals("OK")) {
 
-                JOptionPane.showMessageDialog(this, "Id de petición: " + apiResponse.getRequest() + "\n" + "Id de mensaje: " + apiResponse.getIds().get(0), "Envío", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                System.err.println(apiResponse.getResult());
+                    JOptionPane.showMessageDialog(this, "Id de petición: " + apiResponse.getRequest() + "\n" + "Id de mensaje: " + apiResponse.getIds().get(0), "Envío", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    System.err.println(apiResponse.getResult());
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (Exception ex) {
-            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            JOptionPane.showMessageDialog(null, "Hay caracteres invalidos en el mensaje,los caracteres validos son:\n" + alfabetoGSM);
         }
-
     }//GEN-LAST:event_btnEnviarMouseClicked
 
     private void btnAñadirLicenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirLicenciaMouseClicked
@@ -602,14 +607,14 @@ public class Envios extends javax.swing.JFrame {
     private void btnUtilizarLicenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUtilizarLicenciaMouseClicked
         try {
             semApi = new SemApi(txtLicencia.getText(), txtUsuario.getText(), txtClave.getText(), "es.servicios.mensario.com", 443);
-            apiResponse =semApi.executeSynchronization();
-            if(apiResponse.getResult().equals("OK")){
-            semApi.setTimezone("Europe/Madrid");
-            lblNombreUsr.setText(txtLicencia.getText());
-            refrescarSaldo();
-                JOptionPane.showMessageDialog(null,"Conectado a la licencia '"+txtLicencia.getText()+"' de "+txtNombre.getText());
-            }else{
-                JOptionPane.showMessageDialog(null,"La licencia no existe");
+            apiResponse = semApi.executeSynchronization();
+            if (apiResponse.getResult().equals("OK")) {
+                semApi.setTimezone("Europe/Madrid");
+                lblNombreUsr.setText(txtLicencia.getText());
+                refrescarSaldo();
+                JOptionPane.showMessageDialog(null, "Conectado a la licencia '" + txtLicencia.getText() + "' de " + txtNombre.getText());
+            } else {
+                JOptionPane.showMessageDialog(null, "La licencia no existe");
             }
         } catch (Exception ex) {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
@@ -803,24 +808,24 @@ public class Envios extends javax.swing.JFrame {
         Statement stmt = null;
 
         String licencia = txtLicencia.getText();
-        if(licencia!=""){
-        try {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-            c.setAutoCommit(false);
+        if (!"".equals(licencia)) {
+            try {
+                Class.forName("org.sqlite.JDBC");
+                c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+                c.setAutoCommit(false);
 
-            stmt = c.createStatement();
-            String sql = "DELETE from licencias where nlicencia='" + licencia + "';";
-            stmt.executeUpdate(sql);
-            c.commit();
-            stmt.close();
-            c.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "No existe esa licencia,compruebe si esta bien escrita");
-        }
-        DefaultTableModel modelo = (DefaultTableModel) tablaLicencias.getModel();
-        modelo.removeRow(tablaLicencias.getSelectedRow());
-        }else{
+                stmt = c.createStatement();
+                String sql = "DELETE from licencias where nlicencia='" + licencia + "';";
+                stmt.executeUpdate(sql);
+                c.commit();
+                stmt.close();
+                c.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "No existe esa licencia,compruebe si esta bien escrita");
+            }
+            DefaultTableModel modelo = (DefaultTableModel) tablaLicencias.getModel();
+            modelo.removeRow(tablaLicencias.getSelectedRow());
+        } else {
             JOptionPane.showMessageDialog(null, "Debes elegir una licencia a borrar");
         }
     }
@@ -830,6 +835,24 @@ public class Envios extends javax.swing.JFrame {
         txtUsuario.setText("");
         txtClave.setText("");
         txtNombre.setText("");
+    }
+
+    public static String cambiarCaracteres(String mensaje) {
+        String aux = mensaje.replace("á", "à");
+        aux = aux.replace("í", "ì");
+        aux = aux.replace("ó", "ò");
+        aux = aux.replace("ú", "ù");
+        return aux;
+    }
+
+    public static boolean comprobarGSM(String mensaje) {
+        char[] charArray = mensaje.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            if (alfabetoGSM.indexOf(charArray[i]) < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
