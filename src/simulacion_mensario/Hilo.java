@@ -25,7 +25,7 @@ public class Hilo extends Thread {
             comprobarCheck();
             lblMovilesInsertados.setText(comprobarTelefonos());
             comprobarNumMensajes();
-           
+            comprobarMovilPais(calcularLargoTelf(comboPais.getSelectedItem().toString()));
         }
     }
 
@@ -43,14 +43,11 @@ public class Hilo extends Thread {
         String[] contador = txtAreaMoviles.getText().split(",");
         String cantMoviles="0";
         if (contador.length > 1) {
-            //lblMovilesInsertados.setText("" + contador.length);
             cantMoviles=""+contador.length;
         } else {
             if (!"".equals(txtAreaMoviles.getText())) {
-                //lblMovilesInsertados.setText("1");
                 cantMoviles="1";
             } else {
-                //lblMovilesInsertados.setText("0");
                 cantMoviles="0";
             }
         }
@@ -61,7 +58,7 @@ public class Hilo extends Thread {
         String[] contador = txtAreaMoviles.getText().split(",");
         Boolean[] comprobador = new Boolean[contador.length];
         for (int i = 0; i < contador.length; i++) {
-            if ((contador[i].startsWith("6") || contador[i].startsWith("7")) && contador[i].length() == 9) {
+            if ((contador[i].startsWith("6") || contador[i].startsWith("7")) && (contador[i].length() >= 9)) {
                 comprobador[i] = true;
             } else {
                 comprobador[i] = false;
@@ -73,7 +70,16 @@ public class Hilo extends Thread {
             btnEnviar.setEnabled(false);
         }
     }
-
+    public static void comprobarMovilPais(int[]numeros){
+        String auxM=txtMovilContacto.getText();
+        if((auxM.startsWith(""+numeros[2])||auxM.startsWith(""+numeros[3])||auxM.startsWith(""+numeros[4]))&&
+                (auxM.length()>=numeros[0]&&auxM.length()<=numeros[1])){
+            btnAñadirContacto.setEnabled(true);
+        }else{
+            btnAñadirContacto.setEnabled(false);
+        }
+    }
+    
     public boolean comprobarBooleans(Boolean[] array) {
         for (boolean b : array) {
             if (!b) {
