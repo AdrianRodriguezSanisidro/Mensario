@@ -300,10 +300,10 @@ public class Envios extends javax.swing.JFrame {
                 .addGroup(IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblNumCaracteres, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEliminarTexto)
-                    .addGroup(IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblNumMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblNumMensajesName)
-                        .addComponent(lblNumCaracteresName))
-                    .addComponent(lblNumMensajes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblNumCaracteresName)))
                 .addGap(5, 5, 5))
         );
 
@@ -381,8 +381,7 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(lblSaldoName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelEnviosLayout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IFDestinatario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -984,12 +983,14 @@ public class Envios extends javax.swing.JFrame {
                 refrescarSaldo();
                 mostrarDatosTContactos(comboElegirGrupo.getSelectedItem().toString(), lblNombreUsr.getText());
                 JOptionPane.showMessageDialog(null, "Conectado a la licencia '" + txtLicencia.getText() + "' de " + txtNombre.getText());
+                limpiarTxt();
             } else {
                 JOptionPane.showMessageDialog(null, "La licencia no existe");
             }
         } catch (Exception ex) {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_btnUtilizarLicenciaMouseClicked
 
     private void btnAñadirContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirContactoMouseClicked
@@ -1396,6 +1397,249 @@ public class Envios extends javax.swing.JFrame {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public static int[] calcularLargoTelf(String nombrePais){
+        int[]num=new int[5];
+        switch (nombrePais) {
+            case "Alemania":
+                num=new int[5];
+                num[0]=10;
+                num[1]=11;
+                num[2]=1;
+                return num;
+            case "Andorra":
+                num=new int[5];
+                num[0]=6;
+                num[1]=6;
+                num[2]=3;
+                num[3]=4;
+                num[4]=6;
+                return num;
+            case "Austria":
+                num=new int[5];
+                num[0]=10;
+                num[1]=10;
+                num[2]=6;
+                return num;
+            case "Bélgica":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=4;
+                return num;
+            case "Bosnia":
+                num=new int[5];
+                num[0]=8;
+                num[1]=8;
+                num[2]=6;
+                return num;
+            case "Bulgaria":
+                num=new int[5];
+                num[0]=8;
+                num[1]=8;
+                num[2]=87;
+                return num;
+            case "Chipre":
+                num=new int[5];
+                num[0]=8;
+                num[1]=8;
+                num[2]=99;
+                return num;
+            case "Croacia":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=9;
+                return num;
+            case "Dinamarca":
+                num=new int[5];
+                num[0]=8;
+                num[1]=8;
+                return num;
+            case "Eslovaquia":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=9;
+                return num;
+            case "Eslovenia":
+                num=new int[5];
+                num[0]=8;
+                num[1]=8;
+                return num;
+            case "España":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=6;
+                num[3]=7;
+                return num;
+            case "Estonia":
+                num=new int[5];
+                num[0]=7;
+                num[1]=8;
+                num[2]=5;
+                num[3]=8;
+                return num;
+            case "Finlandia":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=4;
+                num[3]=50;
+                return num;
+            case "Francia":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=6;
+                num[3]=7;
+                return num;
+            case "Grecia":
+                num=new int[5];
+                num[0]=10;
+                num[1]=10;
+                num[2]=6;
+                return num;
+            case "Hungría":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=20;
+                num[3]=30;
+                num[4]=70;
+                return num;
+            case "Irlanda":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=8;
+                return num;
+            case "Islandia":
+                num=new int[5];
+                num[0]=7;
+                num[1]=7;
+                return num;
+            case "Italia":
+                num=new int[5];
+                num[0]=10;
+                num[1]=10;
+                num[2]=3;
+                return num;
+            case "Letonia":
+                num=new int[5];
+                num[0]=8;
+                num[1]=8;
+                num[2]=2;
+                return num;
+            case "Lituania":
+                num=new int[5];
+                num[0]=8;
+                num[1]=8;
+                num[2]=6;
+                return num;
+            case "Luxemburgo":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=6;
+                return num;
+            case "Malta":
+                num=new int[5];
+                num[0]=8;
+                num[1]=8;
+                num[2]=79;
+                num[3]=99;
+                return num;
+            case "Montenegro":
+                num=new int[5];
+                num[0]=8;
+                num[1]=8;
+                num[2]=6;
+                return num;
+            case "Noruega":
+                num=new int[5];
+                num[0]=8;
+                num[1]=8;
+                num[2]=4;
+                num[3]=9;
+                return num;
+            case "Países Bajos":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=6;
+                return num;
+            case "Polonia":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=5;
+                num[3]=6;
+                num[4]=7;
+                return num;
+            case "Portugal":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=9;
+                return num;
+            case "Reino Unido":
+                num=new int[5];
+                num[0]=10;
+                num[1]=10;
+                num[2]=7;
+                return num;
+            case "República Checa":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=6;
+                num[3]=7;
+                return num;
+            case "Rumanía":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=7;
+                return num;
+            case "Rusia":
+                num=new int[5];
+                num[0]=10;
+                num[1]=10;
+                num[2]=9;
+                return num;
+            case "Serbia-Kosovo":
+                num=new int[5];
+                num[0]=8;
+                num[1]=9;
+                num[2]=6;
+                return num;
+            case "Suecia":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=7;
+                return num;
+            case "Suiza":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                num[2]=7;
+                return num;
+            case "Turquía":
+                num=new int[5];
+                num[0]=10;
+                num[1]=10;
+                num[2]=5;
+                return num;
+            case "Ucrania":
+                num=new int[5];
+                num[0]=9;
+                num[1]=9;
+                return num;
+        }
+        return num;
+    }
 
     public static String transformarPais(String nombrePais) {
         switch (nombrePais) {
@@ -1626,7 +1870,7 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JInternalFrame IFMensaje;
     private javax.swing.JTabbedPane TPEscribirSms;
     private javax.swing.JButton btnAñadirAlGrupo;
-    private javax.swing.JButton btnAñadirContacto;
+    public static javax.swing.JButton btnAñadirContacto;
     private javax.swing.JButton btnAñadirLicencia;
     private javax.swing.JButton btnAñadirMovil;
     private javax.swing.JButton btnBorrarGrupo;

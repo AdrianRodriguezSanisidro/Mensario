@@ -150,7 +150,6 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                               <Component id="lblSaldo" min="-2" pref="13" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -382,11 +381,11 @@
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="lblNumCaracteres" alignment="1" max="32767" attributes="0"/>
                               <Component id="btnEliminarTexto" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
+                              <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                                  <Component id="lblNumMensajes" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                                   <Component id="lblNumMensajesName" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblNumCaracteresName" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="lblNumMensajes" alignment="1" min="-2" pref="23" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       </Group>
@@ -1254,6 +1253,9 @@
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnA&#xf1;adirContactoMouseClicked"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnEliminarContacto">
                   <Properties>
