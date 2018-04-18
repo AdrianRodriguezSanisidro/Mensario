@@ -15,7 +15,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import static simulacion_mensario.Envios.alfabetoRemitente;
+import static simulacion_mensario.Envios.*;
+
 
 /**
  *
@@ -40,7 +41,8 @@ public class CrearGrupo extends javax.swing.JFrame {
             c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
             stmt = c.createStatement();
             String sql = "CREATE TABLE grupos "
-                    + "(nGrupo TEXT PRIMARY KEY NOT NULL)";
+                    + "(nGrupo TEXT PRIMARY KEY NOT NULL"
+                    + "nLicencia TEXT);";
             stmt.executeUpdate(sql);
             stmt.close();
             c.close();
@@ -62,7 +64,7 @@ public class CrearGrupo extends javax.swing.JFrame {
                 stmt = c.createStatement();
                 String sql = "CREATE TABLE "+adaptarNombreG(nombreG)+"(movilc TEXT PRIMARY KEY NOT NULL)";
                 stmt.executeUpdate(sql);
-                sql="INSERT INTO grupos VALUES('"+txtNuevoGrupo.getText()+"');";
+                sql="INSERT INTO grupos VALUES('"+nombreG+"','"+lblNombreUsr.getText()+"');";
                 stmt.executeUpdate(sql);
                 stmt.close();
                 c.commit();
@@ -92,23 +94,93 @@ public class CrearGrupo extends javax.swing.JFrame {
         return sinEspacios;
     }
     public static void mostrarGruposCombo(){
+        if(Envios.lblNombreUsr.getText()!=""){
+            Connection c=null;
+            Statement stmt=null;
+            try {
+                Class.forName("org.sqlite.JDBC");
+                c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+                c.setAutoCommit(false);
+                stmt=c.createStatement();
+                String sql="SELECT * FROM grupos WHERE nLicencia='"+lblNombreUsr.getText()+"';";
+                ResultSet rs=stmt.executeQuery(sql);
+                comboElegirGrupo.removeAllItems();
+                comboAñadirAlGrupo.removeAllItems();
+                while(rs.next()){
+                    comboElegirGrupo.addItem(rs.getString("nGrupo"));
+                    comboAñadirAlGrupo.addItem(rs.getString("nGrupo"));
+                    System.out.println(rs.getString("nGrupo")+" "+rs.getString("nLicencia"));
+                }
+                stmt.close();
+                c.commit();
+                c.close();
+            } catch (Exception ex) {
+                Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    public static void mostarTodo(){
         Connection c=null;
         Statement stmt=null;
+            try {
+                Class.forName("org.sqlite.JDBC");
+                c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+                c.setAutoCommit(false);
+                stmt=c.createStatement();
+                String sql="Select * from grupos";
+                ResultSet rs=stmt.executeQuery(sql);
+                while(rs.next()){
+                    System.out.println(rs.getString(1)+" , "+rs.getString(2));
+                }
+                stmt.close();
+                c.commit();
+                c.close();
+            } catch (Exception ex) {
+                Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    public static void borrarT(String tabla){
         try {
+            Connection c=null;
+            Statement stmt=null;
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
             c.setAutoCommit(false);
             stmt=c.createStatement();
-            String sql="SELECT * FROM grupos;";
-            ResultSet rs=stmt.executeQuery(sql);
-            Envios.comboElegirGrupo.removeAllItems();
-            while(rs.next()){
-                Envios.comboElegirGrupo.addItem(rs.getString("nGrupo"));
-            }
-        } catch (Exception ex) {
+            String sql="Delete from grupos where nGrupo='"+tabla+"';";
+            String sql2="Drop table "+tabla;
+            stmt.executeUpdate(sql);
+            stmt.executeUpdate(sql2);
+            System.out.println("Borrado "+tabla);
+            stmt.close();
+            c.commit();
+            c.close();
+            
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public static void modificarTodos(){
+                try {
+            Connection c=null;
+            Statement stmt=null;
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+            c.setAutoCommit(false);
+            stmt=c.createStatement();
+            String sql="INSERT INTO grupos VALUES('Todos','LSTD04182162B5196645');";
+            stmt.executeUpdate(sql);
+            System.out.println("AÑADIDO todos");
+            stmt.close();
+            c.commit();
+            c.close();
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -195,8 +267,19 @@ public class CrearGrupo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNuevoGrupoKeyTyped
 
     private void btnAceptarNuevoGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarNuevoGrupoMouseClicked
-        crearNuevoGrupo(txtNuevoGrupo.getText());
-        this.dispose();
+        boolean auxOK=true;
+        for(int i=0;i<comboElegirGrupo.getItemCount();i++){
+            if(adaptarNombreG(comboElegirGrupo.getItemAt(i))==adaptarNombreG(txtNuevoGrupo.getText())){
+                auxOK=false;
+            }
+        }
+        if(auxOK==true){
+            crearNuevoGrupo(txtNuevoGrupo.getText());
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null,"El grupo ya existe");
+        }
+        
     }//GEN-LAST:event_btnAceptarNuevoGrupoMouseClicked
 
     /**

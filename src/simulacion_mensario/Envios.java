@@ -8,6 +8,8 @@ package simulacion_mensario;
 import com.sun.glass.events.KeyEvent;
 import es.xilon.semApi.*;
 import es.xilon.semApi.beans.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -19,6 +21,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
+import static simulacion_mensario.CrearGrupo.*;
 
 /**
  *
@@ -42,13 +45,14 @@ public class Envios extends javax.swing.JFrame {
         Hilo objHilo = new Hilo();
         objHilo.start();
         mostrarDatosTLicencias();
-        mostrarDatosTContactos(comboElegirGrupo.getSelectedItem().toString(), lblNombreUsr.getText());
+        mostrarGruposCombo();
+        
         //Quitar autoscroll horizontal
         txtAreaMensaje.setLineWrap(true);
         txtAreaMensaje.setWrapStyleWord(true);
         txtAreaMoviles.setLineWrap(true);
         txtAreaMoviles.setWrapStyleWord(true);
-
+        
     }
 
     /**
@@ -133,7 +137,6 @@ public class Envios extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         btnEscribirContacto = new javax.swing.JButton();
         btnEscribirGrupo = new javax.swing.JButton();
-        btnRenombrarGrupo = new javax.swing.JButton();
         btnOrdenarMovilA = new javax.swing.JButton();
         btnOrdenarMovilD = new javax.swing.JButton();
         btnOrdenarNombreA = new javax.swing.JButton();
@@ -352,7 +355,7 @@ public class Envios extends javax.swing.JFrame {
                 .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblHoraEnvio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(comboHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboMinEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -514,7 +517,7 @@ public class Envios extends javax.swing.JFrame {
                                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                         .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLicenciasLayout.createSequentialGroup()
                                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -574,12 +577,15 @@ public class Envios extends javax.swing.JFrame {
 
         TPEscribirSms.addTab("Licencias", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_licencia.jpg"), panelLicencias); // NOI18N
 
+        panelContactos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panelContactos.setPreferredSize(new java.awt.Dimension(705, 777));
 
-        comboElegirGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "todos", "Ejemplo2" }));
+        comboElegirGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
 
         lblNombreTabla.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNombreTabla.setText("Grupo");
+
+        scrollContactos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         tablaContactos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -614,9 +620,19 @@ public class Envios extends javax.swing.JFrame {
         btnBorrarGrupo.setForeground(new java.awt.Color(204, 0, 0));
         btnBorrarGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\papelera.jpg")); // NOI18N
         btnBorrarGrupo.setText("Eliminar grupo");
+        btnBorrarGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBorrarGrupoMouseClicked(evt);
+            }
+        });
 
         btnCrearGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
         btnCrearGrupo.setText("Crear grupo");
+        btnCrearGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCrearGrupoMouseClicked(evt);
+            }
+        });
 
         btnAñadirAlGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_user.jpg")); // NOI18N
         btnAñadirAlGrupo.setText("Añadir contacto al grupo");
@@ -677,28 +693,28 @@ public class Envios extends javax.swing.JFrame {
         IFContactosLayout.setHorizontalGroup(
             IFContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, IFContactosLayout.createSequentialGroup()
-                .addGroup(IFContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(IFContactosLayout.createSequentialGroup()
-                        .addComponent(lblNombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)
-                        .addComponent(btnLimpiarNombreC, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnAñadirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblNombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(btnLimpiarNombreC, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtMovilContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
-                .addGroup(IFContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(IFContactosLayout.createSequentialGroup()
-                        .addComponent(btnLimpiarMovilC, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPais)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboPais, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnEliminarContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnLimpiarMovilC, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPais)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboPais, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
+            .addGroup(IFContactosLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(btnAñadirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(211, 211, 211)
+                .addComponent(btnEliminarContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         IFContactosLayout.setVerticalGroup(
             IFContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -713,23 +729,23 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(txtMovilContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(comboPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblPais, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(72, 72, 72)
+                .addGap(20, 20, 20)
                 .addGroup(IFContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminarContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAñadirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
         );
 
-        comboAñadirAlGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnEscribirContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_envios.jpg")); // NOI18N
         btnEscribirContacto.setText("Escribir al contacto");
+        btnEscribirContacto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEscribirContactoMouseClicked(evt);
+            }
+        });
 
         btnEscribirGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_envios.jpg")); // NOI18N
         btnEscribirGrupo.setText("Escribir a todo el grupo");
-
-        btnRenombrarGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\renombrar.jpg")); // NOI18N
-        btnRenombrarGrupo.setText("Renombrar grupo");
 
         btnOrdenarMovilA.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\orderDown.jpg")); // NOI18N
         btnOrdenarMovilA.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -773,7 +789,7 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnDesordenar.setText("...");
+        btnDesordenar.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
         btnDesordenar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnDesordenarMouseClicked(evt);
@@ -784,12 +800,6 @@ public class Envios extends javax.swing.JFrame {
         panelContactos.setLayout(panelContactosLayout);
         panelContactosLayout.setHorizontalGroup(
             panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContactosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(comboAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(panelContactosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -800,63 +810,71 @@ public class Envios extends javax.swing.JFrame {
                         .addGap(18, 18, 18))
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContactosLayout.createSequentialGroup()
-                        .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(IFContactos, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(IFContactos)
+                        .addContainerGap())
+                    .addGroup(panelContactosLayout.createSequentialGroup()
+                        .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContactosLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(comboAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(scrollContactos))
                         .addContainerGap())
                     .addGroup(panelContactosLayout.createSequentialGroup()
                         .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelContactosLayout.createSequentialGroup()
-                                .addComponent(lblNombreTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(comboElegirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(291, 291, 291)
                                 .addComponent(btnCrearGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3)
-                                .addComponent(btnRenombrarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3)
-                                .addComponent(btnBorrarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(90, 90, 90)
+                                .addComponent(btnBorrarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelContactosLayout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addComponent(btnOrdenarMovilA, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnOrdenarMovilD, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(166, 166, 166)
-                                .addComponent(btnOrdenarNombreA, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnOrdenarNombreD, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(184, 184, 184)
-                                .addComponent(btnOrdenarPaisA, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnOrdenarPaisD, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                                .addComponent(lblNombreTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboElegirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(panelContactosLayout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addComponent(btnOrdenarMovilA, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnOrdenarMovilD, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(174, 174, 174)
+                .addComponent(btnOrdenarNombreA, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnOrdenarNombreD, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnOrdenarPaisA, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnOrdenarPaisD, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81))
         );
         panelContactosLayout.setVerticalGroup(
             panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContactosLayout.createSequentialGroup()
-                .addGap(1, 1, 1)
-                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnRenombrarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(comboElegirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnBorrarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnCrearGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblNombreTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(4, 4, 4)
+                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(panelContactosLayout.createSequentialGroup()
+                            .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnDesordenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(comboElegirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNombreTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(7, 7, 7))
+                        .addComponent(btnCrearGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBorrarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnOrdenarMovilA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnOrdenarMovilD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnOrdenarNombreA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnOrdenarNombreD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnOrdenarPaisA, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnOrdenarPaisD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDesordenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnOrdenarPaisD))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollContactos, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollContactos, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(IFContactos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -981,9 +999,10 @@ public class Envios extends javax.swing.JFrame {
                 semApi.setTimezone("Europe/Madrid");
                 lblNombreUsr.setText(txtLicencia.getText());
                 refrescarSaldo();
-                mostrarDatosTContactos(comboElegirGrupo.getSelectedItem().toString(), lblNombreUsr.getText());
+                mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
                 JOptionPane.showMessageDialog(null, "Conectado a la licencia '" + txtLicencia.getText() + "' de " + txtNombre.getText());
                 limpiarTxt();
+                CrearGrupo.mostrarGruposCombo();
             } else {
                 JOptionPane.showMessageDialog(null, "La licencia no existe");
             }
@@ -1015,7 +1034,7 @@ public class Envios extends javax.swing.JFrame {
                 modelo.removeRow(i);
                 i -= 1;
             }
-        mostrarDatosTContactosOrdenados("movilc","DESC",comboElegirGrupo.getSelectedItem().toString(), lblNombreUsr.getText());
+        mostrarDatosTContactosOrdenados("movilc","DESC",adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
     }//GEN-LAST:event_btnOrdenarMovilAMouseClicked
 
     private void btnOrdenarMovilDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrdenarMovilDMouseClicked
@@ -1024,7 +1043,7 @@ public class Envios extends javax.swing.JFrame {
                 modelo.removeRow(i);
                 i -= 1;
             }
-        mostrarDatosTContactosOrdenados("movilc","ASC",comboElegirGrupo.getSelectedItem().toString(), lblNombreUsr.getText());
+        mostrarDatosTContactosOrdenados("movilc","ASC",adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
     }//GEN-LAST:event_btnOrdenarMovilDMouseClicked
 
     private void btnOrdenarNombreAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrdenarNombreAMouseClicked
@@ -1033,7 +1052,7 @@ public class Envios extends javax.swing.JFrame {
                 modelo.removeRow(i);
                 i -= 1;
             }
-        mostrarDatosTContactosOrdenados("nombrec","DESC",comboElegirGrupo.getSelectedItem().toString(), lblNombreUsr.getText());
+        mostrarDatosTContactosOrdenados("nombrec","DESC",adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
     }//GEN-LAST:event_btnOrdenarNombreAMouseClicked
 
     private void btnOrdenarPaisAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrdenarPaisAMouseClicked
@@ -1042,7 +1061,7 @@ public class Envios extends javax.swing.JFrame {
                 modelo.removeRow(i);
                 i -= 1;
             }
-        mostrarDatosTContactosOrdenados("paisc","DESC",comboElegirGrupo.getSelectedItem().toString(), lblNombreUsr.getText());
+        mostrarDatosTContactosOrdenados("paisc","DESC",adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
     }//GEN-LAST:event_btnOrdenarPaisAMouseClicked
 
     private void btnOrdenarNombreDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrdenarNombreDMouseClicked
@@ -1051,7 +1070,7 @@ public class Envios extends javax.swing.JFrame {
                 modelo.removeRow(i);
                 i -= 1;
             }
-        mostrarDatosTContactosOrdenados("nombrec","ASC",comboElegirGrupo.getSelectedItem().toString(), lblNombreUsr.getText());
+        mostrarDatosTContactosOrdenados("nombrec","ASC",adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
     }//GEN-LAST:event_btnOrdenarNombreDMouseClicked
 
     private void btnOrdenarPaisDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrdenarPaisDMouseClicked
@@ -1060,7 +1079,7 @@ public class Envios extends javax.swing.JFrame {
                 modelo.removeRow(i);
                 i -= 1;
             }
-        mostrarDatosTContactosOrdenados("paisc","ASC",comboElegirGrupo.getSelectedItem().toString(), lblNombreUsr.getText());
+        mostrarDatosTContactosOrdenados("paisc","ASC",adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
     }//GEN-LAST:event_btnOrdenarPaisDMouseClicked
 
     private void btnDesordenarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDesordenarMouseClicked
@@ -1069,7 +1088,7 @@ public class Envios extends javax.swing.JFrame {
                 modelo.removeRow(i);
                 i -= 1;
             }
-        mostrarDatosTContactos(comboElegirGrupo.getSelectedItem().toString(), lblNombreUsr.getText());
+        mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
     }//GEN-LAST:event_btnDesordenarMouseClicked
 
     private void tablaContactosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaContactosMouseClicked
@@ -1093,6 +1112,20 @@ public class Envios extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtMovilContactoKeyTyped
+
+    private void btnEscribirContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEscribirContactoMouseClicked
+        txtAreaMoviles.setText(juntarMovilPrefijo(txtMovilContacto.getText())+txtAreaMoviles.getText());
+    }//GEN-LAST:event_btnEscribirContactoMouseClicked
+
+    private void btnCrearGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearGrupoMouseClicked
+        CrearGrupo objCrearG=new CrearGrupo();
+        objCrearG.setVisible(true);
+    }//GEN-LAST:event_btnCrearGrupoMouseClicked
+
+    private void btnBorrarGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarGrupoMouseClicked
+        borrarGrupo();
+        mostrarGruposCombo();
+    }//GEN-LAST:event_btnBorrarGrupoMouseClicked
     /*
     *
     *
@@ -1100,6 +1133,7 @@ public class Envios extends javax.swing.JFrame {
     *
     *
      */
+    
     public String conseguirFecha() {
         String fechaDefinitiva = "";
         if (CheckEnvioProgramado.isSelected() == true) {
@@ -1765,6 +1799,7 @@ public class Envios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debes elegir una licencia a borrar");
         }
     }
+    
     public static void eliminarContacto(){
         Connection c = null;
         Statement stmt = null;
@@ -1825,6 +1860,52 @@ public class Envios extends javax.swing.JFrame {
             }
         }
         return true;
+    }
+    public static String juntarMovilPrefijo(String movil){
+        Connection c=null;
+        Statement stmt=null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+            c.setAutoCommit(false);
+            stmt=c.createStatement();
+            
+            String sql="SELECT * FROM contactos WHERE movilc='"+movil+"'";
+            ResultSet rs=stmt.executeQuery(sql);
+            if(rs.next()==true){
+                String movilPref=transformarPais(rs.getString("paisc"))+rs.getString("movilc")+",";
+                return movilPref;
+            }else
+                JOptionPane.showMessageDialog(null,"Este teléfono no se encuentra registrado agréguelo primero");
+        } catch (Exception ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
+    }
+    public static void borrarGrupo(){
+        if(!"Todos".equals(comboElegirGrupo.getSelectedItem().toString())){
+            Connection c=null;
+            Statement stmt=null;
+            try {
+                Class.forName("org.sqlite.JDBC");
+                c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+                c.setAutoCommit(false);
+                stmt=c.createStatement();
+                String sql="DELETE FROM grupos where nGrupo='"+comboElegirGrupo.getSelectedItem().toString()+"';";
+                stmt.executeUpdate(sql);
+                c.commit();
+                sql="DROP TABLE "+adaptarNombreG(comboElegirGrupo.getSelectedItem().toString())+";";
+                stmt.executeUpdate(sql);
+                c.commit();
+                stmt.close();
+                c.close();
+
+            } catch (Exception ex) {
+                Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"El grupo \"Todos\" no se puede borrar");
+        }
     }
 
     /**
@@ -1893,9 +1974,8 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JButton btnOrdenarNombreD;
     private javax.swing.JButton btnOrdenarPaisA;
     private javax.swing.JButton btnOrdenarPaisD;
-    private javax.swing.JButton btnRenombrarGrupo;
     private javax.swing.JButton btnUtilizarLicencia;
-    private javax.swing.JComboBox<String> comboAñadirAlGrupo;
+    public static javax.swing.JComboBox<String> comboAñadirAlGrupo;
     public static javax.swing.JComboBox<String> comboElegirGrupo;
     public static javax.swing.JComboBox<String> comboHoraEnvio;
     public static javax.swing.JComboBox<String> comboMinEnvio;
@@ -1919,7 +1999,7 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombreContacto;
     private javax.swing.JLabel lblNombreRemitente;
     private javax.swing.JLabel lblNombreTabla;
-    private javax.swing.JLabel lblNombreUsr;
+    public static javax.swing.JLabel lblNombreUsr;
     public static javax.swing.JLabel lblNumCaracteres;
     private javax.swing.JLabel lblNumCaracteresName;
     public static javax.swing.JLabel lblNumMensajes;

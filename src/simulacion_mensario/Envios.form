@@ -115,7 +115,7 @@
                       <Component id="jCalendar1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="lblHoraEnvio" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="5" max="32767" attributes="0"/>
+                      <EmptySpace pref="17" max="32767" attributes="0"/>
                       <Component id="comboHoraEnvio" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="comboMinEnvio" min="-2" max="-2" attributes="0"/>
@@ -194,6 +194,9 @@
                   </Border>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="lblNombreRemitente">
               <Properties>
@@ -730,7 +733,7 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="45" max="32767" attributes="0"/>
+                              <EmptySpace pref="57" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -982,6 +985,9 @@
         </Container>
         <Container class="javax.swing.JPanel" name="panelContactos">
           <Properties>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor Por defecto"/>
+            </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[705, 777]"/>
             </Property>
@@ -1000,14 +1006,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="comboAñadirAlGrupo" min="-2" pref="171" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnAñadirAlGrupo" min="-2" pref="195" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
@@ -1018,75 +1017,89 @@
                           </Group>
                           <Component id="jSeparator2" alignment="1" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="IFContactos" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="scrollContactos" max="32767" attributes="0"/>
+                              <Component id="IFContactos" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <Component id="comboAñadirAlGrupo" min="-2" pref="171" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="btnAñadirAlGrupo" min="-2" pref="195" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="scrollContactos" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblNombreTabla" min="-2" pref="43" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="comboElegirGrupo" min="-2" pref="149" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="291" max="-2" attributes="0"/>
                                       <Component id="btnCrearGrupo" min="-2" pref="158" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                      <Component id="btnRenombrarGrupo" min="-2" pref="158" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
                                       <Component id="btnBorrarGrupo" min="-2" pref="158" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                      <Component id="btnOrdenarMovilA" min="-2" pref="23" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="btnOrdenarMovilD" min="-2" pref="23" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="166" max="-2" attributes="0"/>
-                                      <Component id="btnOrdenarNombreA" min="-2" pref="23" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="btnOrdenarNombreD" min="-2" pref="23" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="184" max="-2" attributes="0"/>
-                                      <Component id="btnOrdenarPaisA" min="-2" pref="23" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="btnOrdenarPaisD" min="-2" pref="23" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="btnDesordenar" min="-2" pref="23" max="-2" attributes="0"/>
+                                      <Component id="lblNombreTabla" min="-2" pref="43" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="comboElegirGrupo" min="-2" pref="149" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="btnDesordenar" min="-2" pref="27" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                      <Component id="btnOrdenarMovilA" min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnOrdenarMovilD" min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="174" max="-2" attributes="0"/>
+                      <Component id="btnOrdenarNombreA" min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnOrdenarNombreD" min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnOrdenarPaisA" min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnOrdenarPaisD" min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnRenombrarGrupo" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="comboElegirGrupo" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnBorrarGrupo" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                              <Component id="btnCrearGrupo" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                              <Component id="lblNombreTabla" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="btnDesordenar" max="32767" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="comboElegirGrupo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                          <Component id="lblNombreTabla" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="btnCrearGrupo" min="-2" pref="43" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="btnBorrarGrupo" min="-2" pref="43" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnOrdenarMovilA" max="32767" attributes="0"/>
                           <Component id="btnOrdenarMovilD" max="32767" attributes="0"/>
                           <Component id="btnOrdenarNombreA" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnOrdenarNombreD" alignment="1" max="32767" attributes="0"/>
                           <Component id="btnOrdenarPaisA" alignment="1" max="32767" attributes="0"/>
-                          <Component id="btnOrdenarPaisD" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnDesordenar" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnOrdenarPaisD" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="scrollContactos" pref="376" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="scrollContactos" pref="399" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="IFContactos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1109,9 +1122,8 @@
             <Component class="javax.swing.JComboBox" name="comboElegirGrupo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
-                    <StringItem index="0" value="todos"/>
-                    <StringItem index="1" value="Ejemplo2"/>
+                  <StringArray count="1">
+                    <StringItem index="0" value="Todos"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -1129,6 +1141,11 @@
               </Properties>
             </Component>
             <Container class="javax.swing.JScrollPane" name="scrollContactos">
+              <Properties>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor Por defecto"/>
+                </Property>
+              </Properties>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
@@ -1161,6 +1178,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Eliminar grupo"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnBorrarGrupoMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnCrearGrupo">
               <Properties>
@@ -1169,6 +1189,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Crear grupo"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCrearGrupoMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnA&#xf1;adirAlGrupo">
               <Properties>
@@ -1188,32 +1211,29 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="lblNombreContacto" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtNombreContacto" min="-2" pref="150" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                  <Component id="btnLimpiarNombreC" min="-2" pref="26" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="btnAñadirContacto" min="-2" pref="204" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblNombreContacto" min="-2" pref="50" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtNombreContacto" min="-2" pref="150" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                          <Component id="btnLimpiarNombreC" min="-2" pref="26" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblMovil" min="-2" pref="36" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtMovilContacto" min="-2" pref="164" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="btnLimpiarMovilC" min="-2" pref="26" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="lblPais" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="comboPais" min="-2" pref="156" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="btnEliminarContacto" min="-2" pref="186" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="btnLimpiarMovilC" min="-2" pref="26" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblPais" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="comboPais" min="-2" pref="156" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <Component id="btnAñadirContacto" min="-2" pref="204" max="-2" attributes="0"/>
+                          <EmptySpace min="211" pref="211" max="-2" attributes="0"/>
+                          <Component id="btnEliminarContacto" min="-2" pref="186" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1232,7 +1252,7 @@
                                   <Component id="lblPais" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnEliminarContacto" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                               <Component id="btnAñadirContacto" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
@@ -1383,16 +1403,12 @@
             <Component class="javax.swing.JComboBox" name="comboA&#xf1;adirAlGrupo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator2">
@@ -1404,6 +1420,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Escribir al contacto"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEscribirContactoMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnEscribirGrupo">
               <Properties>
@@ -1411,14 +1430,6 @@
                   <Image iconType="2" name="C:\Users\adrys\Documents\NetBeansProjects\Simulacion_Mensario\iconos\rsz_envios.jpg"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Escribir a todo el grupo"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnRenombrarGrupo">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\adrys\Documents\NetBeansProjects\Simulacion_Mensario\iconos\renombrar.jpg"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Renombrar grupo"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnOrdenarMovilA">
@@ -1483,7 +1494,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnDesordenar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="..."/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\adrys\Documents\NetBeansProjects\Simulacion_Mensario\iconos\rsz_check.jpg"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDesordenarMouseClicked"/>
