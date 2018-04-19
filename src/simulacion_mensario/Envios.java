@@ -5,11 +5,9 @@
  */
 package simulacion_mensario;
 
-import com.sun.glass.events.KeyEvent;
 import es.xilon.semApi.*;
 import es.xilon.semApi.beans.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -19,7 +17,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import static simulacion_mensario.CrearGrupo.*;
 
@@ -43,6 +40,7 @@ public class Envios extends javax.swing.JFrame {
      */
     public Envios() {
         initComponents();
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
         this.setLocationRelativeTo(null);//Centrar ventana
         //Inicio del hilo
         Hilo objHilo = new Hilo();
@@ -1985,6 +1983,9 @@ public class Envios extends javax.swing.JFrame {
             ResultSet rs=stmt.executeQuery(sql);
             if(rs.next()==true){
                 String movilPref=transformarPais(rs.getString("paisc"))+rs.getString("movilc")+",";
+                rs.close();
+                stmt.close();
+                c.close();
                 return movilPref;
             }else
                 JOptionPane.showMessageDialog(null,"Este teléfono no se encuentra registrado agréguelo primero");
@@ -2034,12 +2035,19 @@ public class Envios extends javax.swing.JFrame {
             String sql="SELECT * FROM contactos WHERE movilc='"+existMovil+"';";
             ResultSet rs=stmt.executeQuery(sql);
             if(rs.next()){
+                rs.close();
+                stmt.close();
+                c.close();
                 return true;
             }
+            rs.close();
+            stmt.close();
+            c.close();
         } catch (Exception ex) {
             System.err.println("ERROR EN COMPROBAR REGISTRO");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return false;
     }
     public static void añadirAlGrupoSeleccionado(String grupoS){
@@ -2056,6 +2064,8 @@ public class Envios extends javax.swing.JFrame {
                     stmt.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null,"El contacto se ha agregado al grupo "+grupoS+" con exito");
                     c.commit();
+                    stmt.close();
+                    c.close();
                 } catch (ClassNotFoundException ex) {
                     
                 } catch (SQLException ex) {
@@ -2082,8 +2092,14 @@ public class Envios extends javax.swing.JFrame {
             String sql="SELECT * FROM "+auxNuevoGrupo+" WHERE movilc='"+auxMovil+"';";
             ResultSet rs=stmt.executeQuery(sql);
             if(rs.next()){
+                rs.close();
+                stmt.close();
+                c.close();
                 return false;
-            }  
+            }
+            rs.close();
+            stmt.close();
+            c.close();
         } catch (ClassNotFoundException ex) {
             System.err.println("ERROR EN COMPROBAR SI ESTA EN NUEVO GRUPO");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
@@ -2146,6 +2162,9 @@ public class Envios extends javax.swing.JFrame {
                 String movil=rs.getString("movilc");
                 txtAreaMoviles.setText(juntarMovilPrefijo(movil)+txtAreaMoviles.getText());
             }
+            rs.close();
+            stmt.close();
+            c.close();
             JOptionPane.showMessageDialog(null,"Se ha escrito el telefono de todo el grupo \""+auxGrupo+"\" en la pestaña \"Enviar\"");
         } catch (ClassNotFoundException ex) {
             System.err.println("ERROR EN ESCRIBIR A TODO EL GRUPO");

@@ -27,7 +27,7 @@ public class Hilo extends Thread {
                 comprobarCheck();
                 lblMovilesInsertados.setText(comprobarTelefonos());
                 comprobarNumMensajes();
-                //comprobarCambioDeGrupo();
+                comprobarCambioDeGrupo();
                 comprobarMovilPais(calcularLargoTelf(comboPais.getSelectedItem().toString()));
             }
     }
