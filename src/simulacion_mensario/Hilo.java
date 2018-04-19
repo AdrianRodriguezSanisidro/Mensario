@@ -7,6 +7,7 @@ package simulacion_mensario;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static simulacion_mensario.CrearGrupo.adaptarNombreG;
 import static simulacion_mensario.Envios.*;
 
 /**
@@ -14,9 +15,10 @@ import static simulacion_mensario.Envios.*;
  * @author adrys
  */
 public class Hilo extends Thread {
-
+    
     int x = 2;
     int numAux = 1;
+    
 
     public void run() {
         while (x == 2) {
@@ -25,6 +27,7 @@ public class Hilo extends Thread {
             comprobarCheck();
             lblMovilesInsertados.setText(comprobarTelefonos());
             comprobarNumMensajes();
+            comprobarCambioDeGrupo();
             comprobarMovilPais(calcularLargoTelf(comboPais.getSelectedItem().toString()));
         }
     }
@@ -77,6 +80,12 @@ public class Hilo extends Thread {
             btnAñadirContacto.setEnabled(true);
         }else{
             btnAñadirContacto.setEnabled(false);
+        }
+    }
+    public static void comprobarCambioDeGrupo(){
+        if(Envios.auxComprobarGrupo!=comboElegirGrupo.getSelectedItem().toString()){
+            mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
+            Envios.auxComprobarGrupo=comboElegirGrupo.getSelectedItem().toString();
         }
     }
     
