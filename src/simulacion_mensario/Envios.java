@@ -169,7 +169,7 @@ public class Envios extends javax.swing.JFrame {
         panelEnvios.setPreferredSize(new java.awt.Dimension(705, 777));
 
         lblNombreUsr.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblNombreUsr.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Esta utilizando la licencia:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 11))); // NOI18N
+        lblNombreUsr.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Está utilizando la licencia:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 11))); // NOI18N
 
         lblNombreRemitente.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNombreRemitente.setText("Nombre de remitente:");
@@ -636,6 +636,11 @@ public class Envios extends javax.swing.JFrame {
 
         btnAñadirAlGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_user.jpg")); // NOI18N
         btnAñadirAlGrupo.setText("Añadir contacto al grupo");
+        btnAñadirAlGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAñadirAlGrupoMouseClicked(evt);
+            }
+        });
 
         IFContactos.setTitle("Contacto");
         IFContactos.setVisible(true);
@@ -1123,9 +1128,18 @@ public class Envios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearGrupoMouseClicked
 
     private void btnBorrarGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarGrupoMouseClicked
-        borrarGrupo();
-        mostrarGruposCombo();
+        int yesNoButton =JOptionPane.YES_NO_OPTION;
+        int returnVal= JOptionPane.showConfirmDialog(null, 
+                "El grupo sera borrado de forma permanente,¿estas seguro de eliminarlo?", "¡CUIDADO!", yesNoButton);
+        if (returnVal==JOptionPane.YES_OPTION){
+            borrarGrupo();
+        }
+        
     }//GEN-LAST:event_btnBorrarGrupoMouseClicked
+
+    private void btnAñadirAlGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirAlGrupoMouseClicked
+        añadirAlGrupoSeleccionado(comboAñadirAlGrupo.getSelectedItem().toString());
+    }//GEN-LAST:event_btnAñadirAlGrupoMouseClicked
     /*
     *
     *
@@ -1138,7 +1152,6 @@ public class Envios extends javax.swing.JFrame {
         String fechaDefinitiva = "";
         if (CheckEnvioProgramado.isSelected() == true) {
             String fechaString = "" + jCalendar1.getDate();
-            System.out.println("----------" + fechaString + "----------");
             String[] fecha = fechaString.split(" ");
             fecha[1] = convertirMes(fecha[1]);
             fechaDefinitiva = (fecha[5] + fecha[1] + fecha[2]
@@ -1300,16 +1313,16 @@ public class Envios extends javax.swing.JFrame {
                 c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
                 c.setAutoCommit(false);
                 stmt = c.createStatement();
-
-                ResultSet rs = stmt.executeQuery(consultarSegunGrupo(1, "", "", nombreGrupo, nLicencia));
+                String sql=consultarSegunGrupo(1, "", "", nombreGrupo, nLicencia);
+                ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     Object[] linea = new Object[3];
                     linea[0] = rs.getString("movilc");
                     linea[1] = rs.getString("nombrec");
                     linea[2] = rs.getString("paisc");
                     modelo.addRow(linea);
-                    tablaContactos.setModel(modelo);
                 }
+                tablaContactos.setModel(modelo);
                 rs.close();
                 stmt.close();
                 c.close();
@@ -1333,6 +1346,7 @@ public class Envios extends javax.swing.JFrame {
                 stmt = c.createStatement();
 
                 ResultSet rs = stmt.executeQuery(consultarSegunGrupo(2, campo, orden, nombreGrupo, nLicencia));
+                
                 while (rs.next()) {
                     Object[] linea = new Object[3];
                     linea[0] = rs.getString("movilc");
@@ -1357,13 +1371,13 @@ public class Envios extends javax.swing.JFrame {
             if (nombreGrupo.equals("todos")) {
                 return "SELECT * FROM contactos WHERE licenciac='" + nLicencia + "';";
             } else {
-                return "SELECT * FROM contactos WHERE licenciac='" + nLicencia + "' and movilc=(SELECT movilc FROM " + nombreGrupo + ");";
+                return "SELECT * FROM contactos WHERE licenciac='" + nLicencia + "' and movilc=(SELECT * FROM " + CrearGrupo.adaptarNombreG(nombreGrupo)+ " WHERE contactos.movilc="+CrearGrupo.adaptarNombreG(nombreGrupo)+".movilc);";
             }
         } else{
             if(nombreGrupo.equals("todos")){
                 return "SELECT * FROM contactos WHERE licenciac='" + nLicencia + "' ORDER BY "+campo+" "+orden+";";
             }else{
-                return "SELECT * FROM contactos WHERE licenciac='" + nLicencia + "' and movilc=(SELECT movilc FROM " + nombreGrupo + ") ORDER BY "+campo+" "+orden+";";
+                return "SELECT * FROM contactos WHERE licenciac='" + nLicencia + "' and movilc=(SELECT * FROM " + CrearGrupo.adaptarNombreG(nombreGrupo) + " WHERE contactos.movilc="+CrearGrupo.adaptarNombreG(nombreGrupo)+".movilc) ORDER BY "+campo+" "+orden+";";
             }
     }
     }
@@ -1425,7 +1439,7 @@ public class Envios extends javax.swing.JFrame {
                 modelo.removeRow(i);
                 i -= 1;
             }
-            mostrarDatosTContactos(comboElegirGrupo.getSelectedItem().toString(), nLicencia);
+            mostrarDatosTContactos(CrearGrupo.adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), nLicencia);
             JOptionPane.showMessageDialog(null, "El contacto se añadió correctamente");
         } catch (Exception ex) {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
@@ -1791,7 +1805,7 @@ public class Envios extends javax.swing.JFrame {
                 stmt.close();
                 c.close();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "No existe esa licencia,compruebe si esta bien escrita");
+                JOptionPane.showMessageDialog(null, "No existe esa licencia,compruebe si está bien escrita");
             }
             DefaultTableModel modelo = (DefaultTableModel) tablaLicencias.getModel();
             modelo.removeRow(tablaLicencias.getSelectedRow());
@@ -1818,7 +1832,7 @@ public class Envios extends javax.swing.JFrame {
                 stmt.close();
                 c.close();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "No existe ese contacto,compruebe si esta bien escrito");
+                JOptionPane.showMessageDialog(null, "No existe ese contacto,compruebe si está bien escrito");
             }
             DefaultTableModel modelo = (DefaultTableModel) tablaContactos.getModel();
             modelo.removeRow(tablaContactos.getSelectedRow());
@@ -1897,6 +1911,8 @@ public class Envios extends javax.swing.JFrame {
                 sql="DROP TABLE "+adaptarNombreG(comboElegirGrupo.getSelectedItem().toString())+";";
                 stmt.executeUpdate(sql);
                 c.commit();
+                mostrarGruposCombo();
+                mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
                 stmt.close();
                 c.close();
 
@@ -1906,6 +1922,76 @@ public class Envios extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null,"El grupo \"Todos\" no se puede borrar");
         }
+    }
+    public static boolean comprobarRegistro(String existMovil){
+        Connection c=null;
+        Statement stmt=null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+            c.setAutoCommit(false);
+            stmt=c.createStatement();
+            
+            String sql="SELECT * FROM contactos WHERE movilc='"+existMovil+"';";
+            ResultSet rs=stmt.executeQuery(sql);
+            if(rs.next()){
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    public static void añadirAlGrupoSeleccionado(String grupoS){
+        if(comprobarRegistro(txtMovilContacto.getText())==true){
+            if(comprobarSiEstaEnNuevoGrupo()==true&&!"Todos".equals(comboAñadirAlGrupo.getSelectedItem().toString())){
+                Connection c=null;
+                Statement stmt=null;
+                try {
+                    Class.forName("org.sqlite.JDBC");
+                    c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+                    c.setAutoCommit(false);
+                    stmt=c.createStatement();
+                    String sql="INSERT INTO "+adaptarNombreG(grupoS)+" VALUES('"+txtMovilContacto.getText()+"')";
+                    stmt.executeUpdate(sql);
+                    JOptionPane.showMessageDialog(null,"El contacto se ha agregado al grupo "+grupoS+" con exito");
+                    stmt.close();
+                    c.commit();
+                    c.close();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,txtNombreContacto.getText()+" ya está en "+
+                        comboAñadirAlGrupo.getSelectedItem().toString());
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"El contacto no está registrado");
+        }
+    }
+    public static boolean comprobarSiEstaEnNuevoGrupo(){
+        String auxNuevoGrupo=adaptarNombreG(comboAñadirAlGrupo.getSelectedItem().toString());
+        String auxMovil=txtMovilContacto.getText();
+        try {
+            Connection c=null;
+            Statement stmt=null;
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+            c.setAutoCommit(false);
+            stmt=c.createStatement();
+            String sql="SELECT * FROM "+auxNuevoGrupo+" WHERE movilc='"+auxMovil+"';";
+            ResultSet rs=stmt.executeQuery(sql);
+            if(rs.next()){
+                return false;
+            }  
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
     }
 
     /**

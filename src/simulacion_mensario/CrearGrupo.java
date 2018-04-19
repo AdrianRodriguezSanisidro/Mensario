@@ -109,7 +109,6 @@ public class CrearGrupo extends javax.swing.JFrame {
                 while(rs.next()){
                     comboElegirGrupo.addItem(rs.getString("nGrupo"));
                     comboAñadirAlGrupo.addItem(rs.getString("nGrupo"));
-                    System.out.println(rs.getString("nGrupo")+" "+rs.getString("nLicencia"));
                 }
                 stmt.close();
                 c.commit();
@@ -127,10 +126,12 @@ public class CrearGrupo extends javax.swing.JFrame {
                 c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
                 c.setAutoCommit(false);
                 stmt=c.createStatement();
-                String sql="Select * from grupos";
+                String sql2="SELECT * FROM contactos WHERE licenciac='LSTD04182162B5196645';";
+                
+                String sql="SELECT * FROM contactos WHERE licenciac='LSTD04182162B5196645' and movilc=(SELECT * FROM familia WHERE contactos.movilc=familia.movilc);";
                 ResultSet rs=stmt.executeQuery(sql);
                 while(rs.next()){
-                    System.out.println(rs.getString(1)+" , "+rs.getString(2));
+                    System.out.println(rs.getString(1));
                 }
                 stmt.close();
                 c.commit();
