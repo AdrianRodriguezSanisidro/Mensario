@@ -121,7 +121,6 @@ public class Envios extends javax.swing.JFrame {
         tablaContactos = new javax.swing.JTable();
         btnBorrarGrupo = new javax.swing.JButton();
         btnCrearGrupo = new javax.swing.JButton();
-        btnAñadirAlGrupo = new javax.swing.JButton();
         IFContactos = new javax.swing.JInternalFrame();
         btnAñadirContacto = new javax.swing.JButton();
         btnEliminarContacto = new javax.swing.JButton();
@@ -133,7 +132,6 @@ public class Envios extends javax.swing.JFrame {
         lblNombreContacto = new javax.swing.JLabel();
         btnLimpiarNombreC = new javax.swing.JButton();
         btnLimpiarMovilC = new javax.swing.JButton();
-        comboAñadirAlGrupo = new javax.swing.JComboBox<>();
         jSeparator2 = new javax.swing.JSeparator();
         btnEscribirContacto = new javax.swing.JButton();
         btnEscribirGrupo = new javax.swing.JButton();
@@ -144,6 +142,10 @@ public class Envios extends javax.swing.JFrame {
         btnOrdenarPaisA = new javax.swing.JButton();
         btnOrdenarPaisD = new javax.swing.JButton();
         btnDesordenar = new javax.swing.JButton();
+        jInternalFrame1 = new javax.swing.JInternalFrame();
+        btnAñadirAlGrupo = new javax.swing.JButton();
+        comboAñadirAlGrupo = new javax.swing.JComboBox<>();
+        btnEliminarDelGrupo = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -634,14 +636,6 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnAñadirAlGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_user.jpg")); // NOI18N
-        btnAñadirAlGrupo.setText("Añadir contacto al grupo");
-        btnAñadirAlGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAñadirAlGrupoMouseClicked(evt);
-            }
-        });
-
         IFContactos.setTitle("Contacto");
         IFContactos.setVisible(true);
 
@@ -697,7 +691,12 @@ public class Envios extends javax.swing.JFrame {
         IFContactos.getContentPane().setLayout(IFContactosLayout);
         IFContactosLayout.setHorizontalGroup(
             IFContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, IFContactosLayout.createSequentialGroup()
+            .addGroup(IFContactosLayout.createSequentialGroup()
+                .addComponent(btnAñadirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEliminarContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+            .addGroup(IFContactosLayout.createSequentialGroup()
                 .addComponent(lblNombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -713,13 +712,7 @@ public class Envios extends javax.swing.JFrame {
                 .addComponent(lblPais)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboPais, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
-            .addGroup(IFContactosLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(btnAñadirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(211, 211, 211)
-                .addComponent(btnEliminarContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         IFContactosLayout.setVerticalGroup(
             IFContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -740,6 +733,8 @@ public class Envios extends javax.swing.JFrame {
                     .addComponent(btnAñadirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
         );
+
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         btnEscribirContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_envios.jpg")); // NOI18N
         btnEscribirContacto.setText("Escribir al contacto");
@@ -801,6 +796,49 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        jInternalFrame1.setTitle("Grupo");
+        jInternalFrame1.setVisible(true);
+
+        btnAñadirAlGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_user.jpg")); // NOI18N
+        btnAñadirAlGrupo.setText("Añadir contacto al grupo:");
+        btnAñadirAlGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAñadirAlGrupoMouseClicked(evt);
+            }
+        });
+
+        btnEliminarDelGrupo.setForeground(new java.awt.Color(204, 0, 0));
+        btnEliminarDelGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_echarcon.jpg")); // NOI18N
+        btnEliminarDelGrupo.setText("Echar contacto del grupo");
+        btnEliminarDelGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarDelGrupoMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addComponent(btnAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(comboAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEliminarDelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarDelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5))
+        );
+
         javax.swing.GroupLayout panelContactosLayout = new javax.swing.GroupLayout(panelContactos);
         panelContactos.setLayout(panelContactosLayout);
         panelContactosLayout.setHorizontalGroup(
@@ -808,23 +846,11 @@ public class Envios extends javax.swing.JFrame {
             .addGroup(panelContactosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelContactosLayout.createSequentialGroup()
-                        .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContactosLayout.createSequentialGroup()
                         .addComponent(IFContactos)
                         .addContainerGap())
                     .addGroup(panelContactosLayout.createSequentialGroup()
-                        .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContactosLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(comboAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(scrollContactos))
+                        .addComponent(scrollContactos)
                         .addContainerGap())
                     .addGroup(panelContactosLayout.createSequentialGroup()
                         .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -839,7 +865,15 @@ public class Envios extends javax.swing.JFrame {
                                 .addComponent(comboElegirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelContactosLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(99, 99, 99)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90))))
             .addGroup(panelContactosLayout.createSequentialGroup()
                 .addGap(86, 86, 86)
                 .addComponent(btnOrdenarMovilA, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -854,6 +888,10 @@ public class Envios extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnOrdenarPaisD, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(81, 81, 81))
+            .addGroup(panelContactosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jInternalFrame1)
+                .addContainerGap())
         );
         panelContactosLayout.setVerticalGroup(
             panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -878,19 +916,22 @@ public class Envios extends javax.swing.JFrame {
                     .addComponent(btnOrdenarPaisA, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnOrdenarPaisD))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollContactos, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IFContactos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelContactosLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelContactosLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(panelContactosLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -900,7 +941,7 @@ public class Envios extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TPEscribirSms, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(TPEscribirSms, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1140,6 +1181,10 @@ public class Envios extends javax.swing.JFrame {
     private void btnAñadirAlGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirAlGrupoMouseClicked
         añadirAlGrupoSeleccionado(comboAñadirAlGrupo.getSelectedItem().toString());
     }//GEN-LAST:event_btnAñadirAlGrupoMouseClicked
+
+    private void btnEliminarDelGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarDelGrupoMouseClicked
+        echarContactoDeGrupo();
+    }//GEN-LAST:event_btnEliminarDelGrupoMouseClicked
     /*
     *
     *
@@ -1308,6 +1353,11 @@ public class Envios extends javax.swing.JFrame {
             Connection c = null;
             Statement stmt = null;
             DefaultTableModel modelo = (DefaultTableModel) tablaContactos.getModel();
+            for (int i = 0; i < tablaContactos.getRowCount(); i++) {
+                modelo.removeRow(i);
+                i -= 1;
+            }
+            
             try {
                 Class.forName("org.sqlite.JDBC");
                 c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
@@ -1993,6 +2043,40 @@ public class Envios extends javax.swing.JFrame {
         }
         return true;
     }
+    public static void echarContactoDeGrupo(){
+        String auxGrupo=comboElegirGrupo.getSelectedItem().toString();
+        String auxGrupoSQL=adaptarNombreG(auxGrupo);
+        String auxMovilC=(String) tablaContactos.getValueAt(tablaContactos.getSelectedRow(), 0);
+        String auxNombreC=(String) tablaContactos.getValueAt(tablaContactos.getSelectedRow(), 1);
+        if(!"Todos".equals(auxGrupo)){
+            int yesNoButton=JOptionPane.YES_NO_OPTION;
+            int returnVal=JOptionPane.showConfirmDialog(null,
+                    "Estas seguro de querer echar a "+auxNombreC+" de "+auxGrupo+"?", "¡CUIDADO!", yesNoButton);
+            if(returnVal==JOptionPane.YES_OPTION){
+                try {
+                    Connection c=null;
+                    Statement stmt=null;
+                    Class.forName("org.sqlite.JDBC");
+                    c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+                    c.setAutoCommit(false);
+                    stmt=c.createStatement();
+                    String sql="DELETE FROM "+auxGrupoSQL+" WHERE movilc='"+auxMovilC+"';";
+                    stmt.executeUpdate(sql);
+                    stmt.close();
+                    c.commit();
+                    c.close();
+                    mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
+                    JOptionPane.showMessageDialog(null,auxNombreC+" ha sido echado de "+auxGrupo);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No se puede echar a nadie de \"Todos\",si quieres puedes eliminarlo.");
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -2046,6 +2130,7 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JButton btnDesordenar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnEliminarContacto;
+    private javax.swing.JButton btnEliminarDelGrupo;
     private javax.swing.JButton btnEliminarMoviles;
     private javax.swing.JButton btnEliminarTexto;
     public static javax.swing.JButton btnEnviar;
@@ -2069,6 +2154,7 @@ public class Envios extends javax.swing.JFrame {
     public static javax.swing.JComboBox<String> comboSegEnvio;
     public static com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JScrollPane jScrollPaneMoviles;
     private javax.swing.JScrollPane jScrollPaneTexto;
     private javax.swing.JSeparator jSeparator1;
