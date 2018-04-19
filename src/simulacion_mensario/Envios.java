@@ -28,12 +28,15 @@ import static simulacion_mensario.CrearGrupo.*;
  * @author adrys
  */
 public class Envios extends javax.swing.JFrame {
-
+    
+    
     public static final String alfabetoRemitente = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ";
     public static final String alfabetoGSM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÄÖÜÉØÅÆÑÇäöüàèìòùéøåæñ§ßΓ∆ΘΛΞΠΣΦΨΩ .,'?!_:;\"¿¡+-*/=\\<>()[]{}^~|@%#&¤$£€¥\n\r";
     public static ApiResponseBean apiResponse = null;
     public static ApiResponseBean apiResponseSaldo = null;
     public static SemApi semApi;
+    public static String auxComprobarGrupo="Todos";
+
 
     /**
      * Creates new form Envios
@@ -78,7 +81,6 @@ public class Envios extends javax.swing.JFrame {
         jScrollPaneMoviles = new javax.swing.JScrollPane();
         txtAreaMoviles = new javax.swing.JTextArea();
         lblMovilesInsertadosName = new javax.swing.JLabel();
-        btnAñadirMovil = new javax.swing.JButton();
         btnEliminarMoviles = new javax.swing.JButton();
         lblMovilesInsertados = new javax.swing.JLabel();
         IFMensaje = new javax.swing.JInternalFrame();
@@ -168,6 +170,7 @@ public class Envios extends javax.swing.JFrame {
         TPEscribirSms.setOpaque(true);
         TPEscribirSms.setPreferredSize(new java.awt.Dimension(710, 777));
 
+        panelEnvios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panelEnvios.setPreferredSize(new java.awt.Dimension(705, 777));
 
         lblNombreUsr.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -188,19 +191,15 @@ public class Envios extends javax.swing.JFrame {
 
         txtAreaMoviles.setColumns(20);
         txtAreaMoviles.setRows(5);
+        txtAreaMoviles.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAreaMovilesKeyTyped(evt);
+            }
+        });
         jScrollPaneMoviles.setViewportView(txtAreaMoviles);
 
         lblMovilesInsertadosName.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMovilesInsertadosName.setText("Número de moviles insertados:");
-
-        btnAñadirMovil.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
-        btnAñadirMovil.setText("Añadir movil");
-        btnAñadirMovil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAñadirMovil.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAñadirMovilMouseClicked(evt);
-            }
-        });
 
         btnEliminarMoviles.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
         btnEliminarMoviles.setText("Limpiar texto");
@@ -224,8 +223,6 @@ public class Envios extends javax.swing.JFrame {
                         .addGap(5, 5, 5)
                         .addComponent(lblMovilesInsertados, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAñadirMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(btnEliminarMoviles, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5))
                     .addGroup(IFDestinatarioLayout.createSequentialGroup()
@@ -242,9 +239,7 @@ public class Envios extends javax.swing.JFrame {
                 .addGroup(IFDestinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblMovilesInsertadosName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMovilesInsertados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(IFDestinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAñadirMovil)
-                        .addComponent(btnEliminarMoviles)))
+                    .addComponent(btnEliminarMoviles))
                 .addGap(5, 5, 5))
         );
 
@@ -314,6 +309,7 @@ public class Envios extends javax.swing.JFrame {
 
         CheckEnvioProgramado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         CheckEnvioProgramado.setText("Envio programado");
+        CheckEnvioProgramado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lblHoraEnvio.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblHoraEnvio.setText("Hora de envio:");
@@ -412,7 +408,10 @@ public class Envios extends javax.swing.JFrame {
 
         TPEscribirSms.addTab("Enviar", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_envios.jpg"), panelEnvios); // NOI18N
 
+        panelLicencias.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panelLicencias.setPreferredSize(new java.awt.Dimension(705, 777));
+
+        scrollTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         tablaLicencias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -430,6 +429,7 @@ public class Envios extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaLicencias.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tablaLicencias.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaLicenciasMouseClicked(evt);
@@ -451,6 +451,7 @@ public class Envios extends javax.swing.JFrame {
 
         btnAñadirLicencia.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
         btnAñadirLicencia.setText("Añadir licencia");
+        btnAñadirLicencia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAñadirLicencia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAñadirLicenciaMouseClicked(evt);
@@ -459,6 +460,7 @@ public class Envios extends javax.swing.JFrame {
 
         btnBuscarLicencia.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_lupa.jpg")); // NOI18N
         btnBuscarLicencia.setText("Buscar");
+        btnBuscarLicencia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarLicencia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnBuscarLicenciaMouseClicked(evt);
@@ -467,6 +469,7 @@ public class Envios extends javax.swing.JFrame {
 
         btnLimpiar.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
         btnLimpiar.setText("Limpiar campos");
+        btnLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLimpiarMouseClicked(evt);
@@ -485,6 +488,7 @@ public class Envios extends javax.swing.JFrame {
         btnEliminar.setForeground(new java.awt.Color(255, 0, 0));
         btnEliminar.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\papelera.jpg")); // NOI18N
         btnEliminar.setText("Eliminar licencia");
+        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarMouseClicked(evt);
@@ -622,6 +626,7 @@ public class Envios extends javax.swing.JFrame {
         btnBorrarGrupo.setForeground(new java.awt.Color(204, 0, 0));
         btnBorrarGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\papelera.jpg")); // NOI18N
         btnBorrarGrupo.setText("Eliminar grupo");
+        btnBorrarGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBorrarGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnBorrarGrupoMouseClicked(evt);
@@ -630,6 +635,7 @@ public class Envios extends javax.swing.JFrame {
 
         btnCrearGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
         btnCrearGrupo.setText("Crear grupo");
+        btnCrearGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCrearGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCrearGrupoMouseClicked(evt);
@@ -641,6 +647,7 @@ public class Envios extends javax.swing.JFrame {
 
         btnAñadirContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_user.jpg")); // NOI18N
         btnAñadirContacto.setText("Añadir contacto");
+        btnAñadirContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAñadirContacto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAñadirContactoMouseClicked(evt);
@@ -650,6 +657,7 @@ public class Envios extends javax.swing.JFrame {
         btnEliminarContacto.setForeground(new java.awt.Color(204, 0, 0));
         btnEliminarContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\papelera.jpg")); // NOI18N
         btnEliminarContacto.setText("Eliminar contacto");
+        btnEliminarContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarContacto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarContactoMouseClicked(evt);
@@ -674,6 +682,7 @@ public class Envios extends javax.swing.JFrame {
         lblNombreContacto.setText("Nombre:");
 
         btnLimpiarNombreC.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
+        btnLimpiarNombreC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLimpiarNombreC.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLimpiarNombreCMouseClicked(evt);
@@ -681,6 +690,7 @@ public class Envios extends javax.swing.JFrame {
         });
 
         btnLimpiarMovilC.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
+        btnLimpiarMovilC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLimpiarMovilC.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLimpiarMovilCMouseClicked(evt);
@@ -738,6 +748,7 @@ public class Envios extends javax.swing.JFrame {
 
         btnEscribirContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_envios.jpg")); // NOI18N
         btnEscribirContacto.setText("Escribir al contacto");
+        btnEscribirContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEscribirContacto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEscribirContactoMouseClicked(evt);
@@ -746,8 +757,15 @@ public class Envios extends javax.swing.JFrame {
 
         btnEscribirGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_envios.jpg")); // NOI18N
         btnEscribirGrupo.setText("Escribir a todo el grupo");
+        btnEscribirGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEscribirGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEscribirGrupoMouseClicked(evt);
+            }
+        });
 
         btnOrdenarMovilA.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\orderDown.jpg")); // NOI18N
+        btnOrdenarMovilA.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnOrdenarMovilA.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnOrdenarMovilAMouseClicked(evt);
@@ -755,6 +773,7 @@ public class Envios extends javax.swing.JFrame {
         });
 
         btnOrdenarMovilD.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\orderUp.jpg")); // NOI18N
+        btnOrdenarMovilD.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnOrdenarMovilD.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnOrdenarMovilDMouseClicked(evt);
@@ -762,6 +781,7 @@ public class Envios extends javax.swing.JFrame {
         });
 
         btnOrdenarNombreA.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\orderDown.jpg")); // NOI18N
+        btnOrdenarNombreA.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnOrdenarNombreA.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnOrdenarNombreAMouseClicked(evt);
@@ -769,6 +789,7 @@ public class Envios extends javax.swing.JFrame {
         });
 
         btnOrdenarNombreD.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\orderUp.jpg")); // NOI18N
+        btnOrdenarNombreD.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnOrdenarNombreD.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnOrdenarNombreDMouseClicked(evt);
@@ -776,6 +797,7 @@ public class Envios extends javax.swing.JFrame {
         });
 
         btnOrdenarPaisA.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\orderDown.jpg")); // NOI18N
+        btnOrdenarPaisA.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnOrdenarPaisA.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnOrdenarPaisAMouseClicked(evt);
@@ -783,6 +805,7 @@ public class Envios extends javax.swing.JFrame {
         });
 
         btnOrdenarPaisD.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\orderUp.jpg")); // NOI18N
+        btnOrdenarPaisD.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnOrdenarPaisD.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnOrdenarPaisDMouseClicked(evt);
@@ -790,6 +813,7 @@ public class Envios extends javax.swing.JFrame {
         });
 
         btnDesordenar.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
+        btnDesordenar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDesordenar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnDesordenarMouseClicked(evt);
@@ -801,6 +825,7 @@ public class Envios extends javax.swing.JFrame {
 
         btnAñadirAlGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_user.jpg")); // NOI18N
         btnAñadirAlGrupo.setText("Añadir contacto al grupo:");
+        btnAñadirAlGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAñadirAlGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAñadirAlGrupoMouseClicked(evt);
@@ -810,6 +835,7 @@ public class Envios extends javax.swing.JFrame {
         btnEliminarDelGrupo.setForeground(new java.awt.Color(204, 0, 0));
         btnEliminarDelGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_echarcon.jpg")); // NOI18N
         btnEliminarDelGrupo.setText("Echar contacto del grupo");
+        btnEliminarDelGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarDelGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarDelGrupoMouseClicked(evt);
@@ -961,10 +987,6 @@ public class Envios extends javax.swing.JFrame {
         txtAreaMensaje.setText("");
     }//GEN-LAST:event_btnEliminarTextoMouseClicked
 
-    private void btnAñadirMovilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirMovilMouseClicked
-        txtAreaMoviles.setText("678111234," + txtAreaMoviles.getText());
-    }//GEN-LAST:event_btnAñadirMovilMouseClicked
-
     private void btnEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMouseClicked
         if ((comprobarGSM(cambiarCaracteres(txtAreaMensaje.getText())) == true) && (comprobarRemitente(txtNombreRemitente.getText()) == true)) {
             try {
@@ -1014,7 +1036,7 @@ public class Envios extends javax.swing.JFrame {
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         int yesNoButton = JOptionPane.YES_NO_OPTION;
         int returnVal = JOptionPane.showConfirmDialog(null,
-                "La licencia sera borrada de forma permanente,¿estas seguro de eliminarla?", "¡CUIDADO!", yesNoButton);
+                "La licencia será borrada de forma permanente,¿estás seguro de eliminarla?", "¡CUIDADO!", yesNoButton);
         if (returnVal == JOptionPane.YES_OPTION) {
             eliminarLicencia();
             limpiarTxt();
@@ -1053,17 +1075,14 @@ public class Envios extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "La licencia no existe");
             }
         } catch (Exception ex) {
+            System.err.println("ERROR EN BTN UTILIZAR LICENCIA");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_btnUtilizarLicenciaMouseClicked
 
     private void btnAñadirContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirContactoMouseClicked
-        if ((txtMovilContacto.getText().startsWith("6") || txtMovilContacto.getText().startsWith("7")) && txtMovilContacto.getText().length() == 9) {  
             añadirContacto(lblNombreUsr.getText());
-            } else {
-                JOptionPane.showMessageDialog(null, "El telefono es incorrecto");
-            }
     }//GEN-LAST:event_btnAñadirContactoMouseClicked
 
     private void btnLimpiarNombreCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarNombreCMouseClicked
@@ -1144,7 +1163,7 @@ public class Envios extends javax.swing.JFrame {
     private void btnEliminarContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarContactoMouseClicked
         int yesNoButton = JOptionPane.YES_NO_OPTION;
         int returnVal = JOptionPane.showConfirmDialog(null,
-                "El contacto sera borrado de forma permanente,¿estas seguro de eliminarlo?", "¡CUIDADO!", yesNoButton);
+                "El contacto será borrado de forma permanente,¿estás seguro de eliminarlo?", "¡CUIDADO!", yesNoButton);
         if (returnVal == JOptionPane.YES_OPTION) {
             eliminarContacto();
             txtNombreContacto.setText("");
@@ -1161,6 +1180,7 @@ public class Envios extends javax.swing.JFrame {
 
     private void btnEscribirContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEscribirContactoMouseClicked
         txtAreaMoviles.setText(juntarMovilPrefijo(txtMovilContacto.getText())+txtAreaMoviles.getText());
+        JOptionPane.showMessageDialog(null,"El teléfono se ha escrito en la pestaña \"Enviar\"");
     }//GEN-LAST:event_btnEscribirContactoMouseClicked
 
     private void btnCrearGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearGrupoMouseClicked
@@ -1171,7 +1191,7 @@ public class Envios extends javax.swing.JFrame {
     private void btnBorrarGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarGrupoMouseClicked
         int yesNoButton =JOptionPane.YES_NO_OPTION;
         int returnVal= JOptionPane.showConfirmDialog(null, 
-                "El grupo sera borrado de forma permanente,¿estas seguro de eliminarlo?", "¡CUIDADO!", yesNoButton);
+                "El grupo será borrado de forma permanente,¿estás seguro de eliminarlo?", "¡CUIDADO!", yesNoButton);
         if (returnVal==JOptionPane.YES_OPTION){
             borrarGrupo();
         }
@@ -1185,6 +1205,18 @@ public class Envios extends javax.swing.JFrame {
     private void btnEliminarDelGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarDelGrupoMouseClicked
         echarContactoDeGrupo();
     }//GEN-LAST:event_btnEliminarDelGrupoMouseClicked
+
+    private void btnEscribirGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEscribirGrupoMouseClicked
+        escribirATodoElGrupo();
+        
+    }//GEN-LAST:event_btnEscribirGrupoMouseClicked
+
+    private void txtAreaMovilesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreaMovilesKeyTyped
+        char enter = evt.getKeyChar();
+        if((Character.isLetter(enter))){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtAreaMovilesKeyTyped
     /*
     *
     *
@@ -1253,6 +1285,7 @@ public class Envios extends javax.swing.JFrame {
     }
 
     public static void comprobarCheck() {
+       try{
         if (CheckEnvioProgramado.isSelected() == false) {
             comboHoraEnvio.setEnabled(false);
             comboMinEnvio.setEnabled(false);
@@ -1264,6 +1297,9 @@ public class Envios extends javax.swing.JFrame {
             comboSegEnvio.setEnabled(true);
             jCalendar1.setEnabled(true);
         }
+       }catch(Exception e){
+           System.err.println("ERROR EN REFRESCAR SALDO");
+       }
     }
 
     public static void refrescarSaldo() {
@@ -1271,6 +1307,7 @@ public class Envios extends javax.swing.JFrame {
             apiResponseSaldo = semApi.executeBalanceEnquiry();
             lblSaldo.setText("" + apiResponseSaldo.getQuantity());
         } catch (Exception ex) {
+            System.err.println("ERROR EN REFRESCAR SALDO");
             Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1291,8 +1328,10 @@ public class Envios extends javax.swing.JFrame {
             stmt.close();
             c.close();
         } catch (ClassNotFoundException ex) {
+            System.err.println("ERROR EN CREAR TABALA LICENCIAS");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            System.err.println("ERROR EN CREAR TABLA LICENCIAS");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1313,8 +1352,10 @@ public class Envios extends javax.swing.JFrame {
             stmt.close();
             c.close();
         } catch (SQLException ex) {
+            System.err.println("ERROR EN CREAR TABLA CONTACTOS");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
+            System.err.println("ERROR EN CREAR TABLA CONTACTOS");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1322,8 +1363,9 @@ public class Envios extends javax.swing.JFrame {
     public static void mostrarDatosTLicencias() {
         Connection c = null;
         Statement stmt = null;
+        try{
         DefaultTableModel modelo = (DefaultTableModel) tablaLicencias.getModel();
-        try {
+        
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
             c.setAutoCommit(false);
@@ -1343,6 +1385,7 @@ public class Envios extends javax.swing.JFrame {
             stmt.close();
             c.close();
         } catch (Exception e) {
+            System.err.println("ERROR EN MOSTRAR DATOS T LICENCIAS");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
@@ -1352,13 +1395,12 @@ public class Envios extends javax.swing.JFrame {
         if (!"".equals(nLicencia)) {
             Connection c = null;
             Statement stmt = null;
-            DefaultTableModel modelo = (DefaultTableModel) tablaContactos.getModel();
-            for (int i = 0; i < tablaContactos.getRowCount(); i++) {
-                modelo.removeRow(i);
-                i -= 1;
-            }
-            
-            try {
+            try{
+                DefaultTableModel modelo = (DefaultTableModel) tablaContactos.getModel();
+                for (int i = 0; i < tablaContactos.getRowCount(); i++) {
+                    modelo.removeRow(i);
+                    i -= 1;
+                }
                 Class.forName("org.sqlite.JDBC");
                 c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
                 c.setAutoCommit(false);
@@ -1378,6 +1420,7 @@ public class Envios extends javax.swing.JFrame {
                 c.close();
 
             } catch (Exception ex) {
+                System.err.println("ERROR EN MOSTRAR DATOS T CONTACTOS");
                 Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
                 System.exit(0);
             }
@@ -1388,8 +1431,9 @@ public class Envios extends javax.swing.JFrame {
         if (!"".equals(nLicencia)) {
             Connection c = null;
             Statement stmt = null;
-            DefaultTableModel modelo = (DefaultTableModel) tablaContactos.getModel();
-            try {
+            try{
+                DefaultTableModel modelo = (DefaultTableModel) tablaContactos.getModel();
+            
                 Class.forName("org.sqlite.JDBC");
                 c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
                 c.setAutoCommit(false);
@@ -1410,6 +1454,7 @@ public class Envios extends javax.swing.JFrame {
                 c.close();
 
             } catch (Exception ex) {
+                System.err.println("ERROR EN MOSTRAR DATOS T CONTACTOS ORDENADOS");
                 Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
                 System.exit(0);
             }
@@ -1459,6 +1504,7 @@ public class Envios extends javax.swing.JFrame {
             mostrarDatosTLicencias();
             JOptionPane.showMessageDialog(null, "La licencia se añadió correctamente");
         } catch (Exception e) {
+            System.err.println("ERROR EN AÑADIR LICENCIA");
             JOptionPane.showMessageDialog(null, "No se pudo hacer la inserción debido a que 1 o mas datos ya existen,"
                     + "\nasegúrese de que ingresó los datos correctamente");
         }
@@ -1492,6 +1538,7 @@ public class Envios extends javax.swing.JFrame {
             mostrarDatosTContactos(CrearGrupo.adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), nLicencia);
             JOptionPane.showMessageDialog(null, "El contacto se añadió correctamente");
         } catch (Exception ex) {
+            System.err.println("ERROR EN AÑADIR CONTACTO");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1942,6 +1989,7 @@ public class Envios extends javax.swing.JFrame {
             }else
                 JOptionPane.showMessageDialog(null,"Este teléfono no se encuentra registrado agréguelo primero");
         } catch (Exception ex) {
+            System.err.println("ERROR EN AJUNTAR MOVIL PREFIJO");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
@@ -1967,6 +2015,7 @@ public class Envios extends javax.swing.JFrame {
                 c.close();
 
             } catch (Exception ex) {
+                System.err.println("ERROR EN BORRAR GRUPO");
                 Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
@@ -1988,6 +2037,7 @@ public class Envios extends javax.swing.JFrame {
                 return true;
             }
         } catch (Exception ex) {
+            System.err.println("ERROR EN COMPROBAR REGISTRO");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
@@ -2005,13 +2055,11 @@ public class Envios extends javax.swing.JFrame {
                     String sql="INSERT INTO "+adaptarNombreG(grupoS)+" VALUES('"+txtMovilContacto.getText()+"')";
                     stmt.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null,"El contacto se ha agregado al grupo "+grupoS+" con exito");
-                    stmt.close();
                     c.commit();
-                    c.close();
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+                    
                 } catch (SQLException ex) {
-                    Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+                    
                 }
             }else{
                 JOptionPane.showMessageDialog(null,txtNombreContacto.getText()+" ya está en "+
@@ -2037,8 +2085,10 @@ public class Envios extends javax.swing.JFrame {
                 return false;
             }  
         } catch (ClassNotFoundException ex) {
+            System.err.println("ERROR EN COMPROBAR SI ESTA EN NUEVO GRUPO");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            System.err.println("ERROR EN COMPROBAR SI ESTA EN NUEVO GRUPO");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
         return true;
@@ -2068,13 +2118,41 @@ public class Envios extends javax.swing.JFrame {
                     mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
                     JOptionPane.showMessageDialog(null,auxNombreC+" ha sido echado de "+auxGrupo);
                 } catch (ClassNotFoundException ex) {
+                    System.err.println("ERROR EN ECHAR CONTACTO DE GRUPO");
                     Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
+                    System.err.println("ERROR EN ECHAR CONTACTO DE GRUPO");
                     Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }else{
             JOptionPane.showMessageDialog(null, "No se puede echar a nadie de \"Todos\",si quieres puedes eliminarlo.");
+        }
+    }
+    public static void escribirATodoElGrupo(){
+        String auxGrupo=comboElegirGrupo.getSelectedItem().toString();
+        String auxGrupoSQL=CrearGrupo.adaptarNombreG(auxGrupo);
+        String nLicencia=lblNombreUsr.getText();
+        try {
+            Connection c=null;
+            Statement stmt=null;
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+            c.setAutoCommit(false);
+            stmt=c.createStatement();
+            String sql=consultarSegunGrupo(1, "", "", auxGrupoSQL, nLicencia);
+            ResultSet rs=stmt.executeQuery(sql);
+            while(rs.next()){
+                String movil=rs.getString("movilc");
+                txtAreaMoviles.setText(juntarMovilPrefijo(movil)+txtAreaMoviles.getText());
+            }
+            JOptionPane.showMessageDialog(null,"Se ha escrito el telefono de todo el grupo \""+auxGrupo+"\" en la pestaña \"Enviar\"");
+        } catch (ClassNotFoundException ex) {
+            System.err.println("ERROR EN ESCRIBIR A TODO EL GRUPO");
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            System.err.println("ERROR EN ESCRIBIR A TODO EL GRUPO");
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -2106,10 +2184,10 @@ public class Envios extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Envios().setVisible(true);
-                comprobarCheck();
             }
         });
     }
@@ -2123,7 +2201,6 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JButton btnAñadirAlGrupo;
     public static javax.swing.JButton btnAñadirContacto;
     private javax.swing.JButton btnAñadirLicencia;
-    private javax.swing.JButton btnAñadirMovil;
     private javax.swing.JButton btnBorrarGrupo;
     private javax.swing.JButton btnBuscarLicencia;
     private javax.swing.JButton btnCrearGrupo;

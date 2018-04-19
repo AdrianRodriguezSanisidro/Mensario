@@ -21,15 +21,15 @@ public class Hilo extends Thread {
     
 
     public void run() {
-        while (x == 2) {
-            validarTelefonos();
-            lblNumCaracteres.setText("" + txtAreaMensaje.getText().length());
-            comprobarCheck();
-            lblMovilesInsertados.setText(comprobarTelefonos());
-            comprobarNumMensajes();
-            comprobarCambioDeGrupo();
-            comprobarMovilPais(calcularLargoTelf(comboPais.getSelectedItem().toString()));
-        }
+            while (x == 2) {
+                //validarTelefonos();
+                lblNumCaracteres.setText("" + txtAreaMensaje.getText().length());
+                comprobarCheck();
+                lblMovilesInsertados.setText(comprobarTelefonos());
+                comprobarNumMensajes();
+                //comprobarCambioDeGrupo();
+                comprobarMovilPais(calcularLargoTelf(comboPais.getSelectedItem().toString()));
+            }
     }
 
     public void comprobarNumMensajes() {
@@ -83,9 +83,27 @@ public class Hilo extends Thread {
         }
     }
     public static void comprobarCambioDeGrupo(){
-        if(Envios.auxComprobarGrupo!=comboElegirGrupo.getSelectedItem().toString()){
-            mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
-            Envios.auxComprobarGrupo=comboElegirGrupo.getSelectedItem().toString();
+        
+        try{
+            String aux=comboElegirGrupo.getSelectedItem().toString();
+            String aux2=Envios.auxComprobarGrupo;
+            if(aux!=null){
+                if(Envios.auxComprobarGrupo==null){
+                    Envios.auxComprobarGrupo="Todos";
+                }else{
+                    if(Envios.auxComprobarGrupo!=comboElegirGrupo.getSelectedItem().toString()){
+                        try {
+                            Thread.sleep(300);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
+                        Envios.auxComprobarGrupo=comboElegirGrupo.getSelectedItem().toString();
+                    }
+                }
+            }
+        }catch(NullPointerException ex){
+
         }
     }
     
