@@ -29,6 +29,8 @@ public class Hilo extends Thread {
                 comprobarNumMensajes();
                 comprobarCambioDeGrupo();
                 comprobarMovilPais(calcularLargoTelf(comboPais.getSelectedItem().toString()));
+                vaciarTextoPlantilla();
+                
             }
     }
 
@@ -39,6 +41,11 @@ public class Hilo extends Thread {
             int cantCar = txtAreaMensaje.getText().length() - 161;
             int resultado = (cantCar / 153);
             lblNumMensajes.setText("" + (resultado + 2));
+        }
+    }
+    public void vaciarTextoPlantilla(){
+        if(tablaPlantillas.getSelectedRow()==-1){
+            txtAreaPlantilla.setText("");
         }
     }
 
