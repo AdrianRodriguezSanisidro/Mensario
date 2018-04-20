@@ -126,12 +126,12 @@ public class CrearGrupo extends javax.swing.JFrame {
                 c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
                 c.setAutoCommit(false);
                 stmt=c.createStatement();
-                String sql2="SELECT * FROM contactos WHERE licenciac='LSTD04182162B5196645';";
+                String sql2="SELECT * FROM plantillas;";
                 
                 String sql="SELECT * FROM contactos WHERE licenciac='LSTD04182162B5196645' and movilc=(SELECT * FROM familia WHERE contactos.movilc=familia.movilc);";
-                ResultSet rs=stmt.executeQuery(sql);
+                ResultSet rs=stmt.executeQuery(sql2);
                 while(rs.next()){
-                    System.out.println(rs.getString(1));
+                    System.out.println(rs.getString(1)+"    ,   "+rs.getString(2)+"    ,   "+rs.getString(3));
                 }
                 stmt.close();
                 c.commit();
@@ -192,14 +192,15 @@ public class CrearGrupo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelCrearGrupo = new javax.swing.JPanel();
         lblNuevoGrupo = new javax.swing.JLabel();
         txtNuevoGrupo = new javax.swing.JTextField();
         btnAceptarNuevoGrupo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Crear grupo");
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        panelCrearGrupo.setBackground(new java.awt.Color(204, 204, 204));
 
         lblNuevoGrupo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblNuevoGrupo.setText("Nombre del nuevo grupo:");
@@ -218,26 +219,26 @@ public class CrearGrupo extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelCrearGrupoLayout = new javax.swing.GroupLayout(panelCrearGrupo);
+        panelCrearGrupo.setLayout(panelCrearGrupoLayout);
+        panelCrearGrupoLayout.setHorizontalGroup(
+            panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCrearGrupoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNuevoGrupo)
                     .addComponent(txtNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
                 .addComponent(btnAceptarNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelCrearGrupoLayout.setVerticalGroup(
+            panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCrearGrupoLayout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnAceptarNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(panelCrearGrupoLayout.createSequentialGroup()
                         .addComponent(lblNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -248,11 +249,11 @@ public class CrearGrupo extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelCrearGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelCrearGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -320,8 +321,8 @@ public class CrearGrupo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptarNuevoGrupo;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblNuevoGrupo;
+    private javax.swing.JPanel panelCrearGrupo;
     public static javax.swing.JTextField txtNuevoGrupo;
     // End of variables declaration//GEN-END:variables
 }
