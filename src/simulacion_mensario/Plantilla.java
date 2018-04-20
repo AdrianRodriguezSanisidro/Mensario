@@ -42,6 +42,8 @@ public class Plantilla extends javax.swing.JFrame {
         Plantilla.textoP=textoP;
         txtNombrePlantilla.setText(nombreP);
         txtAreaEscribirTextoPlantilla.setText(textoP);
+        txtAreaEscribirTextoPlantilla.setLineWrap(true);
+        txtAreaEscribirTextoPlantilla.setWrapStyleWord(true);
     }
 
     /**
@@ -61,10 +63,10 @@ public class Plantilla extends javax.swing.JFrame {
         btnAceptarPlantilla = new javax.swing.JButton();
         btnLimpiarTextoPlantilla = new javax.swing.JButton();
         btnLimpiarNombrePlantilla = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboVariablesPlantilla = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         panelEscribirPlanilla.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -81,12 +83,18 @@ public class Plantilla extends javax.swing.JFrame {
         jScrollPaneEscribirTextoPlantilla.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         txtAreaEscribirTextoPlantilla.setColumns(20);
+        txtAreaEscribirTextoPlantilla.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         txtAreaEscribirTextoPlantilla.setRows(5);
         jScrollPaneEscribirTextoPlantilla.setViewportView(txtAreaEscribirTextoPlantilla);
 
         btnAceptarPlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
         btnAceptarPlantilla.setText("Aceptar");
         btnAceptarPlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAceptarPlantilla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAceptarPlantillaMouseClicked(evt);
+            }
+        });
 
         btnLimpiarTextoPlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
         btnLimpiarTextoPlantilla.setText("Limpiar");
@@ -104,9 +112,14 @@ public class Plantilla extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboVariablesPlantilla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "{#Nombre}", "{#País}", "{#Remitente}" }));
 
         jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelEscribirPlanillaLayout = new javax.swing.GroupLayout(panelEscribirPlanilla);
         panelEscribirPlanilla.setLayout(panelEscribirPlanillaLayout);
@@ -126,7 +139,7 @@ public class Plantilla extends javax.swing.JFrame {
                     .addGroup(panelEscribirPlanillaLayout.createSequentialGroup()
                         .addComponent(btnAceptarPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboVariablesPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
@@ -153,7 +166,7 @@ public class Plantilla extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEscribirPlanillaLayout.createSequentialGroup()
                         .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboVariablesPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24))))
         );
 
@@ -187,6 +200,15 @@ public class Plantilla extends javax.swing.JFrame {
         txtNombrePlantilla.setText("");
     }//GEN-LAST:event_btnLimpiarNombrePlantillaMouseClicked
 
+    private void btnAceptarPlantillaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarPlantillaMouseClicked
+        nuevaPlantilla();
+        this.dispose();
+    }//GEN-LAST:event_btnAceptarPlantillaMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        txtAreaEscribirTextoPlantilla.insert(comboVariablesPlantilla.getSelectedItem().toString(), txtAreaEscribirTextoPlantilla.getCaretPosition());
+    }//GEN-LAST:event_jButton1MouseClicked
+
     public static void nuevaPlantilla(){
         if(!"".equals(txtNombrePlantilla.getText())){
             if(eleccion==0){
@@ -197,11 +219,12 @@ public class Plantilla extends javax.swing.JFrame {
                     c=DriverManager.getConnection("jdbc:sqlite:jmensario.db");
                     c.setAutoCommit(false);
                     stmt=c.createStatement();
-                    String sql="INSERT INTO plantillas VALUES('"+txtNombrePlantilla.getText()+"','"+txtAreaEscribirTextoPlantilla.getText()+"','"+Envios.lblNombreUsr+"');";
+                    String sql="INSERT INTO plantillas VALUES('"+txtNombrePlantilla.getText()+"','"+txtAreaEscribirTextoPlantilla.getText()+"','"+Envios.lblNombreUsr.getText()+"');";
                     stmt.executeUpdate(sql);
                     stmt.close();
                     c.commit();
                     c.close();
+                    mostrarTablaPlantillas();
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(Plantilla.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
@@ -216,7 +239,7 @@ public class Plantilla extends javax.swing.JFrame {
                     c.setAutoCommit(false);
                     stmt=c.createStatement();
                     String sql="INSERT INTO plantillas VALUES('"+txtNombrePlantilla.getText()+"','"+txtAreaEscribirTextoPlantilla.getText()+"','"+Envios.lblNombreUsr.getText()+"');";
-                    borrarPlantilla();
+                    borrarPlantilla(nombreP);
                     if(auxBorrado==true){
                         stmt.executeUpdate(sql);
                         auxBorrado=false;
@@ -224,6 +247,7 @@ public class Plantilla extends javax.swing.JFrame {
                     stmt.close();
                     c.commit();
                     c.close();
+                    mostrarTablaPlantillas();
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(Plantilla.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
@@ -234,7 +258,7 @@ public class Plantilla extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"El nombre no puede estar en blanco","¡ATENCIÓN!",JOptionPane.ERROR_MESSAGE);
         }
     }
-    public static void borrarPlantilla(){
+    public static void borrarPlantilla(String plantilla){
         try {
                 Connection c=null;
                 Statement stmt=null;
@@ -242,7 +266,7 @@ public class Plantilla extends javax.swing.JFrame {
                 c=DriverManager.getConnection("jdbc:sqlite:jmensario.db");
                 c.setAutoCommit(false);
                 stmt=c.createStatement();
-                String sql="DELETE FROM plantillas WHERE nPlantilla='"+nombreP+"';";
+                String sql="DELETE FROM plantillas WHERE nPlantilla='"+plantilla+"';";
                 stmt.executeUpdate(sql);
                 auxBorrado=true;
                 stmt.close();
@@ -275,7 +299,7 @@ public class Plantilla extends javax.swing.JFrame {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void mostrarTablaLicencias(){
+    public static void mostrarTablaPlantillas(){
         if (!"".equals(Envios.lblNombreUsr)) {
             Connection c = null;
             Statement stmt = null;
@@ -348,8 +372,8 @@ public class Plantilla extends javax.swing.JFrame {
     private javax.swing.JButton btnAceptarPlantilla;
     private javax.swing.JButton btnLimpiarNombrePlantilla;
     private javax.swing.JButton btnLimpiarTextoPlantilla;
+    private javax.swing.JComboBox<String> comboVariablesPlantilla;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPaneEscribirTextoPlantilla;
     private javax.swing.JLabel lblNombrePlantilla;
     private javax.swing.JPanel panelEscribirPlanilla;
