@@ -871,12 +871,8 @@ public class Envios extends javax.swing.JFrame {
             .addGroup(panelContactosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContactosLayout.createSequentialGroup()
-                        .addComponent(IFContactos)
-                        .addContainerGap())
-                    .addGroup(panelContactosLayout.createSequentialGroup()
-                        .addComponent(scrollContactos)
-                        .addContainerGap())
+                    .addComponent(IFContactos, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(scrollContactos)
                     .addGroup(panelContactosLayout.createSequentialGroup()
                         .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelContactosLayout.createSequentialGroup()
@@ -890,15 +886,15 @@ public class Envios extends javax.swing.JFrame {
                                 .addComponent(comboElegirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panelContactosLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
             .addGroup(panelContactosLayout.createSequentialGroup()
                 .addGap(86, 86, 86)
                 .addComponent(btnOrdenarMovilA, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1145,6 +1141,7 @@ public class Envios extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Conectado a la licencia '" + txtLicencia.getText() + "' de " + txtNombre.getText(),"Conectado",JOptionPane.INFORMATION_MESSAGE);
                 limpiarTxt();
                 CrearGrupo.mostrarGruposCombo();
+                Plantilla.mostrarTablaLicencias();
             } else {
                 JOptionPane.showMessageDialog(null, "La licencia no existe","¡ATENCIÓN!",JOptionPane.ERROR_MESSAGE);
             }
@@ -2365,7 +2362,7 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrollTable;
     public static javax.swing.JTable tablaContactos;
     public static javax.swing.JTable tablaLicencias;
-    private javax.swing.JTable tablaPlantillas;
+    public static javax.swing.JTable tablaPlantillas;
     public static javax.swing.JTextArea txtAreaMensaje;
     public static javax.swing.JTextArea txtAreaMoviles;
     private javax.swing.JTextArea txtAreaPlantilla;
