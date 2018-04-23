@@ -35,20 +35,17 @@ public class CrearGrupo extends javax.swing.JFrame {
 
     public static void crearGruposT() {
         try {
-            Connection c = null;
-            Statement stmt = null;
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-            stmt = c.createStatement();
+            conectar();
             String sql = "CREATE TABLE grupos "
-                    + "(nGrupo TEXT PRIMARY KEY NOT NULL"
+                    + "(nGrupo TEXT PRIMARY KEY NOT NULL,"
                     + "nLicencia TEXT);";
+            String sql2="INSERT INTO grupos VALUES('Todos','SYSTEM');";
             stmt.executeUpdate(sql);
-            stmt.close();
-            c.close();
+            c.commit();
+            stmt.executeUpdate(sql2);
+            c.commit();
+            desconectar();
         } catch (SQLException ex) {
-            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -56,23 +53,15 @@ public class CrearGrupo extends javax.swing.JFrame {
     public static void crearNuevoGrupo(String nombreG) {
         if(comprobarNombreG(nombreG)==true){
             try {
-                Connection c = null;
-                Statement stmt = null;
-                Class.forName("org.sqlite.JDBC");
-                c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-                c.setAutoCommit(false);
-                stmt = c.createStatement();
+                conectar();
                 String sql = "CREATE TABLE "+adaptarNombreG(nombreG)+"(movilc TEXT PRIMARY KEY NOT NULL)";
                 stmt.executeUpdate(sql);
                 sql="INSERT INTO grupos VALUES('"+nombreG+"','"+lblNombreUsr.getText()+"');";
                 stmt.executeUpdate(sql);
-                stmt.close();
                 c.commit();
-                c.close();
+                desconectar();
                 mostrarGruposCombo();
             } catch (SQLException ex) {
-                Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
@@ -94,89 +83,80 @@ public class CrearGrupo extends javax.swing.JFrame {
         return sinEspacios;
     }
     public static void mostrarGruposCombo(){
-        if(Envios.lblNombreUsr.getText()!=""){
-            Connection c=null;
-            Statement stmt=null;
             try {
-                Class.forName("org.sqlite.JDBC");
-                c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-                c.setAutoCommit(false);
-                stmt=c.createStatement();
-                String sql="SELECT * FROM grupos WHERE nLicencia='"+lblNombreUsr.getText()+"';";
-                ResultSet rs=stmt.executeQuery(sql);
+                conectar();
+                String sql="SELECT * FROM grupos;";
+                rs=stmt.executeQuery(sql);
                 comboElegirGrupo.removeAllItems();
                 comboAñadirAlGrupo.removeAllItems();
                 while(rs.next()){
                     comboElegirGrupo.addItem(rs.getString("nGrupo"));
                     comboAñadirAlGrupo.addItem(rs.getString("nGrupo"));
                 }
-                stmt.close();
                 c.commit();
-                c.close();
-            } catch (Exception ex) {
+                desconectar();
+            } catch (SQLException ex) {
                 Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
     }
     public static void mostarTodo(){
-        Connection c=null;
-        Statement stmt=null;
             try {
-                Class.forName("org.sqlite.JDBC");
-                c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-                c.setAutoCommit(false);
-                stmt=c.createStatement();
-                String sql2="SELECT * FROM plantillas;";
+                conectar();
+                String sql2="SELECT * FROM contactos;";
                 
-                String sql="SELECT * FROM contactos WHERE licenciac='LSTD04182162B5196645' and movilc=(SELECT * FROM familia WHERE contactos.movilc=familia.movilc);";
-                ResultSet rs=stmt.executeQuery(sql2);
+                String sql="SELECT * FROM contactos WHERE movilc=(SELECT * FROM familia WHERE contactos.movilc=familia.movilc);";
+                rs=stmt.executeQuery(sql2);
                 while(rs.next()){
-                    System.out.println(rs.getString(1)+"    ,   "+rs.getString(2)+"    ,   "+rs.getString(3));
+                    System.out.println(rs.getString(1));
                 }
-                stmt.close();
                 c.commit();
-                c.close();
-            } catch (Exception ex) {
+                desconectar();
+            } catch (SQLException ex) {
                 Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     public static void borrarT(String tabla){
         try {
-            Connection c=null;
-            Statement stmt=null;
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-            c.setAutoCommit(false);
-            stmt=c.createStatement();
+            desconectar();
             String sql="Delete from grupos where nGrupo='"+tabla+"';";
             String sql2="Drop table "+tabla;
             stmt.executeUpdate(sql);
             stmt.executeUpdate(sql2);
             System.out.println("Borrado "+tabla);
-            stmt.close();
             c.commit();
-            c.close();
-            
-        } catch (ClassNotFoundException | SQLException ex) {
+            desconectar();
+        } catch (SQLException ex) {
             Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static void modificarTodos(){
-                try {
-            Connection c=null;
-            Statement stmt=null;
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-            c.setAutoCommit(false);
-            stmt=c.createStatement();
-            String sql="INSERT INTO grupos VALUES('Todos','LSTD04182162B5196645');";
+        try {
+            conectar();
+            String sql="INSERT INTO grupos VALUES('Todos','"+lblNombreUsr.getText()+"');";
             stmt.executeUpdate(sql);
             System.out.println("AÑADIDO todos");
-            stmt.close();
             c.commit();
-            c.close();
+            desconectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void cambiosEnLasTablas(){
+        try {
+            conectar();
+            String sql1="DROP TABLE grupos;";
+            String sql2="DROP TABLE contactos;";
+            stmt.executeUpdate(sql1);
+            System.out.println("Borrada grupos");
+            stmt.executeUpdate(sql2);
+            System.out.println("Borrada contactos");
+            c.commit();
+            desconectar();
+            crearTablaContactos();
+            crearGruposT();
             
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
+            System.err.println("AQUI");
             Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -213,6 +193,7 @@ public class CrearGrupo extends javax.swing.JFrame {
         });
 
         btnAceptarNuevoGrupo.setText("Crear");
+        btnAceptarNuevoGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAceptarNuevoGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAceptarNuevoGrupoMouseClicked(evt);

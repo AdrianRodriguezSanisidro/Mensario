@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import static simulacion_mensario.Envios.tablaPlantillas;
+import static simulacion_mensario.Envios.*;
 
 /**
  *
@@ -106,15 +106,17 @@ public class Plantilla extends javax.swing.JFrame {
         });
 
         btnLimpiarNombrePlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
+        btnLimpiarNombrePlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLimpiarNombrePlantilla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLimpiarNombrePlantillaMouseClicked(evt);
             }
         });
 
-        comboVariablesPlantilla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "{#Nombre}", "{#País}", "{#Remitente}" }));
+        comboVariablesPlantilla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "{#Nombre}", "{#País}", "{#Remitente}", "{#Teléfono}" }));
 
         jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -150,10 +152,11 @@ public class Plantilla extends javax.swing.JFrame {
             panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEscribirPlanillaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombrePlantilla)
-                    .addComponent(txtNombrePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLimpiarNombrePlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLimpiarNombrePlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblNombrePlantilla)
+                        .addComponent(txtNombrePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPaneEscribirTextoPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -213,43 +216,27 @@ public class Plantilla extends javax.swing.JFrame {
         if(!"".equals(txtNombrePlantilla.getText())){
             if(eleccion==0){
                 try {
-                    Connection c=null;
-                    Statement stmt=null;
-                    Class.forName("org.sqlite.JDBC");
-                    c=DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-                    c.setAutoCommit(false);
-                    stmt=c.createStatement();
+                    conectar();
                     String sql="INSERT INTO plantillas VALUES('"+txtNombrePlantilla.getText()+"','"+txtAreaEscribirTextoPlantilla.getText()+"','"+Envios.lblNombreUsr.getText()+"');";
                     stmt.executeUpdate(sql);
-                    stmt.close();
                     c.commit();
-                    c.close();
+                    desconectar();
                     mostrarTablaPlantillas();
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Plantilla.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null,"Ya existe una plantilla con ese nombre","¡ATENCIÓN!",JOptionPane.ERROR_MESSAGE);
                 }
             }else{
                 try {
-                    Connection c=null;
-                    Statement stmt=null;
-                    Class.forName("org.sqlite.JDBC");
-                    c=DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-                    c.setAutoCommit(false);
-                    stmt=c.createStatement();
+                    conectar();
                     String sql="INSERT INTO plantillas VALUES('"+txtNombrePlantilla.getText()+"','"+txtAreaEscribirTextoPlantilla.getText()+"','"+Envios.lblNombreUsr.getText()+"');";
                     borrarPlantilla(nombreP);
                     if(auxBorrado==true){
                         stmt.executeUpdate(sql);
                         auxBorrado=false;
                     }
-                    stmt.close();
                     c.commit();
-                    c.close();
+                    desconectar();
                     mostrarTablaPlantillas();
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Plantilla.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null,"Ya existe una plantilla con ese nombre","¡ATENCIÓN!",JOptionPane.ERROR_MESSAGE);
                 }
@@ -260,20 +247,12 @@ public class Plantilla extends javax.swing.JFrame {
     }
     public static void borrarPlantilla(String plantilla){
         try {
-                Connection c=null;
-                Statement stmt=null;
-                Class.forName("org.sqlite.JDBC");
-                c=DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-                c.setAutoCommit(false);
-                stmt=c.createStatement();
+                conectar();
                 String sql="DELETE FROM plantillas WHERE nPlantilla='"+plantilla+"';";
                 stmt.executeUpdate(sql);
                 auxBorrado=true;
-                stmt.close();
                 c.commit();
-                c.close();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Plantilla.class.getName()).log(Level.SEVERE, null, ex);
+                desconectar();
             } catch (SQLException ex) {
                 Logger.getLogger(Plantilla.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -281,40 +260,31 @@ public class Plantilla extends javax.swing.JFrame {
     
     public static void crearTablaPlantillas(){
         try {
-            Connection c = null;
-            Statement stmt = null;
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-            stmt = c.createStatement();
+            conectar();
             String sql = "CREATE TABLE plantillas "
                     + "(nPlantilla TEXT PRIMARY KEY NOT NULL,"
                     + "tPlantilla TEXT,"
                     + "nLicencia TEXT)";
             stmt.executeUpdate(sql);
-            System.out.println("Tabla creada");
-            stmt.close();
-            c.close();
-        } catch (SQLException | ClassNotFoundException ex) {
+            c.commit();
+            System.out.println("Tabla plantillas creada");
+            desconectar();
+        } catch (SQLException ex) {
             System.err.println("ERROR EN CREAR TABLA PLANTILLAS");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static void mostrarTablaPlantillas(){
         if (!"".equals(Envios.lblNombreUsr)) {
-            Connection c = null;
-            Statement stmt = null;
             try{
                 DefaultTableModel modelo = (DefaultTableModel) tablaPlantillas.getModel();
                 for (int i = 0; i < tablaPlantillas.getRowCount(); i++) {
                     modelo.removeRow(i);
                     i -= 1;
                 }
-                Class.forName("org.sqlite.JDBC");
-                c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-                c.setAutoCommit(false);
-                stmt = c.createStatement();
+                conectar();
                 String sql="SELECT * FROM plantillas ORDER BY nPlantilla;";
-                ResultSet rs = stmt.executeQuery(sql);
+                rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     Object[] linea = new Object[2];
                     linea[0] = rs.getString("nPlantilla");
@@ -322,11 +292,9 @@ public class Plantilla extends javax.swing.JFrame {
                     modelo.addRow(linea);
                 }
                 tablaPlantillas.setModel(modelo);
-                rs.close();
-                stmt.close();
-                c.close();
+                desconectar();
 
-            } catch (Exception ex) {
+            } catch (SQLException ex) {
                 System.err.println("ERROR EN MOSTRAR DATOS T CONTACTOS");
                 Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
                 System.exit(0);

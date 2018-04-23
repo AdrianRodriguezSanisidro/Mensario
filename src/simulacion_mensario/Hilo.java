@@ -104,7 +104,7 @@ public class Hilo extends Thread {
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()), lblNombreUsr.getText());
+                        mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()));
                         Envios.auxComprobarGrupo=comboElegirGrupo.getSelectedItem().toString();
                     }
                 }

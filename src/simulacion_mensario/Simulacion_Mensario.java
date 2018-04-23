@@ -5,6 +5,9 @@
  */
 package simulacion_mensario;
 
+import static simulacion_mensario.CrearGrupo.crearGruposT;
+import static simulacion_mensario.Envios.crearTablaContactos;
+
 /**
  *
  * @author adrys
@@ -15,9 +18,9 @@ public class Simulacion_Mensario {
      * @param args the command line arguments
      */
     public static void main(String[] args){
-        //CrearGrupo.mostarTodo();
         Envios objEnv=new Envios();
         objEnv.setVisible(true);
+
     }
     
 }
