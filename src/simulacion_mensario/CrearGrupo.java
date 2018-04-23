@@ -17,13 +17,13 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static simulacion_mensario.Envios.*;
 
-
 /**
  *
  * @author adrys
  */
 public class CrearGrupo extends javax.swing.JFrame {
-    public static String cValidos="abcdefghijklmnñopkrstuvwxyz ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+
+    public static String cValidos = "abcdefghijklmnñopkrstuvwxyz ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
     /**
      * Creates new form CrearGrupo
@@ -39,7 +39,7 @@ public class CrearGrupo extends javax.swing.JFrame {
             String sql = "CREATE TABLE grupos "
                     + "(nGrupo TEXT PRIMARY KEY NOT NULL,"
                     + "nLicencia TEXT);";
-            String sql2="INSERT INTO grupos VALUES('Todos','SYSTEM');";
+            String sql2 = "INSERT INTO grupos VALUES('Todos','SYSTEM');";
             stmt.executeUpdate(sql);
             c.commit();
             stmt.executeUpdate(sql2);
@@ -51,12 +51,12 @@ public class CrearGrupo extends javax.swing.JFrame {
     }
 
     public static void crearNuevoGrupo(String nombreG) {
-        if(comprobarNombreG(nombreG)==true){
+        if (comprobarNombreG(nombreG) == true) {
             try {
                 conectar();
-                String sql = "CREATE TABLE "+adaptarNombreG(nombreG)+"(movilc TEXT PRIMARY KEY NOT NULL)";
+                String sql = "CREATE TABLE " + adaptarNombreG(nombreG) + "(movilc TEXT PRIMARY KEY NOT NULL)";
                 stmt.executeUpdate(sql);
-                sql="INSERT INTO grupos VALUES('"+nombreG+"','"+lblNombreUsr.getText()+"');";
+                sql = "INSERT INTO grupos VALUES('" + nombreG + "','" + lblNombreUsr.getText() + "');";
                 stmt.executeUpdate(sql);
                 c.commit();
                 desconectar();
@@ -64,11 +64,12 @@ public class CrearGrupo extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
-            JOptionPane.showMessageDialog(null,"El nombre del grupo es incorrecto.\nEl nombre solo admite caracteres de la A a la Z y espacios");
+        } else {
+            JOptionPane.showMessageDialog(null, "El nombre del grupo es incorrecto.\nEl nombre solo admite caracteres de la A a la Z y espacios");
         }
     }
-    public static boolean comprobarNombreG(String nombreG){
+
+    public static boolean comprobarNombreG(String nombreG) {
         char[] charArray = nombreG.toCharArray();
         for (int i = 0; i < charArray.length; i++) {
             if (cValidos.indexOf(charArray[i]) < 0) {
@@ -77,62 +78,67 @@ public class CrearGrupo extends javax.swing.JFrame {
         }
         return true;
     }
-    public static String adaptarNombreG(String nombreG){
-        String nMinuscula=nombreG.toLowerCase();
-        String sinEspacios=nMinuscula.replaceAll(" ", "_");
+
+    public static String adaptarNombreG(String nombreG) {
+        String nMinuscula = nombreG.toLowerCase();
+        String sinEspacios = nMinuscula.replaceAll(" ", "_");
         return sinEspacios;
     }
-    public static void mostrarGruposCombo(){
-            try {
-                conectar();
-                String sql="SELECT * FROM grupos;";
-                rs=stmt.executeQuery(sql);
-                comboElegirGrupo.removeAllItems();
-                comboAñadirAlGrupo.removeAllItems();
-                while(rs.next()){
-                    comboElegirGrupo.addItem(rs.getString("nGrupo"));
-                    comboAñadirAlGrupo.addItem(rs.getString("nGrupo"));
-                }
-                c.commit();
-                desconectar();
-            } catch (SQLException ex) {
-                Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }
-    public static void mostarTodo(){
-            try {
-                conectar();
-                String sql2="SELECT * FROM contactos;";
-                
-                String sql="SELECT * FROM contactos WHERE movilc=(SELECT * FROM familia WHERE contactos.movilc=familia.movilc);";
-                rs=stmt.executeQuery(sql2);
-                while(rs.next()){
-                    System.out.println(rs.getString(1));
-                }
-                c.commit();
-                desconectar();
-            } catch (SQLException ex) {
-                Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    public static void borrarT(String tabla){
+
+    public static void mostrarGruposCombo() {
         try {
-            desconectar();
-            String sql="Delete from grupos where nGrupo='"+tabla+"';";
-            String sql2="Drop table "+tabla;
-            stmt.executeUpdate(sql);
-            stmt.executeUpdate(sql2);
-            System.out.println("Borrado "+tabla);
+            conectar();
+            String sql = "SELECT * FROM grupos;";
+            rs = stmt.executeQuery(sql);
+            comboElegirGrupo.removeAllItems();
+            comboAñadirAlGrupo.removeAllItems();
+            while (rs.next()) {
+                comboElegirGrupo.addItem(rs.getString("nGrupo"));
+                comboAñadirAlGrupo.addItem(rs.getString("nGrupo"));
+            }
             c.commit();
             desconectar();
         } catch (SQLException ex) {
             Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void modificarTodos(){
+
+    public static void mostarTodo() {
         try {
             conectar();
-            String sql="INSERT INTO grupos VALUES('Todos','"+lblNombreUsr.getText()+"');";
+            String sql2 = "SELECT * FROM contactos;";
+
+            String sql = "SELECT * FROM contactos WHERE movilc=(SELECT * FROM familia WHERE contactos.movilc=familia.movilc);";
+            rs = stmt.executeQuery(sql2);
+            while (rs.next()) {
+                System.out.println(rs.getString(1));
+            }
+            c.commit();
+            desconectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void borrarT(String tabla) {
+        try {
+            desconectar();
+            String sql = "Delete from grupos where nGrupo='" + tabla + "';";
+            String sql2 = "Drop table " + tabla;
+            stmt.executeUpdate(sql);
+            stmt.executeUpdate(sql2);
+            System.out.println("Borrado " + tabla);
+            c.commit();
+            desconectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void modificarTodos() {
+        try {
+            conectar();
+            String sql = "INSERT INTO grupos VALUES('Todos','" + lblNombreUsr.getText() + "');";
             stmt.executeUpdate(sql);
             System.out.println("AÑADIDO todos");
             c.commit();
@@ -141,11 +147,12 @@ public class CrearGrupo extends javax.swing.JFrame {
             Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void cambiosEnLasTablas(){
+
+    public static void cambiosEnLasTablas() {
         try {
             conectar();
-            String sql1="DROP TABLE grupos;";
-            String sql2="DROP TABLE contactos;";
+            String sql1 = "DROP TABLE grupos;";
+            String sql2 = "DROP TABLE contactos;";
             stmt.executeUpdate(sql1);
             System.out.println("Borrada grupos");
             stmt.executeUpdate(sql2);
@@ -154,14 +161,12 @@ public class CrearGrupo extends javax.swing.JFrame {
             desconectar();
             crearTablaContactos();
             crearGruposT();
-            
+
         } catch (SQLException ex) {
             System.err.println("AQUI");
             Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -250,19 +255,19 @@ public class CrearGrupo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNuevoGrupoKeyTyped
 
     private void btnAceptarNuevoGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarNuevoGrupoMouseClicked
-        boolean auxOK=true;
-        for(int i=0;i<comboElegirGrupo.getItemCount();i++){
-            if(adaptarNombreG(comboElegirGrupo.getItemAt(i))==adaptarNombreG(txtNuevoGrupo.getText())){
-                auxOK=false;
+        boolean auxOK = true;
+        for (int i = 0; i < comboElegirGrupo.getItemCount(); i++) {
+            if (adaptarNombreG(comboElegirGrupo.getItemAt(i)) == adaptarNombreG(txtNuevoGrupo.getText())) {
+                auxOK = false;
             }
         }
-        if(auxOK==true){
+        if (auxOK == true) {
             crearNuevoGrupo(txtNuevoGrupo.getText());
             this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(null,"El grupo ya existe");
+        } else {
+            JOptionPane.showMessageDialog(null, "El grupo ya existe");
         }
-        
+
     }//GEN-LAST:event_btnAceptarNuevoGrupoMouseClicked
 
     /**

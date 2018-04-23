@@ -27,19 +27,20 @@ public class Plantilla extends javax.swing.JFrame {
     public static int eleccion;
     public static String nombreP;
     public static String textoP;
-    public static boolean auxBorrado=false;
+    public static boolean auxBorrado = false;
 
     /**
      * Creates new form Plantilla
+     *
      * @param eleccion
      * @param nombreP
      * @param textoP
      */
-    public Plantilla(int eleccion,String nombreP,String textoP) {
+    public Plantilla(int eleccion, String nombreP, String textoP) {
         initComponents();
-        Plantilla.eleccion=eleccion;
-        Plantilla.nombreP=nombreP;
-        Plantilla.textoP=textoP;
+        Plantilla.eleccion = eleccion;
+        Plantilla.nombreP = nombreP;
+        Plantilla.textoP = textoP;
         txtNombrePlantilla.setText(nombreP);
         txtAreaEscribirTextoPlantilla.setText(textoP);
         txtAreaEscribirTextoPlantilla.setLineWrap(true);
@@ -188,9 +189,9 @@ public class Plantilla extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNombrePlantillaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombrePlantillaKeyTyped
-       char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
 
-        if (!(Character.isAlphabetic(c) || (c == VK_SPACE) || c == KeyEvent.VK_DELETE)||txtNombrePlantilla.getText().length()>=64) {
+        if (!(Character.isAlphabetic(c) || (c == VK_SPACE) || c == KeyEvent.VK_DELETE) || txtNombrePlantilla.getText().length() >= 64) {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombrePlantillaKeyTyped
@@ -212,53 +213,54 @@ public class Plantilla extends javax.swing.JFrame {
         txtAreaEscribirTextoPlantilla.insert(comboVariablesPlantilla.getSelectedItem().toString(), txtAreaEscribirTextoPlantilla.getCaretPosition());
     }//GEN-LAST:event_jButton1MouseClicked
 
-    public static void nuevaPlantilla(){
-        if(!"".equals(txtNombrePlantilla.getText())){
-            if(eleccion==0){
+    public static void nuevaPlantilla() {
+        if (!"".equals(txtNombrePlantilla.getText())) {
+            if (eleccion == 0) {
                 try {
                     conectar();
-                    String sql="INSERT INTO plantillas VALUES('"+txtNombrePlantilla.getText()+"','"+txtAreaEscribirTextoPlantilla.getText()+"','"+Envios.lblNombreUsr.getText()+"');";
+                    String sql = "INSERT INTO plantillas VALUES('" + txtNombrePlantilla.getText() + "','" + txtAreaEscribirTextoPlantilla.getText() + "','" + Envios.lblNombreUsr.getText() + "');";
                     stmt.executeUpdate(sql);
                     c.commit();
                     desconectar();
                     mostrarTablaPlantillas();
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null,"Ya existe una plantilla con ese nombre","¡ATENCIÓN!",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Ya existe una plantilla con ese nombre", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
                 }
-            }else{
+            } else {
                 try {
                     conectar();
-                    String sql="INSERT INTO plantillas VALUES('"+txtNombrePlantilla.getText()+"','"+txtAreaEscribirTextoPlantilla.getText()+"','"+Envios.lblNombreUsr.getText()+"');";
+                    String sql = "INSERT INTO plantillas VALUES('" + txtNombrePlantilla.getText() + "','" + txtAreaEscribirTextoPlantilla.getText() + "','" + Envios.lblNombreUsr.getText() + "');";
                     borrarPlantilla(nombreP);
-                    if(auxBorrado==true){
+                    if (auxBorrado == true) {
                         stmt.executeUpdate(sql);
-                        auxBorrado=false;
+                        auxBorrado = false;
                     }
                     c.commit();
                     desconectar();
                     mostrarTablaPlantillas();
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null,"Ya existe una plantilla con ese nombre","¡ATENCIÓN!",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Ya existe una plantilla con ese nombre", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }else{
-            JOptionPane.showMessageDialog(null,"El nombre no puede estar en blanco","¡ATENCIÓN!",JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "El nombre no puede estar en blanco", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
         }
     }
-    public static void borrarPlantilla(String plantilla){
+
+    public static void borrarPlantilla(String plantilla) {
         try {
-                conectar();
-                String sql="DELETE FROM plantillas WHERE nPlantilla='"+plantilla+"';";
-                stmt.executeUpdate(sql);
-                auxBorrado=true;
-                c.commit();
-                desconectar();
-            } catch (SQLException ex) {
-                Logger.getLogger(Plantilla.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            conectar();
+            String sql = "DELETE FROM plantillas WHERE nPlantilla='" + plantilla + "';";
+            stmt.executeUpdate(sql);
+            auxBorrado = true;
+            c.commit();
+            desconectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Plantilla.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
-    public static void crearTablaPlantillas(){
+
+    public static void crearTablaPlantillas() {
         try {
             conectar();
             String sql = "CREATE TABLE plantillas "
@@ -274,16 +276,17 @@ public class Plantilla extends javax.swing.JFrame {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void mostrarTablaPlantillas(){
+
+    public static void mostrarTablaPlantillas() {
         if (!"".equals(Envios.lblNombreUsr)) {
-            try{
+            try {
                 DefaultTableModel modelo = (DefaultTableModel) tablaPlantillas.getModel();
                 for (int i = 0; i < tablaPlantillas.getRowCount(); i++) {
                     modelo.removeRow(i);
                     i -= 1;
                 }
                 conectar();
-                String sql="SELECT * FROM plantillas ORDER BY nPlantilla;";
+                String sql = "SELECT * FROM plantillas ORDER BY nPlantilla;";
                 rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     Object[] linea = new Object[2];
@@ -301,6 +304,7 @@ public class Plantilla extends javax.swing.JFrame {
             }
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -331,7 +335,7 @@ public class Plantilla extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Plantilla(eleccion,nombreP,textoP).setVisible(true);
+                new Plantilla(eleccion, nombreP, textoP).setVisible(true);
             }
         });
     }

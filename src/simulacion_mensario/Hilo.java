@@ -15,23 +15,22 @@ import static simulacion_mensario.Envios.*;
  * @author adrys
  */
 public class Hilo extends Thread {
-    
+
     int x = 2;
     int numAux = 1;
-    
 
     public void run() {
-            while (x == 2) {
-                //validarTelefonos();
-                lblNumCaracteres.setText("" + txtAreaMensaje.getText().length());
-                comprobarCheck();
-                lblMovilesInsertados.setText(comprobarTelefonos());
-                comprobarNumMensajes();
-                comprobarCambioDeGrupo();
-                comprobarMovilPais(calcularLargoTelf(comboPais.getSelectedItem().toString()));
-                vaciarTextoPlantilla();
-                
-            }
+        while (x == 2) {
+            //validarTelefonos();
+            lblNumCaracteres.setText("" + txtAreaMensaje.getText().length());
+            comprobarCheck();
+            lblMovilesInsertados.setText(comprobarTelefonos());
+            comprobarNumMensajes();
+            comprobarCambioDeGrupo();
+            comprobarMovilPais(calcularLargoTelf(comboPais.getSelectedItem().toString()));
+            vaciarTextoPlantilla();
+
+        }
     }
 
     public void comprobarNumMensajes() {
@@ -43,22 +42,23 @@ public class Hilo extends Thread {
             lblNumMensajes.setText("" + (resultado + 2));
         }
     }
-    public void vaciarTextoPlantilla(){
-        if(tablaPlantillas.getSelectedRow()==-1){
+
+    public void vaciarTextoPlantilla() {
+        if (tablaPlantillas.getSelectedRow() == -1) {
             txtAreaPlantilla.setText("");
         }
     }
 
     public static String comprobarTelefonos() {
         String[] contador = txtAreaMoviles.getText().split(",");
-        String cantMoviles="0";
+        String cantMoviles = "0";
         if (contador.length > 1) {
-            cantMoviles=""+contador.length;
+            cantMoviles = "" + contador.length;
         } else {
             if (!"".equals(txtAreaMoviles.getText())) {
-                cantMoviles="1";
+                cantMoviles = "1";
             } else {
-                cantMoviles="0";
+                cantMoviles = "0";
             }
         }
         return cantMoviles;
@@ -80,40 +80,42 @@ public class Hilo extends Thread {
             btnEnviar.setEnabled(false);
         }
     }
-    public static void comprobarMovilPais(int[]numeros){
-        String auxM=txtMovilContacto.getText();
-        if((auxM.startsWith(""+numeros[2])||auxM.startsWith(""+numeros[3])||auxM.startsWith(""+numeros[4]))&&
-                (auxM.length()>=numeros[0]&&auxM.length()<=numeros[1])){
+
+    public static void comprobarMovilPais(int[] numeros) {
+        String auxM = txtMovilContacto.getText();
+        if ((auxM.startsWith("" + numeros[2]) || auxM.startsWith("" + numeros[3]) || auxM.startsWith("" + numeros[4]))
+                && (auxM.length() >= numeros[0] && auxM.length() <= numeros[1])) {
             btnAñadirContacto.setEnabled(true);
-        }else{
+        } else {
             btnAñadirContacto.setEnabled(false);
         }
     }
-    public static void comprobarCambioDeGrupo(){
-        
-        try{
-            String aux=comboElegirGrupo.getSelectedItem().toString();
-            String aux2=Envios.auxComprobarGrupo;
-            if(aux!=null){
-                if(Envios.auxComprobarGrupo==null){
-                    Envios.auxComprobarGrupo="Todos";
-                }else{
-                    if(Envios.auxComprobarGrupo!=comboElegirGrupo.getSelectedItem().toString()){
+
+    public static void comprobarCambioDeGrupo() {
+
+        try {
+            String aux = comboElegirGrupo.getSelectedItem().toString();
+            String aux2 = Envios.auxComprobarGrupo;
+            if (aux != null) {
+                if (Envios.auxComprobarGrupo == null) {
+                    Envios.auxComprobarGrupo = "Todos";
+                } else {
+                    if (Envios.auxComprobarGrupo != comboElegirGrupo.getSelectedItem().toString()) {
                         try {
                             Thread.sleep(300);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()));
-                        Envios.auxComprobarGrupo=comboElegirGrupo.getSelectedItem().toString();
+                        Envios.auxComprobarGrupo = comboElegirGrupo.getSelectedItem().toString();
                     }
                 }
             }
-        }catch(NullPointerException ex){
+        } catch (NullPointerException ex) {
 
         }
     }
-    
+
     public boolean comprobarBooleans(Boolean[] array) {
         for (boolean b : array) {
             if (!b) {
