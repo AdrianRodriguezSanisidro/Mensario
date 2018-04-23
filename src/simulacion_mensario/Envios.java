@@ -832,11 +832,11 @@ public class Envios extends javax.swing.JFrame {
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(btnAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEliminarDelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEliminarDelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
         jInternalFrame1Layout.setVerticalGroup(
@@ -2002,31 +2002,36 @@ public class Envios extends javax.swing.JFrame {
     }
 
     public static void añadirAlGrupoSeleccionado(String grupoS) {
-        if (tablaContactos.getSelectedRowCount() > 0) {
-            int selectedRow[] = tablaContactos.getSelectedRows();
-            for (int i = 0;i<selectedRow.length;i++) {
-                String movil = tablaContactos.getValueAt(selectedRow[i], 0).toString();
-                if (comprobarRegistro(movil) == true) {
-                    if (comprobarSiEstaEnNuevoGrupo(movil) == true && !"Todos".equals(comboAñadirAlGrupo.getSelectedItem().toString())) {
-                        try {
-                            conectar();
-                            String sql = "INSERT INTO " + adaptarNombreG(grupoS) + " VALUES('" + movil + "')";
-                            stmt.executeUpdate(sql);
-                            System.out.println("El contacto se ha agregado al grupo " + grupoS + " con exito");
-                            
-                            c.commit();
-                            desconectar();
-                        } catch (SQLException ex) {
+        if(!"Todos".equals(comboAñadirAlGrupo.getSelectedItem().toString())){
+            if (tablaContactos.getSelectedRowCount() > 0) {
+                int selectedRow[] = tablaContactos.getSelectedRows();
+                for (int i = 0;i<selectedRow.length;i++) {
+                    String movil = tablaContactos.getValueAt(selectedRow[i], 0).toString();
+                    if (comprobarRegistro(movil) == true) {
+                        if (comprobarSiEstaEnNuevoGrupo(movil) == true) {
+                            try {
+                                conectar();
+                                String sql = "INSERT INTO " + adaptarNombreG(grupoS) + " VALUES('" + movil + "')";
+                                stmt.executeUpdate(sql);
+                                System.out.println("El contacto se ha agregado al grupo " + grupoS + " con exito");
+
+                                c.commit();
+                                desconectar();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, txtNombreContacto.getText() + " ya está en "
+                                    + comboAñadirAlGrupo.getSelectedItem().toString(), "¡ATENCIÓN!", JOptionPane.WARNING_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, txtNombreContacto.getText() + " ya está en "
-                                + comboAñadirAlGrupo.getSelectedItem().toString(), "¡ATENCIÓN!", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "El contacto no está registrado", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "El contacto no está registrado", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
                 }
+                JOptionPane.showMessageDialog(null,"Los contactos se han agregado al grupo "+grupoS+" con exito");
             }
-            JOptionPane.showMessageDialog(null,"Los contactos se han agregado al grupo "+grupoS+" con exito");
+        }else{
+            JOptionPane.showMessageDialog(null,"Los contactos ya estan en \"Todos\"");
         }
     }
 
@@ -2050,28 +2055,39 @@ public class Envios extends javax.swing.JFrame {
 
     public static void echarContactoDeGrupo() {
         String auxGrupo = comboElegirGrupo.getSelectedItem().toString();
-        String auxGrupoSQL = adaptarNombreG(auxGrupo);
-        String auxMovilC = (String) tablaContactos.getValueAt(tablaContactos.getSelectedRow(), 0);
-        String auxNombreC = (String) tablaContactos.getValueAt(tablaContactos.getSelectedRow(), 1);
         if (!"Todos".equals(auxGrupo)) {
             int yesNoButton = JOptionPane.YES_NO_OPTION;
             int returnVal = JOptionPane.showConfirmDialog(null,
-                    "Estas seguro de querer echar a " + auxNombreC + " de " + auxGrupo + "?", "¡CUIDADO!", yesNoButton);
+                "Estas seguro de querer echar a estos contactos de " + auxGrupo + "?", "¡CUIDADO!", yesNoButton);
             if (returnVal == JOptionPane.YES_OPTION) {
-                try {
-                    conectar();
-                    String sql = "DELETE FROM " + auxGrupoSQL + " WHERE movilc='" + auxMovilC + "';";
-                    stmt.executeUpdate(sql);
-                    c.commit();
-                    desconectar();
-                    mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()));
-                    JOptionPane.showMessageDialog(null, auxNombreC + " ha sido echado de " + auxGrupo);
-                } catch (SQLException ex) {
-                    System.err.println("ERROR EN ECHAR CONTACTO DE GRUPO");
-                    Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                if (tablaContactos.getSelectedRowCount() > 0) {
+                    int selectedRowI[] = tablaContactos.getSelectedRows();
+                    String selectedRowS[] = new String[selectedRowI.length];
+                    for (int i = 0;i<selectedRowI.length;i++) {
+                        String auxMovilC = tablaContactos.getValueAt(selectedRowI[i], 0).toString();
+                        selectedRowS[i]=auxMovilC;
+                    }
+                    for(int i=0;i<selectedRowS.length;i++){
+                        String auxGrupoSQL = adaptarNombreG(auxGrupo);
+                            try {
+                                conectar();
+                                String sql = "DELETE FROM " + auxGrupoSQL + " WHERE movilc='" + selectedRowS[i] + "';";
+                                stmt.executeUpdate(sql);
+                                c.commit();
+                                desconectar();
+                                mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()));
+
+                            } catch (SQLException ex) {
+                                System.err.println("ERROR EN ECHAR CONTACTO DE GRUPO");
+                                Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún contacto.", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
+                    }
+                JOptionPane.showMessageDialog(null,"Los contactos seleccionados se han echado del grupo "+auxGrupo+" correctamente");
             }
-        } else {
+        }else{
             JOptionPane.showMessageDialog(null, "No se puede echar a nadie de \"Todos\",si quieres puedes eliminarlo.", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
         }
     }
