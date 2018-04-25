@@ -265,8 +265,7 @@ public class Plantilla extends javax.swing.JFrame {
             conectar();
             String sql = "CREATE TABLE plantillas "
                     + "(nPlantilla TEXT PRIMARY KEY NOT NULL,"
-                    + "tPlantilla TEXT,"
-                    + "nLicencia TEXT)";
+                    + "tPlantilla TEXT);";
             stmt.executeUpdate(sql);
             c.commit();
             System.out.println("Tabla plantillas creada");
@@ -276,9 +275,19 @@ public class Plantilla extends javax.swing.JFrame {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public static void dropPlantilla(){
+        try {
+            conectar();
+            String sql="DROP TABLE plantillas;";
+            stmt.executeUpdate(sql);
+            c.commit();
+            desconectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Plantilla.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public static void mostrarTablaPlantillas() {
-        if (!"".equals(Envios.lblNombreUsr)) {
             try {
                 DefaultTableModel modelo = (DefaultTableModel) tablaPlantillas.getModel();
                 for (int i = 0; i < tablaPlantillas.getRowCount(); i++) {
@@ -302,7 +311,6 @@ public class Plantilla extends javax.swing.JFrame {
                 Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
                 System.exit(0);
             }
-        }
     }
 
     /**

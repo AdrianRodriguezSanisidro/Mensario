@@ -18,6 +18,8 @@ public class Simulacion_Mensario {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //Envios.crearTablaContactos();
+        //Envios.borrarT();
         Envios objEnv = new Envios();
         objEnv.setVisible(true);
 

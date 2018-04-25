@@ -7,11 +7,7 @@ package simulacion_mensario;
 
 import com.sun.glass.events.KeyEvent;
 import static java.awt.event.KeyEvent.VK_SPACE;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -54,7 +50,7 @@ public class CrearGrupo extends javax.swing.JFrame {
         if (comprobarNombreG(nombreG) == true) {
             try {
                 conectar();
-                String sql = "CREATE TABLE " + adaptarNombreG(nombreG) + "(movilc TEXT PRIMARY KEY NOT NULL)";
+                String sql = "CREATE TABLE " + quitarEspacios(nombreG) + "(Movil TEXT PRIMARY KEY NOT NULL)";
                 stmt.executeUpdate(sql);
                 sql = "INSERT INTO grupos VALUES('" + nombreG + "','" + lblNombreUsr.getText() + "');";
                 stmt.executeUpdate(sql);
@@ -79,9 +75,8 @@ public class CrearGrupo extends javax.swing.JFrame {
         return true;
     }
 
-    public static String adaptarNombreG(String nombreG) {
-        String nMinuscula = nombreG.toLowerCase();
-        String sinEspacios = nMinuscula.replaceAll(" ", "_");
+    public static String quitarEspacios(String nombreG) {
+        String sinEspacios = nombreG.replaceAll(" ", "_");
         return sinEspacios;
     }
 
@@ -92,6 +87,8 @@ public class CrearGrupo extends javax.swing.JFrame {
             rs = stmt.executeQuery(sql);
             comboElegirGrupo.removeAllItems();
             comboAñadirAlGrupo.removeAllItems();
+            comboElegirGrupo.addItem("Todos");
+            comboAñadirAlGrupo.addItem("Todos");
             while (rs.next()) {
                 comboElegirGrupo.addItem(rs.getString("nGrupo"));
                 comboAñadirAlGrupo.addItem(rs.getString("nGrupo"));
@@ -108,7 +105,7 @@ public class CrearGrupo extends javax.swing.JFrame {
             conectar();
             String sql2 = "SELECT * FROM contactos;";
 
-            String sql = "SELECT * FROM contactos WHERE movilc=(SELECT * FROM familia WHERE contactos.movilc=familia.movilc);";
+            String sql = "SELECT * FROM contactos WHERE Movil=(SELECT * FROM familia WHERE contactos.Movil=familia.Movil);";
             rs = stmt.executeQuery(sql2);
             while (rs.next()) {
                 System.out.println(rs.getString(1));
@@ -147,6 +144,7 @@ public class CrearGrupo extends javax.swing.JFrame {
             Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 
     public static void cambiosEnLasTablas() {
         try {
@@ -257,7 +255,7 @@ public class CrearGrupo extends javax.swing.JFrame {
     private void btnAceptarNuevoGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarNuevoGrupoMouseClicked
         boolean auxOK = true;
         for (int i = 0; i < comboElegirGrupo.getItemCount(); i++) {
-            if (adaptarNombreG(comboElegirGrupo.getItemAt(i)) == adaptarNombreG(txtNuevoGrupo.getText())) {
+            if (quitarEspacios(comboElegirGrupo.getItemAt(i)).equals(quitarEspacios(txtNuevoGrupo.getText()))) {
                 auxOK = false;
             }
         }
@@ -298,10 +296,8 @@ public class CrearGrupo extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CrearGrupo().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new CrearGrupo().setVisible(true);
         });
     }
 

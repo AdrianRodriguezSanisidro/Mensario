@@ -7,8 +7,8 @@ package simulacion_mensario;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static simulacion_mensario.CrearGrupo.adaptarNombreG;
 import static simulacion_mensario.Envios.*;
+import static simulacion_mensario.CrearGrupo.quitarEspacios;
 
 /**
  *
@@ -19,6 +19,7 @@ public class Hilo extends Thread {
     int x = 2;
     int numAux = 1;
 
+    @Override
     public void run() {
         while (x == 2) {
             //validarTelefonos();
@@ -26,6 +27,7 @@ public class Hilo extends Thread {
             comprobarCheck();
             lblMovilesInsertados.setText(comprobarTelefonos());
             comprobarNumMensajes();
+            comprobarSeleccionParaModificar();
             comprobarCambioDeGrupo();
             comprobarMovilPais(calcularLargoTelf(comboPais.getSelectedItem().toString()));
             vaciarTextoPlantilla();
@@ -40,6 +42,13 @@ public class Hilo extends Thread {
             int cantCar = txtAreaMensaje.getText().length() - 161;
             int resultado = (cantCar / 153);
             lblNumMensajes.setText("" + (resultado + 2));
+        }
+    }
+    public void comprobarSeleccionParaModificar(){
+        if(tablaContactos.getSelectedRow()==-1){
+            Envios.btnModificarContacto.setEnabled(false);
+        }else{
+            Envios.btnModificarContacto.setEnabled(true);
         }
     }
 
@@ -106,7 +115,7 @@ public class Hilo extends Thread {
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()));
+                        mostrarDatosTContactos();
                         Envios.auxComprobarGrupo = comboElegirGrupo.getSelectedItem().toString();
                     }
                 }
