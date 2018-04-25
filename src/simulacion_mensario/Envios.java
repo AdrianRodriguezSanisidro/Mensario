@@ -687,7 +687,7 @@ public class Envios extends javax.swing.JFrame {
         IFContactos.setTitle("Contacto");
         IFContactos.setVisible(true);
 
-        btnAñadirContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_user.jpg")); // NOI18N
+        btnAñadirContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_user.png")); // NOI18N
         btnAñadirContacto.setText("Añadir contacto");
         btnAñadirContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAñadirContacto.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -831,7 +831,7 @@ public class Envios extends javax.swing.JFrame {
         jInternalFrame1.setTitle("Grupo");
         jInternalFrame1.setVisible(true);
 
-        btnAñadirAlGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_user.jpg")); // NOI18N
+        btnAñadirAlGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_user.png")); // NOI18N
         btnAñadirAlGrupo.setText("Añadir contacto/s al grupo:");
         btnAñadirAlGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAñadirAlGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -874,6 +874,9 @@ public class Envios extends javax.swing.JFrame {
                 .addGap(5, 5, 5))
         );
 
+        btnBorrarColumna.setBackground(new java.awt.Color(255, 255, 255));
+        btnBorrarColumna.setForeground(new java.awt.Color(204, 0, 0));
+        btnBorrarColumna.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\delete_column.png")); // NOI18N
         btnBorrarColumna.setText("Borrar columna");
         btnBorrarColumna.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -881,6 +884,7 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        btnAñadirColumna.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_column.png")); // NOI18N
         btnAñadirColumna.setText("Añadir columna");
         btnAñadirColumna.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

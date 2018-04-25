@@ -179,6 +179,7 @@ public class CrearGrupo extends javax.swing.JFrame {
         lblNuevoGrupo = new javax.swing.JLabel();
         txtNuevoGrupo = new javax.swing.JTextField();
         btnAceptarNuevoGrupo = new javax.swing.JButton();
+        btnCancelarNuevoGrupo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Crear grupo");
@@ -195,11 +196,22 @@ public class CrearGrupo extends javax.swing.JFrame {
             }
         });
 
-        btnAceptarNuevoGrupo.setText("Crear");
+        btnAceptarNuevoGrupo.setForeground(new java.awt.Color(0, 153, 0));
+        btnAceptarNuevoGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
+        btnAceptarNuevoGrupo.setText("Aceptar");
         btnAceptarNuevoGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAceptarNuevoGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAceptarNuevoGrupoMouseClicked(evt);
+            }
+        });
+
+        btnCancelarNuevoGrupo.setForeground(new java.awt.Color(204, 0, 0));
+        btnCancelarNuevoGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\cancel.png")); // NOI18N
+        btnCancelarNuevoGrupo.setText("Cancelar");
+        btnCancelarNuevoGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelarNuevoGrupoMouseClicked(evt);
             }
         });
 
@@ -210,23 +222,30 @@ public class CrearGrupo extends javax.swing.JFrame {
             .addGroup(panelCrearGrupoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNuevoGrupo)
-                    .addComponent(txtNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
-                .addComponent(btnAceptarNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addGroup(panelCrearGrupoLayout.createSequentialGroup()
+                        .addGroup(panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNuevoGrupo)
+                            .addComponent(txtNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(49, Short.MAX_VALUE))
+                    .addGroup(panelCrearGrupoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAceptarNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelarNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelCrearGrupoLayout.setVerticalGroup(
             panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCrearGrupoLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAceptarNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelCrearGrupoLayout.createSequentialGroup()
-                        .addComponent(lblNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addComponent(lblNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelarNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAceptarNuevoGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -268,6 +287,10 @@ public class CrearGrupo extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAceptarNuevoGrupoMouseClicked
 
+    private void btnCancelarNuevoGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarNuevoGrupoMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarNuevoGrupoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -303,6 +326,7 @@ public class CrearGrupo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptarNuevoGrupo;
+    private javax.swing.JButton btnCancelarNuevoGrupo;
     private javax.swing.JLabel lblNuevoGrupo;
     private javax.swing.JPanel panelCrearGrupo;
     public static javax.swing.JTextField txtNuevoGrupo;

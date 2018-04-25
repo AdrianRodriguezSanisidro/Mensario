@@ -40,6 +40,8 @@ public class NuevaColumna extends javax.swing.JFrame {
         lblNombreNuevaColumna.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblNombreNuevaColumna.setText("Nombre de la nueva columna:");
 
+        btnAceptarNuevaColumna.setForeground(new java.awt.Color(0, 153, 0));
+        btnAceptarNuevaColumna.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
         btnAceptarNuevaColumna.setText("Aceptar");
         btnAceptarNuevaColumna.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -47,6 +49,8 @@ public class NuevaColumna extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarNuevaColumna.setForeground(new java.awt.Color(204, 0, 0));
+        btnCancelarNuevaColumna.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\cancel.png")); // NOI18N
         btnCancelarNuevaColumna.setText("Cancelar");
         btnCancelarNuevaColumna.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

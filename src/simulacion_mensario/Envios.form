@@ -1286,7 +1286,7 @@
                 <Component class="javax.swing.JButton" name="btnA&#xf1;adirContacto">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="2" name="C:\Users\adrys\Documents\NetBeansProjects\Simulacion_Mensario\iconos\add_user.jpg"/>
+                      <Image iconType="2" name="C:\Users\adrys\Documents\NetBeansProjects\Simulacion_Mensario\iconos\add_user.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="A&#xf1;adir contacto"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1527,7 +1527,7 @@
                 <Component class="javax.swing.JButton" name="btnA&#xf1;adirAlGrupo">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="2" name="C:\Users\adrys\Documents\NetBeansProjects\Simulacion_Mensario\iconos\add_user.jpg"/>
+                      <Image iconType="2" name="C:\Users\adrys\Documents\NetBeansProjects\Simulacion_Mensario\iconos\add_user.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="A&#xf1;adir contacto/s al grupo:"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1570,6 +1570,15 @@
             </Container>
             <Component class="javax.swing.JButton" name="btnBorrarColumna">
               <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="cc" type="rgb"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\adrys\Documents\NetBeansProjects\Simulacion_Mensario\iconos\delete_column.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Borrar columna"/>
               </Properties>
               <Events>
@@ -1578,6 +1587,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnA&#xf1;adirColumna">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\adrys\Documents\NetBeansProjects\Simulacion_Mensario\iconos\add_column.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="A&#xf1;adir columna"/>
               </Properties>
               <Events>

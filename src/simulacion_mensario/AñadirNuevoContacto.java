@@ -71,6 +71,8 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTitulo.setText("Quieres añadir datos al resto de los campos o dejarlos vacíos? (Aparecerán como null si están vacíos):");
 
+        btnAceptarNuevoContacto.setForeground(new java.awt.Color(0, 153, 0));
+        btnAceptarNuevoContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
         btnAceptarNuevoContacto.setText("Aceptar");
         btnAceptarNuevoContacto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -78,6 +80,8 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarNuevoContacto.setForeground(new java.awt.Color(204, 0, 0));
+        btnCancelarNuevoContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\cancel.png")); // NOI18N
         btnCancelarNuevoContacto.setText("Cancelar");
         btnCancelarNuevoContacto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
