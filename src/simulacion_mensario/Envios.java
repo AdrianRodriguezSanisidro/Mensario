@@ -8,18 +8,23 @@ package simulacion_mensario;
 import es.xilon.semApi.*;
 import es.xilon.semApi.beans.*;
 import java.awt.HeadlessException;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import static simulacion_mensario.CrearGrupo.*;
 import static simulacion_mensario.Plantilla.borrarPlantilla;
 import static simulacion_mensario.Plantilla.mostrarTablaPlantillas;
@@ -39,6 +44,9 @@ public class Envios extends javax.swing.JFrame {
     public static Connection c;
     public static Statement stmt;
     public static ResultSet rs;
+    public static String cambioMovilElegido;
+    public static String columnaABorrar;
+    public static int numColumnaABorrar;
 
     /**
      * Creates new form Envios
@@ -52,12 +60,13 @@ public class Envios extends javax.swing.JFrame {
         objHilo.start();
         mostrarDatosTLicencias();
         mostrarGruposCombo();
-        CrearGrupo.mostrarGruposCombo();
         Plantilla.mostrarTablaPlantillas();
-        mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()));
+        mostrarDatosTContactos();
+        //Permite ordenar los datos
         tablaContactos.setAutoCreateRowSorter(true);
         tablaLicencias.setAutoCreateRowSorter(true);
         tablaPlantillas.setAutoCreateRowSorter(true);
+        //Impide que se muevan las columnas de posición
         tablaContactos.getTableHeader().setReorderingAllowed(false);
         tablaLicencias.getTableHeader().setReorderingAllowed(false);
         tablaPlantillas.getTableHeader().setReorderingAllowed(false);
@@ -148,6 +157,7 @@ public class Envios extends javax.swing.JFrame {
         lblNombreContacto = new javax.swing.JLabel();
         btnLimpiarNombreC = new javax.swing.JButton();
         btnLimpiarMovilC = new javax.swing.JButton();
+        btnModificarContacto = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         btnEscribirContacto = new javax.swing.JButton();
         btnEscribirGrupo = new javax.swing.JButton();
@@ -156,6 +166,8 @@ public class Envios extends javax.swing.JFrame {
         btnAñadirAlGrupo = new javax.swing.JButton();
         comboAñadirAlGrupo = new javax.swing.JComboBox<>();
         btnEliminarDelGrupo = new javax.swing.JButton();
+        btnBorrarColumna = new javax.swing.JButton();
+        btnAñadirColumna = new javax.swing.JButton();
         panelPlantillas = new javax.swing.JPanel();
         jScrollPaneTablaPlantillas = new javax.swing.JScrollPane();
         tablaPlantillas = new javax.swing.JTable();
@@ -169,7 +181,7 @@ public class Envios extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mensario 2");
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(780, 880));
+        setPreferredSize(new java.awt.Dimension(880, 880));
         setSize(new java.awt.Dimension(720, 777));
 
         TPEscribirSms.setBackground(new java.awt.Color(255, 255, 255));
@@ -298,15 +310,15 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(lblNumMensajesName)
                         .addGap(5, 5, 5)
                         .addComponent(lblNumMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                         .addComponent(lblNumCaracteresName)
                         .addGap(5, 5, 5)
                         .addComponent(lblNumCaracteres, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                         .addComponent(comboVariablesTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAñadirVariable, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                         .addComponent(btnEliminarTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5))))
         );
@@ -559,9 +571,9 @@ public class Envios extends javax.swing.JFrame {
                                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtClave)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 41, Short.MAX_VALUE)
+                                .addGap(18, 87, Short.MAX_VALUE)
                                 .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 23, Short.MAX_VALUE))
+                                .addGap(0, 69, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLicenciasLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -685,7 +697,7 @@ public class Envios extends javax.swing.JFrame {
         });
 
         btnEliminarContacto.setForeground(new java.awt.Color(204, 0, 0));
-        btnEliminarContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\papelera.jpg")); // NOI18N
+        btnEliminarContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\borrar_contacto.png")); // NOI18N
         btnEliminarContacto.setText("Eliminar contacto");
         btnEliminarContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarContacto.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -727,6 +739,14 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        btnModificarContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\user.png")); // NOI18N
+        btnModificarContacto.setText("Modificar contacto");
+        btnModificarContacto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarContactoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout IFContactosLayout = new javax.swing.GroupLayout(IFContactos.getContentPane());
         IFContactos.getContentPane().setLayout(IFContactosLayout);
         IFContactosLayout.setHorizontalGroup(
@@ -740,14 +760,18 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(txtNombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
                         .addComponent(btnLimpiarNombreC, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                         .addComponent(lblMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtMovilContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
-                        .addComponent(btnLimpiarMovilC, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnAñadirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addComponent(btnLimpiarMovilC, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE))
+                    .addGroup(IFContactosLayout.createSequentialGroup()
+                        .addComponent(btnAñadirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnModificarContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(IFContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(IFContactosLayout.createSequentialGroup()
                         .addComponent(lblPais)
@@ -769,10 +793,11 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(txtMovilContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(comboPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblPais, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20)
+                .addGap(5, 5, 5)
                 .addGroup(IFContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminarContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAñadirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAñadirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificarContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
         );
 
@@ -796,7 +821,6 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnDesordenar.setText("...");
         btnDesordenar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDesordenar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -835,7 +859,7 @@ public class Envios extends javax.swing.JFrame {
                 .addComponent(btnAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
                 .addComponent(btnEliminarDelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -850,67 +874,84 @@ public class Envios extends javax.swing.JFrame {
                 .addGap(5, 5, 5))
         );
 
+        btnBorrarColumna.setText("Borrar columna");
+        btnBorrarColumna.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBorrarColumnaMouseClicked(evt);
+            }
+        });
+
+        btnAñadirColumna.setText("Añadir columna");
+        btnAñadirColumna.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAñadirColumnaMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelContactosLayout = new javax.swing.GroupLayout(panelContactos);
         panelContactos.setLayout(panelContactosLayout);
         panelContactosLayout.setHorizontalGroup(
             panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelContactosLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContactosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jInternalFrame1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(IFContactos, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jInternalFrame1)
+                    .addComponent(IFContactos)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelContactosLayout.createSequentialGroup()
+                        .addComponent(lblNombreTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboElegirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCrearGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBorrarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelContactosLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelContactosLayout.createSequentialGroup()
-                        .addComponent(lblNombreTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboElegirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(95, 95, 95)
-                        .addComponent(btnCrearGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90)
-                        .addComponent(btnBorrarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(scrollContactos)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContactosLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnDesordenar)))
-                .addContainerGap())
+                        .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(scrollContactos)
+                            .addGroup(panelContactosLayout.createSequentialGroup()
+                                .addComponent(btnAñadirColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBorrarColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(2, 2, 2)
+                        .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, 0))
         );
         panelContactosLayout.setVerticalGroup(
             panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContactosLayout.createSequentialGroup()
-                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(panelContactosLayout.createSequentialGroup()
-                            .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(comboElegirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblNombreTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(7, 7, 7))
-                        .addComponent(btnCrearGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnBorrarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelContactosLayout.createSequentialGroup()
+                        .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboElegirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombreTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7))
+                    .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCrearGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBorrarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(scrollContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAñadirColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBorrarColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scrollContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IFContactos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelContactosLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelContactosLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelContactosLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         TPEscribirSms.addTab("Contactos", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\usuarios.jpg"), panelContactos); // NOI18N
@@ -1028,7 +1069,7 @@ public class Envios extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TPEscribirSms, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
+            .addComponent(TPEscribirSms, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1054,13 +1095,13 @@ public class Envios extends javax.swing.JFrame {
                 //Separar el contenido para comprobar los telefonos de forma individual
                 String[] contador = txtAreaMoviles.getText().split(",");
                 //Set recipients
-                ArrayList<ApiRecipientBean> recipients = new ArrayList<ApiRecipientBean>();
+                ArrayList<ApiRecipientBean> recipients = new ArrayList<>();
                 for (int i = 0; i < Integer.parseInt(Hilo.comprobarTelefonos()); i++) {
                     String[] separarPrefijo = contador[i].split("/");
                     ApiRecipientBean recipient = new ApiRecipientBean();
                     recipient.setCode(separarPrefijo[0]);
                     recipient.setPhone(separarPrefijo[1]);
-                    HashMap<String, String> hmap = new HashMap<String, String>();
+                    HashMap<String, String> hmap = new HashMap<>();
                     hmap.put("Nombre", cambiarPorNombre(separarPrefijo[1], "Nombre"));
                     hmap.put("País", cambiarPorNombre(separarPrefijo[1], "País"));
                     hmap.put("Remitente", txtNombreRemitente.getText());
@@ -1069,7 +1110,7 @@ public class Envios extends javax.swing.JFrame {
                     recipients.add(recipient);
                 }
                 //Set message data
-                ArrayList<ApiMessageBean> sendings = new ArrayList<ApiMessageBean>();
+                ArrayList<ApiMessageBean> sendings = new ArrayList<>();
                 ApiMessageBean message = new ApiMessageBean();
                 message.setRecipients(recipients);
                 message.setSender(txtNombreRemitente.getText());
@@ -1148,7 +1189,9 @@ public class Envios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUtilizarLicenciaMouseClicked
 
     private void btnAñadirContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirContactoMouseClicked
-        añadirContacto(lblNombreUsr.getText());
+        AñadirNuevoContacto objNC=new AñadirNuevoContacto(0);
+        objNC.setVisible(true);
+        
     }//GEN-LAST:event_btnAñadirContactoMouseClicked
 
     private void btnLimpiarNombreCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarNombreCMouseClicked
@@ -1164,7 +1207,16 @@ public class Envios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDesordenarMouseClicked
 
     private void tablaContactosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaContactosMouseClicked
-        seleccionarLineaContactos();
+        Point point=evt.getPoint();
+        int column=tablaContactos.columnAtPoint(point);
+        numColumnaABorrar=column;
+        columnaABorrar=tablaContactos.getColumnName(column);
+        if(column<=2){
+            btnBorrarColumna.setText("No puedes borrar la columna \""+columnaABorrar+"\"");
+        }else{
+            btnBorrarColumna.setText("Borrar columna \""+columnaABorrar+"\"");
+        }
+        
     }//GEN-LAST:event_tablaContactosMouseClicked
 
     private void btnEliminarContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarContactoMouseClicked
@@ -1253,6 +1305,32 @@ public class Envios extends javax.swing.JFrame {
     private void btnAñadirVariableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirVariableMouseClicked
         txtAreaMensaje.insert(comboVariablesTexto.getSelectedItem().toString(), txtAreaMensaje.getCaretPosition());
     }//GEN-LAST:event_btnAñadirVariableMouseClicked
+
+    private void btnModificarContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarContactoMouseClicked
+        AñadirNuevoContacto objNC=new AñadirNuevoContacto(1);
+        objNC.setVisible(true);
+    }//GEN-LAST:event_btnModificarContactoMouseClicked
+
+    private void btnAñadirColumnaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirColumnaMouseClicked
+        NuevaColumna objNCol =new NuevaColumna();
+        objNCol.setVisible(true);
+    }//GEN-LAST:event_btnAñadirColumnaMouseClicked
+
+    private void btnBorrarColumnaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarColumnaMouseClicked
+        if(numColumnaABorrar==0){
+            
+        }else{
+            int YesNoOption=JOptionPane.YES_NO_OPTION;
+            int returnVal=JOptionPane.showConfirmDialog(null,"La columna con todos los datos que hay dentro sera borrada.\nEstas seguro de querer borrarlo? ", "¡CUIDADO!", YesNoOption);
+            if(returnVal==JOptionPane.YES_OPTION){
+                crearCopiaTabla();
+                copiarContenidoEntreTablas();
+                borrarT();
+                renombrarTablaCopia();
+                mostrarDatosTContactos();
+            }
+        }
+    }//GEN-LAST:event_btnBorrarColumnaMouseClicked
     /*
     *
     *
@@ -1262,7 +1340,7 @@ public class Envios extends javax.swing.JFrame {
      */
 
     public String conseguirFecha() {
-        String fechaDefinitiva = "";
+        String fechaDefinitiva;
         if (CheckEnvioProgramado.isSelected() == true) {
             String fechaString = "" + jCalendar1.getDate();
             String[] fecha = fechaString.split(" ");
@@ -1369,10 +1447,9 @@ public class Envios extends javax.swing.JFrame {
         try {
             conectar();
             String sql = "CREATE TABLE contactos "
-                    + "(movilc TEXT PRIMARY KEY NOT NULL,"
-                    + "nombrec TEXT NOT NULL,"
-                    + "paisc TEXT NOT NULL,"
-                    + "licenciac TEXT);";
+                    + "(Movil TEXT PRIMARY KEY NOT NULL,"
+                    + "Nombre TEXT NOT NULL,"
+                    + "País TEXT NOT NULL);";
             stmt.executeUpdate(sql);
             c.commit();
             System.out.println("contactos creada");
@@ -1405,70 +1482,25 @@ public class Envios extends javax.swing.JFrame {
         }
     }
 
-    public static void mostrarDatosTContactos(String nombreGrupo) {
+    public static void mostrarDatosTContactos() {
         try {
-            DefaultTableModel modelo = (DefaultTableModel) tablaContactos.getModel();
-            for (int i = 0; i < tablaContactos.getRowCount(); i++) {
-                modelo.removeRow(i);
-                i -= 1;
-            }
             conectar();
-            String sql = consultarSegunGrupo(1, "", "", nombreGrupo);
-            rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                Object[] linea = new Object[3];
-                linea[0] = rs.getString("movilc");
-                linea[1] = rs.getString("nombrec");
-                linea[2] = rs.getString("paisc");
-                modelo.addRow(linea);
-            }
-            tablaContactos.setModel(modelo);
+            String sql=consultarSegunGrupo(comboElegirGrupo.getSelectedItem().toString());
+            rs=stmt.executeQuery(sql);
+            tablaContactos.setModel(resultSetToTableModelUneditable(rs));
             desconectar();
-
+            sustituirNull(tablaContactos);
         } catch (SQLException ex) {
-            System.err.println("ERROR EN MOSTRAR DATOS T CONTACTOS");
-            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
-            System.exit(0);
+                Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void mostrarDatosTContactosOrdenados(String campo, String orden, String nombreGrupo) {
-        try {
-            DefaultTableModel modelo = (DefaultTableModel) tablaContactos.getModel();
-            conectar();
-            rs = stmt.executeQuery(consultarSegunGrupo(2, campo, orden, nombreGrupo));
-
-            while (rs.next()) {
-                Object[] linea = new Object[3];
-                linea[0] = rs.getString("movilc");
-                linea[1] = rs.getString("nombrec");
-                linea[2] = rs.getString("paisc");
-                modelo.addRow(linea);
-                tablaContactos.setModel(modelo);
-            }
-            desconectar();
-
-        } catch (SQLException ex) {
-            System.err.println("ERROR EN MOSTRAR DATOS T CONTACTOS ORDENADOS");
-            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
-            System.exit(0);
-        }
-    }
-
-    public static String consultarSegunGrupo(int tipo, String campo, String orden, String nombreGrupo) {
-        if (tipo == 1) {
-            if (nombreGrupo.equals("todos")) {
+    public static String consultarSegunGrupo(String nombreGrupo) {
+            if (nombreGrupo.equals("Todos")) {
                 return "SELECT * FROM contactos;";
             } else {
-                return "SELECT * FROM contactos WHERE movilc=(SELECT * FROM " + CrearGrupo.adaptarNombreG(nombreGrupo) + " WHERE contactos.movilc=" + CrearGrupo.adaptarNombreG(nombreGrupo) + ".movilc);";
+                return "SELECT * FROM contactos WHERE Movil=(SELECT * FROM " + CrearGrupo.quitarEspacios(nombreGrupo) + " WHERE contactos.Movil=" + CrearGrupo.quitarEspacios(nombreGrupo) + ".Movil);";
             }
-        } else {
-            if (nombreGrupo.equals("todos")) {
-                return "SELECT * FROM contactos ORDER BY " + campo + " " + orden + ";";
-            } else {
-                return "SELECT * FROM contactos WHERE movilc=(SELECT * FROM " + CrearGrupo.adaptarNombreG(nombreGrupo) + " WHERE contactos.movilc=" + CrearGrupo.adaptarNombreG(nombreGrupo) + ".movilc) ORDER BY " + campo + " " + orden + ";";
-            }
-        }
     }
 
     public static void añadirLicencia() {
@@ -1495,31 +1527,6 @@ public class Envios extends javax.swing.JFrame {
                     + "\nasegúrese de que ingresó los datos correctamente", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
         }
 
-    }
-
-    public static void añadirContacto(String nLicencia) {
-        try {
-            String nContacto = txtNombreContacto.getText();
-            String movilContacto = txtMovilContacto.getText();
-            String paisContacto = comboPais.getSelectedItem().toString();
-
-            conectar();
-            String sql = "INSERT INTO contactos VALUES"
-                    + " ('" + movilContacto + "','" + nContacto + "','" + paisContacto + "','" + nLicencia + "');";
-            stmt.executeUpdate(sql);
-            c.commit();
-            desconectar();
-            DefaultTableModel modelo = (DefaultTableModel) tablaContactos.getModel();
-            for (int i = 0; i < tablaContactos.getRowCount(); i++) {
-                modelo.removeRow(i);
-                i -= 1;
-            }
-            mostrarDatosTContactos(CrearGrupo.adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()));
-            JOptionPane.showMessageDialog(null, "El contacto se añadió correctamente");
-        } catch (HeadlessException | SQLException ex) {
-            System.err.println("ERROR EN AÑADIR CONTACTO");
-            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public static int[] calcularLargoTelf(String nombrePais) {
@@ -1885,11 +1892,11 @@ public class Envios extends javax.swing.JFrame {
     }
 
     public static void eliminarContacto() {
-        String movil = txtMovilContacto.getText();
+        String movil = (String) tablaContactos.getValueAt(tablaContactos.getSelectedRow(), 0);
         if (!"".equals(movil)) {
             try {
                 conectar();
-                String sql = "DELETE from contactos where movilc='" + movil + "';";
+                String sql = "DELETE from contactos where Movil='" + movil + "';";
                 stmt.executeUpdate(sql);
                 c.commit();
                 desconectar();
@@ -1942,10 +1949,10 @@ public class Envios extends javax.swing.JFrame {
         try {
             conectar();
 
-            String sql = "SELECT * FROM contactos WHERE movilc='" + movil + "'";
+            String sql = "SELECT * FROM contactos WHERE Movil='" + movil + "'";
             rs = stmt.executeQuery(sql);
             if (rs.next() == true) {
-                String movilPref = transformarPais(rs.getString("paisc")) + rs.getString("movilc") + ",";
+                String movilPref = transformarPais(rs.getString("País")) + rs.getString("Movil") + ",";
                 desconectar();
                 return movilPref;
             } else {
@@ -1965,12 +1972,12 @@ public class Envios extends javax.swing.JFrame {
                 String sql = "DELETE FROM grupos where nGrupo='" + comboElegirGrupo.getSelectedItem().toString() + "';";
                 stmt.executeUpdate(sql);
                 c.commit();
-                sql = "DROP TABLE " + adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()) + ";";
+                sql = "DROP TABLE " + quitarEspacios(comboElegirGrupo.getSelectedItem().toString()) + ";";
                 stmt.executeUpdate(sql);
                 c.commit();
                 desconectar();
                 mostrarGruposCombo();
-                mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()));
+                mostrarDatosTContactos();
             } catch (SQLException ex) {
                 System.err.println("ERROR EN BORRAR GRUPO");
                 Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
@@ -1979,12 +1986,13 @@ public class Envios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El grupo \"Todos\" no puede ser borrado", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
 
     public static boolean comprobarRegistro(String existMovil) {
         try {
             conectar();
 
-            String sql = "SELECT * FROM contactos WHERE movilc='" + existMovil + "';";
+            String sql = "SELECT * FROM contactos WHERE Movil='" + existMovil + "';";
             rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 rs.close();
@@ -2011,7 +2019,7 @@ public class Envios extends javax.swing.JFrame {
                         if (comprobarSiEstaEnNuevoGrupo(movil) == true) {
                             try {
                                 conectar();
-                                String sql = "INSERT INTO " + adaptarNombreG(grupoS) + " VALUES('" + movil + "')";
+                                String sql = "INSERT INTO " + quitarEspacios(grupoS) + " VALUES('" + movil + "')";
                                 stmt.executeUpdate(sql);
                                 System.out.println("El contacto se ha agregado al grupo " + grupoS + " con exito");
 
@@ -2036,10 +2044,10 @@ public class Envios extends javax.swing.JFrame {
     }
 
     public static boolean comprobarSiEstaEnNuevoGrupo(String auxMovil) {
-        String auxNuevoGrupo = adaptarNombreG(comboAñadirAlGrupo.getSelectedItem().toString());
+        String auxNuevoGrupo = quitarEspacios(comboAñadirAlGrupo.getSelectedItem().toString());
         try {
             conectar();
-            String sql = "SELECT * FROM " + auxNuevoGrupo + " WHERE movilc='" + auxMovil + "';";
+            String sql = "SELECT * FROM " + auxNuevoGrupo + " WHERE Movil='" + auxMovil + "';";
             rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 desconectar();
@@ -2067,21 +2075,20 @@ public class Envios extends javax.swing.JFrame {
                         String auxMovilC = tablaContactos.getValueAt(selectedRowI[i], 0).toString();
                         selectedRowS[i]=auxMovilC;
                     }
-                    for(int i=0;i<selectedRowS.length;i++){
-                        String auxGrupoSQL = adaptarNombreG(auxGrupo);
-                            try {
-                                conectar();
-                                String sql = "DELETE FROM " + auxGrupoSQL + " WHERE movilc='" + selectedRowS[i] + "';";
-                                stmt.executeUpdate(sql);
-                                c.commit();
-                                desconectar();
-                                mostrarDatosTContactos(adaptarNombreG(comboElegirGrupo.getSelectedItem().toString()));
-
-                            } catch (SQLException ex) {
-                                System.err.println("ERROR EN ECHAR CONTACTO DE GRUPO");
-                                Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                    for (String selectedRowS1 : selectedRowS) {
+                        String auxGrupoSQL = quitarEspacios(auxGrupo);
+                        try {
+                            conectar();
+                            String sql = "DELETE FROM " + auxGrupoSQL + " WHERE Movil='" + selectedRowS1 + "';";
+                            stmt.executeUpdate(sql);
+                            c.commit();
+                            desconectar();
+                            mostrarDatosTContactos();
+                        }catch (SQLException ex) {
+                            System.err.println("ERROR EN ECHAR CONTACTO DE GRUPO");
+                            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                    }
                     } else {
                         JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún contacto.", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
                     }
@@ -2094,17 +2101,17 @@ public class Envios extends javax.swing.JFrame {
 
     public static void escribirATodoElGrupo() {
         String auxGrupo = comboElegirGrupo.getSelectedItem().toString();
-        String auxGrupoSQL = CrearGrupo.adaptarNombreG(auxGrupo);
+        String auxGrupoSQL = CrearGrupo.quitarEspacios(auxGrupo);
         try {
             conectar();
-            String sql = consultarSegunGrupo(1, "", "", auxGrupoSQL);
+            String sql = consultarSegunGrupo(auxGrupoSQL);
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                String movil = rs.getString("movilc");
+                String movil = rs.getString("Movil");
                 txtAreaMoviles.setText(juntarMovilPrefijo(movil) + txtAreaMoviles.getText());
             }
             desconectar();
-            JOptionPane.showMessageDialog(null, "Se ha escrito el telefono de todo el grupo \"" + auxGrupo + "\" en la pestaña \"Enviar\"", "Información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Se ha escrito el teléfono de todo el grupo \"" + auxGrupo + "\" en la pestaña \"Enviar\"", "Información", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             System.err.println("ERROR EN ESCRIBIR A TODO EL GRUPO");
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
@@ -2115,12 +2122,12 @@ public class Envios extends javax.swing.JFrame {
         String retornable = "";
         try {
             conectar();
-            String sql = "SELECT * FROM contactos WHERE movilc='" + telefono + "';";
+            String sql = "SELECT * FROM contactos WHERE Movil='" + telefono + "';";
             rs = stmt.executeQuery(sql);
             if (variable.equals("Nombre")) {
-                retornable = rs.getString("nombrec");
+                retornable = rs.getString("Nombre");
             } else if (variable.equals("País")) {
-                retornable = rs.getString("paisc");
+                retornable = rs.getString("País");
             }
             desconectar();
 
@@ -2157,6 +2164,179 @@ public class Envios extends javax.swing.JFrame {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public static void borrarT() {
+        try {
+            conectar();
+            String sql = "DROP TABLE contactos";
+            stmt.executeUpdate(sql);
+            c.commit();
+            desconectar();
+        } catch (SQLException ex) {
+            System.err.println("ERROR EN borrar tabla contactos");
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void añadirColumna(String nombreColumna){
+        try {
+            conectar();
+            String sql="ALTER TABLE contactos ADD "+nombreColumna+" TEXT;";
+            stmt.executeUpdate(sql);
+            c.commit();
+            desconectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static TableModel resultSetToTableModelUneditable(ResultSet rs) {
+	try {
+	    ResultSetMetaData metaData = rs.getMetaData();
+	    int numberOfColumns = metaData.getColumnCount();
+	    Vector<String> columnNames = new Vector<String>();
+
+	    // Get the column names
+	    for (int column = 0; column < numberOfColumns; column++) {
+		columnNames.addElement(metaData.getColumnLabel(column + 1));
+	    }
+
+	    // Get all rows.
+	    Vector<Vector<Object>> rows = new Vector<Vector<Object>>();
+
+	    while (rs.next()) {
+		Vector<Object> newRow = new Vector<Object>();
+
+		for (int i = 1; i <= numberOfColumns; i++) {
+		    newRow.addElement(rs.getObject(i));
+		}
+
+		rows.addElement(newRow);
+	    }
+
+	    return new DefaultTableModel(rows, columnNames){
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+	} catch (Exception e) {
+	    e.printStackTrace();
+
+	    return null;
+	}
+    }
+    public static TableModel resultSetToTableModel(ResultSet rs) {
+	try {
+	    ResultSetMetaData metaData = rs.getMetaData();
+	    int numberOfColumns = metaData.getColumnCount();
+	    Vector<String> columnNames = new Vector<String>();
+
+	    // Get the column names
+	    for (int column = 0; column < numberOfColumns; column++) {
+		columnNames.addElement(metaData.getColumnLabel(column + 1));
+	    }
+
+	    // Get all rows.
+	    Vector<Vector<Object>> rows = new Vector<Vector<Object>>();
+
+	    while (rs.next()) {
+		Vector<Object> newRow = new Vector<Object>();
+
+		for (int i = 1; i <= numberOfColumns; i++) {
+		    newRow.addElement(rs.getObject(i));
+		}
+
+		rows.addElement(newRow);
+	    }
+
+	    return new DefaultTableModel(rows, columnNames);
+	} catch (Exception e) {
+	    e.printStackTrace();
+
+	    return null;
+	}
+    }
+    public static void crearCopiaTabla(){
+        try {
+            conectar();
+            String sql="CREATE TABLE copia "+datosCrearCopiaTabla();
+            stmt.executeUpdate(sql);
+            c.commit();
+            desconectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    public static String datosCrearCopiaTabla(){
+        String aux="";
+        for(int i=0;i<tablaContactos.getColumnCount();i++){
+            if(i==0){
+                aux="("+(String)tablaContactos.getColumnName(i)+" TEXT PRIMARY KEY NOT NULL";
+            }else if(i==1||i==2){
+                aux=aux+","+(String)tablaContactos.getColumnName(i)+" TEXT NOT NULL";
+            }else if(i==numColumnaABorrar&&i==tablaContactos.getColumnCount()-1){
+                aux=aux+");";
+            }else if(i==numColumnaABorrar&&i!=tablaContactos.getColumnCount()-1){
+                
+            }else if(i!=numColumnaABorrar&&i==tablaContactos.getColumnCount()-1){
+                aux=aux+","+(String)tablaContactos.getColumnName(i)+" TEXT);";
+            }else{
+                aux=aux+","+(String)tablaContactos.getColumnName(i)+" TEXT";
+            }
+        }
+        return aux;
+    }
+    public static String datosCopiaTabla(){
+        String aux="";
+        for(int i=0;i<tablaContactos.getColumnCount();i++){
+            if(i==0){
+                aux=(String)tablaContactos.getColumnName(i);
+            }else if(i==numColumnaABorrar){
+               
+            }else{
+                aux=aux+","+(String)tablaContactos.getColumnName(i);
+            }
+        }
+        return aux;
+    }
+    public static void copiarContenidoEntreTablas(){
+        try {
+            conectar();
+            String sql="INSERT INTO copia("+datosCopiaTabla()+") SELECT "+datosCopiaTabla()+" FROM contactos;";
+            
+            stmt.executeUpdate(sql);
+            c.commit();
+            desconectar();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+    }
+    public static void renombrarTablaCopia(){
+        try {
+            conectar();
+            String sql="ALTER TABLE copia RENAME TO contactos;";
+            stmt.executeUpdate(sql);
+            c.commit();
+            desconectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    public static void sustituirNull(JTable tabla){
+        try{
+            int auxNumCol=tabla.getColumnCount();
+            for(int row=0;row<tabla.getRowCount();row++){
+                for(int col=0;col<tabla.getColumnCount();col++){
+                    String aux=(String) tabla.getValueAt(row, col);
+                    if(aux.equals("null")){
+                        tabla.setValueAt(" ", row, col);
+                    }
+                }
+            }
+        }catch(Exception ex){
+            
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -2186,10 +2366,8 @@ public class Envios extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Envios().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Envios().setVisible(true);
         });
     }
 
@@ -2200,9 +2378,11 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JInternalFrame IFMensaje;
     private javax.swing.JTabbedPane TPEscribirSms;
     private javax.swing.JButton btnAñadirAlGrupo;
+    private javax.swing.JButton btnAñadirColumna;
     public static javax.swing.JButton btnAñadirContacto;
     private javax.swing.JButton btnAñadirLicencia;
     private javax.swing.JButton btnAñadirVariable;
+    private javax.swing.JButton btnBorrarColumna;
     private javax.swing.JButton btnBorrarGrupo;
     private javax.swing.JButton btnBuscarLicencia;
     private javax.swing.JButton btnCrearGrupo;
@@ -2219,6 +2399,7 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnLimpiarMovilC;
     private javax.swing.JButton btnLimpiarNombreC;
+    public static javax.swing.JButton btnModificarContacto;
     private javax.swing.JButton btnModificarPlantilla;
     private javax.swing.JButton btnNuevaPlantilla;
     private javax.swing.JButton btnUtilizarLicencia;
