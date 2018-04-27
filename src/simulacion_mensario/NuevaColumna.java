@@ -106,6 +106,7 @@ public class NuevaColumna extends javax.swing.JFrame {
     private void btnAceptarNuevaColumnaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarNuevaColumnaMouseClicked
         Envios.añadirColumna(txtNombreNuevaColumna.getText());
         Envios.mostrarDatosTContactos();
+        Envios.mostrarVariablesCombo(Envios.comboVariablesTexto);
         this.dispose();
     }//GEN-LAST:event_btnAceptarNuevaColumnaMouseClicked
 

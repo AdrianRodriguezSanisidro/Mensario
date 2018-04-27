@@ -21,12 +21,14 @@ import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import static simulacion_mensario.CrearGrupo.*;
 import static simulacion_mensario.Plantilla.borrarPlantilla;
+import static simulacion_mensario.Plantilla.comboVariablesPlantilla;
 import static simulacion_mensario.Plantilla.mostrarTablaPlantillas;
 
 /**
@@ -44,6 +46,9 @@ public class Envios extends javax.swing.JFrame {
     public static Connection c;
     public static Statement stmt;
     public static ResultSet rs;
+    public static Connection c2;
+    public static Statement stmt2;
+    public static ResultSet rs2;
     public static String cambioMovilElegido;
     public static String columnaABorrar;
     public static int numColumnaABorrar;
@@ -62,6 +67,7 @@ public class Envios extends javax.swing.JFrame {
         mostrarGruposCombo();
         Plantilla.mostrarTablaPlantillas();
         mostrarDatosTContactos();
+        mostrarVariablesCombo(comboVariablesTexto);
         //Permite ordenar los datos
         tablaContactos.setAutoCreateRowSorter(true);
         tablaLicencias.setAutoCreateRowSorter(true);
@@ -285,7 +291,7 @@ public class Envios extends javax.swing.JFrame {
 
         lblNumMensajes.setText("1");
 
-        comboVariablesTexto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "{#Nombre}", "{#País}", "{#Remitente}", "{#Teléfono}" }));
+        comboVariablesTexto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "{#Nombre}", "{#Paìs}", "{#Remitente}", "{#Teléfono}" }));
 
         btnAñadirVariable.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
         btnAñadirVariable.setText("Añadir");
@@ -434,14 +440,14 @@ public class Envios extends javax.swing.JFrame {
                             .addComponent(comboMinEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblHoraEnvio))
-                        .addGap(40, 40, 40))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelEnviosLayout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addComponent(CheckEnvioProgramado))
                     .addGroup(panelEnviosLayout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(867, 867, 867))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         TPEscribirSms.addTab("Enviar", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_envios.jpg"), panelEnvios); // NOI18N
@@ -546,41 +552,36 @@ public class Envios extends javax.swing.JFrame {
                         .addGap(5, 5, 5)
                         .addComponent(scrollTable))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLicenciasLayout.createSequentialGroup()
-                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelLicenciasLayout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtLicencia)
-                                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(panelLicenciasLayout.createSequentialGroup()
-                                .addGap(78, 78, 78)
-                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelLicenciasLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblClave, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtClave)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 87, Short.MAX_VALUE)
-                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 69, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLicenciasLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(100, 100, 100)))))
+                        .addGap(40, 40, 40)
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtLicencia)
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblClave, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtClave)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 87, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 69, Short.MAX_VALUE)))
                 .addGap(5, 5, 5))
+            .addGroup(panelLicenciasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelLicenciasLayout.setVerticalGroup(
             panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -612,15 +613,15 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)))
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
-                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         TPEscribirSms.addTab("Licencias", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\licencia.png"), panelLicencias); // NOI18N
@@ -741,6 +742,7 @@ public class Envios extends javax.swing.JFrame {
 
         btnModificarContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\user.png")); // NOI18N
         btnModificarContacto.setText("Modificar contacto");
+        btnModificarContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnModificarContacto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnModificarContactoMouseClicked(evt);
@@ -878,6 +880,7 @@ public class Envios extends javax.swing.JFrame {
         btnBorrarColumna.setForeground(new java.awt.Color(204, 0, 0));
         btnBorrarColumna.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\delete_column.png")); // NOI18N
         btnBorrarColumna.setText("Borrar columna");
+        btnBorrarColumna.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBorrarColumna.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnBorrarColumnaMouseClicked(evt);
@@ -886,6 +889,7 @@ public class Envios extends javax.swing.JFrame {
 
         btnAñadirColumna.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_column.png")); // NOI18N
         btnAñadirColumna.setText("Añadir columna");
+        btnAñadirColumna.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAñadirColumna.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAñadirColumnaMouseClicked(evt);
@@ -925,7 +929,7 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(0, 0, 0))
         );
         panelContactosLayout.setVerticalGroup(
@@ -945,18 +949,26 @@ public class Envios extends javax.swing.JFrame {
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAñadirColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBorrarColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scrollContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(IFContactos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEscribirContacto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addGroup(panelContactosLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                        .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(scrollContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(IFContactos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelContactosLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                                .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelContactosLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(41, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContactosLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))))
         );
 
         TPEscribirSms.addTab("Contactos", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\usuarios.jpg"), panelContactos); // NOI18N
@@ -1059,13 +1071,13 @@ public class Envios extends javax.swing.JFrame {
                 .addComponent(jScrollPaneTablaPlantillas, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(jScrollPaneTextoPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelPlantillasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEliminarPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnModificarPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNuevaPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnUtilizarPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         TPEscribirSms.addTab("Plantillas", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\notepad.png"), panelPlantillas); // NOI18N
@@ -1107,11 +1119,7 @@ public class Envios extends javax.swing.JFrame {
                     recipient.setCode(separarPrefijo[0]);
                     recipient.setPhone(separarPrefijo[1]);
                     HashMap<String, String> hmap = new HashMap<>();
-                    hmap.put("Nombre", cambiarPorNombre(separarPrefijo[1], "Nombre"));
-                    hmap.put("País", cambiarPorNombre(separarPrefijo[1], "País"));
-                    hmap.put("Remitente", txtNombreRemitente.getText());
-                    hmap.put("Teléfono", separarPrefijo[1]);
-                    recipient.setParameters(hmap);
+                    recipient.setParameters(crearHashmap(hmap, separarPrefijo[1]));
                     recipients.add(recipient);
                 }
                 //Set message data
@@ -1243,7 +1251,7 @@ public class Envios extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMovilContactoKeyTyped
 
     private void btnEscribirContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEscribirContactoMouseClicked
-        txtAreaMoviles.setText(juntarMovilPrefijo((String) tablaContactos.getValueAt(tablaContactos.getSelectedRow(), 0)) + txtAreaMoviles.getText());
+        txtAreaMoviles.setText(juntarMovilPrefijo((String) tablaContactos.getValueAt(tablaContactos.getSelectedRow(), 0),(String) tablaContactos.getValueAt(tablaContactos.getSelectedRow(), 2)) + txtAreaMoviles.getText());
         JOptionPane.showMessageDialog(null, "El teléfono se ha escrito en la pestaña \"Enviar\"", "Información", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnEscribirContactoMouseClicked
 
@@ -1322,7 +1330,7 @@ public class Envios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAñadirColumnaMouseClicked
 
     private void btnBorrarColumnaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarColumnaMouseClicked
-        if(numColumnaABorrar==0){
+        if(numColumnaABorrar<=2){
             
         }else{
             int YesNoOption=JOptionPane.YES_NO_OPTION;
@@ -1333,6 +1341,7 @@ public class Envios extends javax.swing.JFrame {
                 borrarT();
                 renombrarTablaCopia();
                 mostrarDatosTContactos();
+                mostrarVariablesCombo(comboVariablesTexto);
             }
         }
     }//GEN-LAST:event_btnBorrarColumnaMouseClicked
@@ -1929,6 +1938,14 @@ public class Envios extends javax.swing.JFrame {
         aux = aux.replace("ú", "ù");
         return aux;
     }
+    
+    public static String cambiarCaracteres2(String mensaje){
+        String aux = mensaje.replace("à", "á");
+        aux = aux.replace("ì", "í");
+        aux = aux.replace("ò", "ó");
+        aux = aux.replace("ù", "ú");
+        return aux;
+    }
 
     public static boolean comprobarGSM(String mensaje) {
         char[] charArray = mensaje.toCharArray();
@@ -1950,24 +1967,9 @@ public class Envios extends javax.swing.JFrame {
         return true;
     }
 
-    public static String juntarMovilPrefijo(String movil) {
-        try {
-            conectar();
-
-            String sql = "SELECT * FROM contactos WHERE Movil='" + movil + "'";
-            rs = stmt.executeQuery(sql);
-            if (rs.next() == true) {
-                String movilPref = transformarPais(rs.getString("País")) + rs.getString("Movil") + ",";
-                desconectar();
-                return movilPref;
-            } else {
-                JOptionPane.showMessageDialog(null, "Este teléfono no se encuentra registrado agréguelo primero", "¡ATENCIÓN!", JOptionPane.WARNING_MESSAGE);
-            }
-        } catch (HeadlessException | SQLException ex) {
-            System.err.println("ERROR EN AJUNTAR MOVIL PREFIJO");
-            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "";
+    public static String juntarMovilPrefijo(String movil,String pais) {
+            String movilPref = transformarPais(pais) + movil + ",";
+            return movilPref;
     }
 
     public static void borrarGrupo() {
@@ -1992,7 +1994,6 @@ public class Envios extends javax.swing.JFrame {
         }
     }
     
-
     public static boolean comprobarRegistro(String existMovil) {
         try {
             conectar();
@@ -2113,7 +2114,8 @@ public class Envios extends javax.swing.JFrame {
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 String movil = rs.getString("Movil");
-                txtAreaMoviles.setText(juntarMovilPrefijo(movil) + txtAreaMoviles.getText());
+                String pais=rs.getString("Paìs");
+                txtAreaMoviles.setText(juntarMovilPrefijo(movil,pais) + txtAreaMoviles.getText());
             }
             desconectar();
             JOptionPane.showMessageDialog(null, "Se ha escrito el teléfono de todo el grupo \"" + auxGrupo + "\" en la pestaña \"Enviar\"", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -2129,11 +2131,7 @@ public class Envios extends javax.swing.JFrame {
             conectar();
             String sql = "SELECT * FROM contactos WHERE Movil='" + telefono + "';";
             rs = stmt.executeQuery(sql);
-            if (variable.equals("Nombre")) {
-                retornable = rs.getString("Nombre");
-            } else if (variable.equals("País")) {
-                retornable = rs.getString("País");
-            }
+                retornable = rs.getString(variable);
             desconectar();
 
         } catch (SQLException ex) {
@@ -2157,6 +2155,34 @@ public class Envios extends javax.swing.JFrame {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static void conectar2(){
+        try {
+            c2 = null;
+            stmt2 = null;
+            rs2 = null;
+            Class.forName("org.sqlite.JDBC");
+            c2 = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+            c2.setAutoCommit(false);
+            stmt2 = c2.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void desconectar2(){
+        try {
+            if (rs2 != null) {
+                rs2.close();
+            }
+            stmt2.close();
+            c2.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public static void desconectar() {
         try {
@@ -2169,6 +2195,7 @@ public class Envios extends javax.swing.JFrame {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     public static void borrarT() {
         try {
             conectar();
@@ -2181,6 +2208,7 @@ public class Envios extends javax.swing.JFrame {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     public static void añadirColumna(String nombreColumna){
         try {
             conectar();
@@ -2192,6 +2220,7 @@ public class Envios extends javax.swing.JFrame {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     public static TableModel resultSetToTableModelUneditable(ResultSet rs) {
 	try {
 	    ResultSetMetaData metaData = rs.getMetaData();
@@ -2227,6 +2256,7 @@ public class Envios extends javax.swing.JFrame {
 	    return null;
 	}
     }
+    
     public static TableModel resultSetToTableModel(ResultSet rs) {
 	try {
 	    ResultSetMetaData metaData = rs.getMetaData();
@@ -2258,6 +2288,7 @@ public class Envios extends javax.swing.JFrame {
 	    return null;
 	}
     }
+    
     public static void crearCopiaTabla(){
         try {
             conectar();
@@ -2270,6 +2301,7 @@ public class Envios extends javax.swing.JFrame {
         }
         
     }
+    
     public static String datosCrearCopiaTabla(){
         String aux="";
         for(int i=0;i<tablaContactos.getColumnCount();i++){
@@ -2289,6 +2321,7 @@ public class Envios extends javax.swing.JFrame {
         }
         return aux;
     }
+    
     public static String datosCopiaTabla(){
         String aux="";
         for(int i=0;i<tablaContactos.getColumnCount();i++){
@@ -2302,6 +2335,7 @@ public class Envios extends javax.swing.JFrame {
         }
         return aux;
     }
+    
     public static void copiarContenidoEntreTablas(){
         try {
             conectar();
@@ -2315,6 +2349,7 @@ public class Envios extends javax.swing.JFrame {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }    
     }
+    
     public static void renombrarTablaCopia(){
         try {
             conectar();
@@ -2327,6 +2362,7 @@ public class Envios extends javax.swing.JFrame {
         }
         
     }
+    
     public static void sustituirNull(JTable tabla){
         try{
             int auxNumCol=tabla.getColumnCount();
@@ -2341,6 +2377,35 @@ public class Envios extends javax.swing.JFrame {
         }catch(Exception ex){
             
         }
+    }
+    
+    public static void mostrarVariablesCombo(JComboBox combo){
+        try {
+            conectar();
+            String sql="PRAGMA table_info(contactos);";
+            combo.removeAllItems();
+            rs=stmt.executeQuery(sql);
+            while(rs.next()){
+                combo.addItem("{#"+rs.getString(2)+"}");
+            }
+            desconectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static HashMap<String,String> crearHashmap(HashMap<String, String> hmap,String movil){
+        for(int i=0;i<comboVariablesTexto.getItemCount();i++){
+            hmap.put(cambiarCaracteres(separarItem(comboVariablesTexto.getItemAt(i))),cambiarPorNombre(movil, separarItem(comboVariablesTexto.getItemAt(i))));
+        }
+        return hmap;
+    }
+    
+    public static String separarItem(String item){
+        String itemCambiado=item.replace("{#", "");
+        String itemCambiado2=itemCambiado.replaceAll("}", "");
+                
+        return itemCambiado2;
     }
 
     /**

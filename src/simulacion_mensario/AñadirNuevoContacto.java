@@ -254,7 +254,6 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
             String auxMovil=movil;
             String sql2="INSERT INTO contactos VALUES "+añadirSinSaberLargo();
             stmt.executeUpdate(sql);
-            System.out.println("Borrado");
             c.commit();
             stmt.executeUpdate(sql2);
             c.commit();

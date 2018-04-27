@@ -45,6 +45,7 @@ public class Plantilla extends javax.swing.JFrame {
         txtAreaEscribirTextoPlantilla.setText(textoP);
         txtAreaEscribirTextoPlantilla.setLineWrap(true);
         txtAreaEscribirTextoPlantilla.setWrapStyleWord(true);
+        Envios.mostrarVariablesCombo(comboVariablesPlantilla);
     }
 
     /**
@@ -114,7 +115,7 @@ public class Plantilla extends javax.swing.JFrame {
             }
         });
 
-        comboVariablesPlantilla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "{#Nombre}", "{#País}", "{#Remitente}", "{#Teléfono}" }));
+        comboVariablesPlantilla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "{#Nombre}", "{#País}", "{#Remitente}", "{#Teléfono}" }));
 
         jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -352,7 +353,7 @@ public class Plantilla extends javax.swing.JFrame {
     private javax.swing.JButton btnAceptarPlantilla;
     private javax.swing.JButton btnLimpiarNombrePlantilla;
     private javax.swing.JButton btnLimpiarTextoPlantilla;
-    private javax.swing.JComboBox<String> comboVariablesPlantilla;
+    public static javax.swing.JComboBox<String> comboVariablesPlantilla;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPaneEscribirTextoPlantilla;
     private javax.swing.JLabel lblNombrePlantilla;
