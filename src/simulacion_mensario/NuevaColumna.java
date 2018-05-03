@@ -5,6 +5,8 @@
  */
 package simulacion_mensario;
 
+import com.sun.glass.events.KeyEvent;
+
 /**
  *
  * @author adrys
@@ -16,6 +18,7 @@ public class NuevaColumna extends javax.swing.JFrame {
      */
     public NuevaColumna() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -39,6 +42,12 @@ public class NuevaColumna extends javax.swing.JFrame {
 
         lblNombreNuevaColumna.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblNombreNuevaColumna.setText("Nombre de la nueva columna:");
+
+        txtNombreNuevaColumna.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreNuevaColumnaKeyTyped(evt);
+            }
+        });
 
         btnAceptarNuevaColumna.setForeground(new java.awt.Color(0, 153, 0));
         btnAceptarNuevaColumna.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
@@ -113,6 +122,14 @@ public class NuevaColumna extends javax.swing.JFrame {
     private void btnCancelarNuevaColumnaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarNuevaColumnaMouseClicked
         this.dispose();
     }//GEN-LAST:event_btnCancelarNuevaColumnaMouseClicked
+
+    private void txtNombreNuevaColumnaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreNuevaColumnaKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!(Character.isAlphabetic(c) || c == KeyEvent.VK_DELETE || Character.isDigit(c))) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreNuevaColumnaKeyTyped
 
     /**
      * @param args the command line arguments

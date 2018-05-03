@@ -47,7 +47,6 @@ public class CrearGrupo extends javax.swing.JFrame {
     }
 
     public static void crearNuevoGrupo(String nombreG) {
-        if (comprobarNombreG(nombreG) == true) {
             try {
                 conectar();
                 String sql = "CREATE TABLE " + quitarEspacios(nombreG) + "(Movil TEXT PRIMARY KEY NOT NULL)";
@@ -58,10 +57,7 @@ public class CrearGrupo extends javax.swing.JFrame {
                 desconectar();
                 mostrarGruposCombo();
             } catch (SQLException ex) {
-                Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "El nombre del grupo es incorrecto.\nEl nombre solo admite caracteres de la A a la Z y espacios");
+                Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);  
         }
     }
 
@@ -209,6 +205,7 @@ public class CrearGrupo extends javax.swing.JFrame {
         btnCancelarNuevoGrupo.setForeground(new java.awt.Color(204, 0, 0));
         btnCancelarNuevoGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\cancel.png")); // NOI18N
         btnCancelarNuevoGrupo.setText("Cancelar");
+        btnCancelarNuevoGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelarNuevoGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCancelarNuevoGrupoMouseClicked(evt);
@@ -228,7 +225,6 @@ public class CrearGrupo extends javax.swing.JFrame {
                             .addComponent(txtNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(49, Short.MAX_VALUE))
                     .addGroup(panelCrearGrupoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAceptarNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelarNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -265,7 +261,7 @@ public class CrearGrupo extends javax.swing.JFrame {
     private void txtNuevoGrupoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNuevoGrupoKeyTyped
         char c = evt.getKeyChar();
 
-        if (!(Character.isAlphabetic(c) || (c == VK_SPACE) || c == KeyEvent.VK_DELETE)) {
+        if (!(Character.isAlphabetic(c) || c == KeyEvent.VK_DELETE || Character.isDigit(c))) {
             evt.consume();
         }
 
@@ -273,16 +269,24 @@ public class CrearGrupo extends javax.swing.JFrame {
 
     private void btnAceptarNuevoGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarNuevoGrupoMouseClicked
         boolean auxOK = true;
-        for (int i = 0; i < comboElegirGrupo.getItemCount(); i++) {
-            if (quitarEspacios(comboElegirGrupo.getItemAt(i)).equals(quitarEspacios(txtNuevoGrupo.getText()))) {
-                auxOK = false;
+        if(!txtNuevoGrupo.getText().equals("")){
+            if(empiezaPorLetra(txtNuevoGrupo.getText())==true){
+                for (int i = 0; i < comboElegirGrupo.getItemCount(); i++) {
+                    if (quitarEspacios(comboElegirGrupo.getItemAt(i)).equals(quitarEspacios(txtNuevoGrupo.getText()))) {
+                        auxOK = false;
+                    }
+                }
+                if (auxOK == true) {
+                    crearNuevoGrupo(txtNuevoGrupo.getText());
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "El grupo ya existe");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"El grupo nó puede empezar por un número","¡ATENCIÓN!",JOptionPane.ERROR_MESSAGE);
             }
-        }
-        if (auxOK == true) {
-            crearNuevoGrupo(txtNuevoGrupo.getText());
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "El grupo ya existe");
+        }else{
+            JOptionPane.showMessageDialog(null,"El nombre del grupo nó puede estar vacío","¡ATENCIÓN!",JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_btnAceptarNuevoGrupoMouseClicked
@@ -322,6 +326,17 @@ public class CrearGrupo extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new CrearGrupo().setVisible(true);
         });
+    }
+    public static boolean empiezaPorLetra(String palabraAComprobar){
+        char[]alfabetoArray=Envios.alfabeto.toCharArray();
+        char[]aux=palabraAComprobar.toCharArray();
+        for(int i=0;i<alfabetoArray.length;i++){
+            if(alfabetoArray[i]==aux[0]){
+                return true;
+            }
+        }
+        return false;
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

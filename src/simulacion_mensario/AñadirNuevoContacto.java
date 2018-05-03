@@ -74,6 +74,7 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
         btnAceptarNuevoContacto.setForeground(new java.awt.Color(0, 153, 0));
         btnAceptarNuevoContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
         btnAceptarNuevoContacto.setText("Aceptar");
+        btnAceptarNuevoContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAceptarNuevoContacto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAceptarNuevoContactoMouseClicked(evt);
@@ -83,6 +84,7 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
         btnCancelarNuevoContacto.setForeground(new java.awt.Color(204, 0, 0));
         btnCancelarNuevoContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\cancel.png")); // NOI18N
         btnCancelarNuevoContacto.setText("Cancelar");
+        btnCancelarNuevoContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelarNuevoContacto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCancelarNuevoContactoMouseClicked(evt);
@@ -133,8 +135,12 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
     private void btnAceptarNuevoContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarNuevoContactoMouseClicked
         if(eleccion==0){
             añadirContacto();
+            Envios.txtNombreContacto.setText("");
+            Envios.txtMovilContacto.setText("");
         }else{
             guardarCambiosContacto((String) tablaContactos.getValueAt(tablaContactos.getSelectedRow(), 0));
+            Envios.txtNombreContacto.setText("");
+            Envios.txtMovilContacto.setText("");
         }
         Envios.mostrarDatosTContactos();
         this.dispose();

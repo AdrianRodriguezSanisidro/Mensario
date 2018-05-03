@@ -20,6 +20,7 @@ public class Simulacion_Mensario {
     public static void main(String[] args) {
         //Envios.crearTablaContactos();
         //Envios.borrarT();
+        //Envios.soutTabla("Prueba");
         Envios objEnv = new Envios();
         objEnv.setVisible(true);
 

@@ -27,7 +27,7 @@ public class Hilo extends Thread {
             comprobarCheck();
             lblMovilesInsertados.setText(comprobarTelefonos());
             comprobarNumMensajes();
-            comprobarSeleccionParaModificar();
+            comprobarSeleccionContactos();
             comprobarCambioDeGrupo();
             comprobarMovilPais(calcularLargoTelf(comboPais.getSelectedItem().toString()));
             vaciarTextoPlantilla();
@@ -44,11 +44,15 @@ public class Hilo extends Thread {
             lblNumMensajes.setText("" + (resultado + 2));
         }
     }
-    public void comprobarSeleccionParaModificar(){
+    public void comprobarSeleccionContactos(){
         if(tablaContactos.getSelectedRow()==-1){
             Envios.btnModificarContacto.setEnabled(false);
+            Envios.btnEscribirContacto.setEnabled(false);
+            Envios.btnAñadirAlGrupo.setEnabled(false);
         }else{
             Envios.btnModificarContacto.setEnabled(true);
+            Envios.btnEscribirContacto.setEnabled(true);
+            Envios.btnAñadirAlGrupo.setEnabled(true);
         }
     }
 

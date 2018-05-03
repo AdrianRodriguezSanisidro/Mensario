@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static simulacion_mensario.CrearGrupo.empiezaPorLetra;
 import static simulacion_mensario.Envios.*;
 
 /**
@@ -66,7 +67,7 @@ public class Plantilla extends javax.swing.JFrame {
         btnLimpiarTextoPlantilla = new javax.swing.JButton();
         btnLimpiarNombrePlantilla = new javax.swing.JButton();
         comboVariablesPlantilla = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnAddVariablePlantilla = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -117,11 +118,11 @@ public class Plantilla extends javax.swing.JFrame {
 
         comboVariablesPlantilla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "{#Nombre}", "{#País}", "{#Remitente}", "{#Teléfono}" }));
 
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAddVariablePlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
+        btnAddVariablePlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAddVariablePlantilla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                btnAddVariablePlantillaMouseClicked(evt);
             }
         });
 
@@ -145,7 +146,7 @@ public class Plantilla extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                         .addComponent(comboVariablesPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddVariablePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                         .addComponent(btnLimpiarTextoPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -170,7 +171,7 @@ public class Plantilla extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEscribirPlanillaLayout.createSequentialGroup()
                         .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAddVariablePlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(comboVariablesPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24))))
         );
@@ -192,7 +193,7 @@ public class Plantilla extends javax.swing.JFrame {
     private void txtNombrePlantillaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombrePlantillaKeyTyped
         char c = evt.getKeyChar();
 
-        if (!(Character.isAlphabetic(c) || (c == VK_SPACE) || c == KeyEvent.VK_DELETE) || txtNombrePlantilla.getText().length() >= 64) {
+        if (!(Character.isAlphabetic(c) || Character.isDigit(c) || c == KeyEvent.VK_DELETE) || txtNombrePlantilla.getText().length() >= 64) {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombrePlantillaKeyTyped
@@ -210,38 +211,42 @@ public class Plantilla extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAceptarPlantillaMouseClicked
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void btnAddVariablePlantillaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddVariablePlantillaMouseClicked
         txtAreaEscribirTextoPlantilla.insert(comboVariablesPlantilla.getSelectedItem().toString(), txtAreaEscribirTextoPlantilla.getCaretPosition());
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_btnAddVariablePlantillaMouseClicked
 
     public static void nuevaPlantilla() {
         if (!"".equals(txtNombrePlantilla.getText())) {
-            if (eleccion == 0) {
-                try {
-                    conectar();
-                    String sql = "INSERT INTO plantillas VALUES('" + txtNombrePlantilla.getText() + "','" + txtAreaEscribirTextoPlantilla.getText() + "','" + Envios.lblNombreUsr.getText() + "');";
-                    stmt.executeUpdate(sql);
-                    c.commit();
-                    desconectar();
-                    mostrarTablaPlantillas();
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Ya existe una plantilla con ese nombre", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                try {
-                    conectar();
-                    String sql = "INSERT INTO plantillas VALUES('" + txtNombrePlantilla.getText() + "','" + txtAreaEscribirTextoPlantilla.getText() + "','" + Envios.lblNombreUsr.getText() + "');";
-                    borrarPlantilla(nombreP);
-                    if (auxBorrado == true) {
+            if(empiezaPorLetra(txtAreaPlantilla.getText())==true){
+                if (eleccion == 0) {
+                    try {
+                        conectar();
+                        String sql = "INSERT INTO plantillas VALUES('" + txtNombrePlantilla.getText() + "','" + txtAreaEscribirTextoPlantilla.getText() + "','" + Envios.lblNombreUsr.getText() + "');";
                         stmt.executeUpdate(sql);
-                        auxBorrado = false;
+                        c.commit();
+                        desconectar();
+                        mostrarTablaPlantillas();
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Ya existe una plantilla con ese nombre", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
                     }
-                    c.commit();
-                    desconectar();
-                    mostrarTablaPlantillas();
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Ya existe una plantilla con ese nombre", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    try {
+                        conectar();
+                        String sql = "INSERT INTO plantillas VALUES('" + txtNombrePlantilla.getText() + "','" + txtAreaEscribirTextoPlantilla.getText() + "','" + Envios.lblNombreUsr.getText() + "');";
+                        borrarPlantilla(nombreP);
+                        if (auxBorrado == true) {
+                            stmt.executeUpdate(sql);
+                            auxBorrado = false;
+                        }
+                        c.commit();
+                        desconectar();
+                        mostrarTablaPlantillas();
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Ya existe una plantilla con ese nombre", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
+            }else{
+                JOptionPane.showMessageDialog(null, "El nombre no puede empezar por una letra", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);  
             }
         } else {
             JOptionPane.showMessageDialog(null, "El nombre no puede estar en blanco", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
@@ -351,10 +356,10 @@ public class Plantilla extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptarPlantilla;
+    private javax.swing.JButton btnAddVariablePlantilla;
     private javax.swing.JButton btnLimpiarNombrePlantilla;
     private javax.swing.JButton btnLimpiarTextoPlantilla;
     public static javax.swing.JComboBox<String> comboVariablesPlantilla;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPaneEscribirTextoPlantilla;
     private javax.swing.JLabel lblNombrePlantilla;
     private javax.swing.JPanel panelEscribirPlanilla;

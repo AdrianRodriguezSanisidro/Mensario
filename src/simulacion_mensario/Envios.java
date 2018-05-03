@@ -9,7 +9,9 @@ import es.xilon.semApi.*;
 import es.xilon.semApi.beans.*;
 import java.awt.HeadlessException;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,9 +26,11 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import static simulacion_mensario.CrearGrupo.*;
+import static simulacion_mensario.Envios.stmt;
 import static simulacion_mensario.Plantilla.borrarPlantilla;
 import static simulacion_mensario.Plantilla.comboVariablesPlantilla;
 import static simulacion_mensario.Plantilla.mostrarTablaPlantillas;
@@ -39,6 +43,7 @@ public class Envios extends javax.swing.JFrame {
 
     public static final String alfabetoRemitente = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ";
     public static final String alfabetoGSM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÄÖÜÉØÅÆÑÇäöüàèìòùéøåæñ§ßΓ∆ΘΛΞΠΣΦΨΩ .,'?!_:;\"¿¡+-*/=\\<>()[]{}^~|@%#&¤$£€¥\n\r";
+    public static final String alfabeto="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     public static ApiResponseBean apiResponse = null;
     public static ApiResponseBean apiResponseSaldo = null;
     public static SemApi semApi;
@@ -164,6 +169,7 @@ public class Envios extends javax.swing.JFrame {
         btnLimpiarNombreC = new javax.swing.JButton();
         btnLimpiarMovilC = new javax.swing.JButton();
         btnModificarContacto = new javax.swing.JButton();
+        btnBuscarMovil = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         btnEscribirContacto = new javax.swing.JButton();
         btnEscribirGrupo = new javax.swing.JButton();
@@ -295,6 +301,7 @@ public class Envios extends javax.swing.JFrame {
 
         btnAñadirVariable.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
         btnAñadirVariable.setText("Añadir");
+        btnAñadirVariable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAñadirVariable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAñadirVariableMouseClicked(evt);
@@ -439,8 +446,7 @@ public class Envios extends javax.swing.JFrame {
                             .addComponent(comboSegEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboMinEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblHoraEnvio))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblHoraEnvio)))
                     .addGroup(panelEnviosLayout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addComponent(CheckEnvioProgramado))
@@ -502,8 +508,8 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnBuscarLicencia.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_lupa.jpg")); // NOI18N
-        btnBuscarLicencia.setText("Buscar");
+        btnBuscarLicencia.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\lupa.png")); // NOI18N
+        btnBuscarLicencia.setText("Buscar nombre");
         btnBuscarLicencia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarLicencia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -613,11 +619,11 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)))
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -749,6 +755,14 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        btnBuscarMovil.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\lupa.png")); // NOI18N
+        btnBuscarMovil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscarMovil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMovilMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout IFContactosLayout = new javax.swing.GroupLayout(IFContactos.getContentPane());
         IFContactos.getContentPane().setLayout(IFContactosLayout);
         IFContactosLayout.setHorizontalGroup(
@@ -762,13 +776,15 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(txtNombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
                         .addComponent(btnLimpiarNombreC, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtMovilContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
                         .addComponent(btnLimpiarMovilC, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(IFContactosLayout.createSequentialGroup()
                         .addComponent(btnAñadirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -794,7 +810,8 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(lblMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtMovilContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(comboPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblPais, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblPais, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBuscarMovil))
                 .addGap(5, 5, 5)
                 .addGroup(IFContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminarContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -923,13 +940,11 @@ public class Envios extends javax.swing.JFrame {
                         .addGap(2, 2, 2)
                         .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelContactosLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0))
         );
         panelContactosLayout.setVerticalGroup(
@@ -945,30 +960,26 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(btnCrearGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnBorrarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAñadirColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBorrarColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scrollContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(IFContactos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelContactosLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                        .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(scrollContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(IFContactos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelContactosLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                                .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelContactosLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(41, Short.MAX_VALUE))
+                        .addGap(10, 10, 10)
+                        .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContactosLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29))))
+                        .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         TPEscribirSms.addTab("Contactos", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\usuarios.jpg"), panelContactos); // NOI18N
@@ -1170,26 +1181,31 @@ public class Envios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarMouseClicked
 
     private void btnBuscarLicenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarLicenciaMouseClicked
-        String nombre = txtNombre.getText();
-        for (int i = 0; i < tablaLicencias.getRowCount(); i++) {
-            if (nombre.equals(tablaLicencias.getValueAt(i, 3))) {
-                txtLicencia.setText((String) tablaLicencias.getValueAt(i, 0));
-                txtUsuario.setText((String) tablaLicencias.getValueAt(i, 1));
-                txtClave.setText((String) tablaLicencias.getValueAt(i, 2));
-                txtNombre.setText((String) tablaLicencias.getValueAt(i, 3));
+        if(txtNombre.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"Debes introducir un nombre de licencia","¡ATENCIÓN!",JOptionPane.ERROR_MESSAGE);
+        }else{
+            if(buscarLicencia()==-1){
+                    JOptionPane.showMessageDialog(null,"La licencia que busca nó está agregada", "¡ATENCIÓN", JOptionPane.ERROR_MESSAGE);
+            }else{
+                tablaLicencias.setRowSelectionInterval(buscarLicencia(), buscarLicencia());
+                scrollToSelectedRow(tablaLicencias);
             }
         }
     }//GEN-LAST:event_btnBuscarLicenciaMouseClicked
 
     private void btnUtilizarLicenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUtilizarLicenciaMouseClicked
         try {
-            semApi = new SemApi(txtLicencia.getText(), txtUsuario.getText(), txtClave.getText(), "es.servicios.mensario.com", 443);
+            String numLicencia=(String) tablaLicencias.getValueAt(tablaLicencias.getSelectedRow(),0);
+            String nUser=(String) tablaLicencias.getValueAt(tablaLicencias.getSelectedRow(),1);
+            String clave=(String) tablaLicencias.getValueAt(tablaLicencias.getSelectedRow(),2);
+            String nombre=(String) tablaLicencias.getValueAt(tablaLicencias.getSelectedRow(),3);
+            semApi = new SemApi(numLicencia, nUser, clave, "es.servicios.mensario.com", 443);
             apiResponse = semApi.executeSynchronization();
             if (apiResponse.getResult().equals("OK")) {
                 semApi.setTimezone("Europe/Madrid");
-                lblNombreUsr.setText(txtLicencia.getText());
+                lblNombreUsr.setText(numLicencia);
                 refrescarSaldo();
-                JOptionPane.showMessageDialog(null, "Conectado a la licencia '" + txtLicencia.getText() + "' de " + txtNombre.getText(), "Conectado", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Conectado a la licencia '" + numLicencia + "' de " + nombre, "Conectado", JOptionPane.INFORMATION_MESSAGE);
                 limpiarTxt();
             } else {
                 JOptionPane.showMessageDialog(null, "La licencia no existe", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
@@ -1345,6 +1361,23 @@ public class Envios extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnBorrarColumnaMouseClicked
+
+    private void btnBuscarMovilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMovilMouseClicked
+        if(txtMovilContacto.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"Debes introducir un número de teléfono","¡ATENCIÓN!",JOptionPane.ERROR_MESSAGE);
+        }else{
+            if(buscarMovil()==-1){
+                if(comboElegirGrupo.getSelectedItem().toString().equals("Todos")){
+                    JOptionPane.showMessageDialog(null,"El teléfono que busca nó está en los contactos", "¡ATENCIÓN", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null,"El teléfono que busca nó está en \""+comboElegirGrupo.getSelectedItem().toString()+"\"", "¡ATENCIÓN", JOptionPane.ERROR_MESSAGE);
+                }
+            }else{
+                tablaContactos.setRowSelectionInterval(buscarMovil(), buscarMovil());
+                scrollToSelectedRow(tablaContactos);
+            }
+        }
+    }//GEN-LAST:event_btnBuscarMovilMouseClicked
     /*
     *
     *
@@ -1518,27 +1551,42 @@ public class Envios extends javax.swing.JFrame {
     }
 
     public static void añadirLicencia() {
-        String nlicencia = txtLicencia.getText();
-        String usuario = txtUsuario.getText();
-        String clave = txtClave.getText();
-        String nombre = txtNombre.getText();
         try {
-            conectar();
-            String sql = "INSERT INTO licencias VALUES (" + "'" + nlicencia + "'," + "'" + usuario + "','" + clave + "','" + nombre + "');";
-            stmt.executeUpdate(sql);
-            c.commit();
-            desconectar();
-            DefaultTableModel modelo = (DefaultTableModel) tablaLicencias.getModel();
-            for (int i = 0; i < tablaLicencias.getRowCount(); i++) {
-                modelo.removeRow(i);
-                i -= 1;
+            String nlicencia = txtLicencia.getText();
+            String usuario = txtUsuario.getText();
+            String clave = txtClave.getText();
+            String nombre = txtNombre.getText();
+            semApi = new SemApi(nlicencia, usuario, clave, "es.servicios.mensario.com", 443);
+            apiResponse = semApi.executeSynchronization();
+            if(!"".equals(txtLicencia.getText())){
+                if (apiResponse.getResult().equals("OK")) {
+                    try {
+                        conectar();
+                        String sql = "INSERT INTO licencias VALUES (" + "'" + nlicencia + "'," + "'" + usuario + "','" + clave + "','" + nombre + "');";
+                        stmt.executeUpdate(sql);
+                        c.commit();
+                        desconectar();
+                        DefaultTableModel modelo = (DefaultTableModel) tablaLicencias.getModel();
+                        for (int i = 0; i < tablaLicencias.getRowCount(); i++) {
+                            modelo.removeRow(i);
+                            i -= 1;
+                        }
+                        mostrarDatosTLicencias();
+                        JOptionPane.showMessageDialog(null, "La licencia se añadió correctamente");
+                    } catch (HeadlessException | SQLException e) {
+                        System.err.println("ERROR EN AÑADIR LICENCIA");
+                        JOptionPane.showMessageDialog(null, "No se pudo hacer la inserción debido a que 1 o mas datos ya existen,"
+                                + "\nasegúrese de que ingresó los datos correctamente", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
+                    }
+                    limpiarTxt();
+                } else {
+                    JOptionPane.showMessageDialog(null, "La licencia no existe", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "La licencia no puede estar en blanco", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
             }
-            mostrarDatosTLicencias();
-            JOptionPane.showMessageDialog(null, "La licencia se añadió correctamente");
-        } catch (HeadlessException | SQLException e) {
-            System.err.println("ERROR EN AÑADIR LICENCIA");
-            JOptionPane.showMessageDialog(null, "No se pudo hacer la inserción debido a que 1 o mas datos ya existen,"
-                    + "\nasegúrese de que ingresó los datos correctamente", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -1909,10 +1957,29 @@ public class Envios extends javax.swing.JFrame {
         String movil = (String) tablaContactos.getValueAt(tablaContactos.getSelectedRow(), 0);
         if (!"".equals(movil)) {
             try {
+                ArrayList<String>gruposArrayList=new ArrayList<String>();
                 conectar();
-                String sql = "DELETE from contactos where Movil='" + movil + "';";
-                stmt.executeUpdate(sql);
+                String sql="SELECT * FROM grupos;";
+                rs=stmt.executeQuery(sql);
+                while(rs.next()){
+                    gruposArrayList.add(rs.getString(1));
+                }
+                rs.close();
+                Object[]gruposArray=gruposArrayList.toArray();
+                String sql2 = "DELETE from contactos where Movil='" + movil + "';";
+                stmt.executeUpdate(sql2);
                 c.commit();
+                String sql3="";
+                String sql4="";
+                for(int i=0;i<gruposArray.length;i++){
+                    sql3="Select * from "+gruposArray[i]+" WHERE Movil='"+movil+"';";
+                    rs=stmt.executeQuery(sql3);
+                    if(rs.next()){
+                        sql4="DELETE FROM "+gruposArray[i]+" WHERE Movil='"+movil+"';";
+                        stmt.executeUpdate(sql4);
+                        c.commit();
+                    }
+                }
                 desconectar();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "No existe ese contacto,compruebe si está bien escrito", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
@@ -2156,34 +2223,6 @@ public class Envios extends javax.swing.JFrame {
         }
     }
     
-    public static void conectar2(){
-        try {
-            c2 = null;
-            stmt2 = null;
-            rs2 = null;
-            Class.forName("org.sqlite.JDBC");
-            c2 = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
-            c2.setAutoCommit(false);
-            stmt2 = c2.createStatement();
-        } catch (SQLException ex) {
-            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public static void desconectar2(){
-        try {
-            if (rs2 != null) {
-                rs2.close();
-            }
-            stmt2.close();
-            c2.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public static void desconectar() {
         try {
             if (rs != null) {
@@ -2378,6 +2417,24 @@ public class Envios extends javax.swing.JFrame {
             
         }
     }
+    public static int buscarMovil(){
+        for(int i=0;i<tablaContactos.getRowCount();i++){
+            String aux=(String) tablaContactos.getValueAt(i, 0);
+            if(aux.equals(txtMovilContacto.getText())){
+                return i;
+            }
+        }
+        return -1;
+    }
+    public static int buscarLicencia(){
+        for(int i=0;i<tablaLicencias.getRowCount();i++){
+            String aux=(String) tablaLicencias.getValueAt(i, 3);
+            if(aux.equals(txtNombre.getText())){
+                return i;
+            }
+        }
+        return -1;
+    }
     
     public static void mostrarVariablesCombo(JComboBox combo){
         try {
@@ -2406,6 +2463,25 @@ public class Envios extends javax.swing.JFrame {
         String itemCambiado2=itemCambiado.replaceAll("}", "");
                 
         return itemCambiado2;
+    }
+    
+    public static void soutTabla(String nTabla){
+        try {
+            conectar();
+            String sql="SELECT * FROM "+nTabla+";";
+            rs=stmt.executeQuery(sql);
+            while(rs.next()){
+                System.out.println(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void scrollToSelectedRow(JTable table){
+        JViewport viewport = (JViewport) table.getParent();
+        Rectangle cellRectangle = table.getCellRect(table.getSelectedRow(), 0, true);
+        Rectangle visibleRectangle = viewport.getVisibleRect();
+        table.scrollRectToVisible(new Rectangle(cellRectangle.x, cellRectangle.y, (int) visibleRectangle.getWidth(), (int) visibleRectangle.getHeight()));
     }
 
     /**
@@ -2447,7 +2523,7 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JInternalFrame IFDestinatario;
     private javax.swing.JInternalFrame IFMensaje;
     private javax.swing.JTabbedPane TPEscribirSms;
-    private javax.swing.JButton btnAñadirAlGrupo;
+    public static javax.swing.JButton btnAñadirAlGrupo;
     private javax.swing.JButton btnAñadirColumna;
     public static javax.swing.JButton btnAñadirContacto;
     private javax.swing.JButton btnAñadirLicencia;
@@ -2455,6 +2531,7 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JButton btnBorrarColumna;
     private javax.swing.JButton btnBorrarGrupo;
     private javax.swing.JButton btnBuscarLicencia;
+    private javax.swing.JButton btnBuscarMovil;
     private javax.swing.JButton btnCrearGrupo;
     private javax.swing.JButton btnDesordenar;
     private javax.swing.JButton btnEliminar;
@@ -2464,7 +2541,7 @@ public class Envios extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminarPlantilla;
     private javax.swing.JButton btnEliminarTexto;
     public static javax.swing.JButton btnEnviar;
-    private javax.swing.JButton btnEscribirContacto;
+    public static javax.swing.JButton btnEscribirContacto;
     private javax.swing.JButton btnEscribirGrupo;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnLimpiarMovilC;
