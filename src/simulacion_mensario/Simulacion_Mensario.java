@@ -19,6 +19,7 @@ public class Simulacion_Mensario {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        crearCarpetaMensario2();
         crearTablaLicencias();
         crearGruposT();
         crearTablaContactos();

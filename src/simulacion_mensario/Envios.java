@@ -11,6 +11,7 @@ import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.io.File;
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -2203,6 +2204,12 @@ public class Envios extends javax.swing.JFrame {
         }
         return retornable;
     }
+    public static void crearCarpetaMensario2(){
+        File file = new File("C:/users/"+System.getProperty("user.name")+"/AppData/Local/Mensario 2");
+         if(!file.exists()){
+             file.mkdirs();
+         }
+    }
 
     public static void conectar() {
         try {
@@ -2210,7 +2217,7 @@ public class Envios extends javax.swing.JFrame {
             stmt = null;
             rs = null;
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:jmensario.db");
+            c = DriverManager.getConnection("jdbc:sqlite:C:/users/"+System.getProperty("user.name")+"/AppData/Local/Mensario 2/jmensario.db");
             c.setAutoCommit(false);
             stmt = c.createStatement();
         } catch (SQLException ex) {
