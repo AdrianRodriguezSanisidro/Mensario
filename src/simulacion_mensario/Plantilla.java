@@ -269,12 +269,11 @@ public class Plantilla extends javax.swing.JFrame {
     public static void crearTablaPlantillas() {
         try {
             conectar();
-            String sql = "CREATE TABLE plantillas "
+            String sql = "CREATE TABLE IF NOT EXISTS plantillas "
                     + "(nPlantilla TEXT PRIMARY KEY NOT NULL,"
                     + "tPlantilla TEXT);";
             stmt.executeUpdate(sql);
             c.commit();
-            System.out.println("Tabla plantillas creada");
             desconectar();
         } catch (SQLException ex) {
             System.err.println("ERROR EN CREAR TABLA PLANTILLAS");
@@ -284,7 +283,7 @@ public class Plantilla extends javax.swing.JFrame {
     public static void dropPlantilla(){
         try {
             conectar();
-            String sql="DROP TABLE plantillas;";
+            String sql="DROP TABLE IF EXISTS plantillas;";
             stmt.executeUpdate(sql);
             c.commit();
             desconectar();

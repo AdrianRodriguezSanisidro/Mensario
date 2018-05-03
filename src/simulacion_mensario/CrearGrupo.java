@@ -32,10 +32,12 @@ public class CrearGrupo extends javax.swing.JFrame {
     public static void crearGruposT() {
         try {
             conectar();
-            String sql = "CREATE TABLE grupos "
+            String sql = "CREATE TABLE IF NOT EXISTS grupos "
                     + "(nGrupo TEXT PRIMARY KEY NOT NULL,"
                     + "nLicencia TEXT);";
-            String sql2 = "INSERT INTO grupos VALUES('Todos','SYSTEM');";
+            String sql2="INSERT INTO grupos(nGrupo,nLicencia)"
+                    + "SELECT 'Todos', 'SYSTEM' "
+                    + "WHERE NOT EXISTS(SELECT 1 FROM grupos WHERE nGrupo = 'Todos' AND nLicencia = 'SYSTEM');";
             stmt.executeUpdate(sql);
             c.commit();
             stmt.executeUpdate(sql2);
@@ -49,7 +51,7 @@ public class CrearGrupo extends javax.swing.JFrame {
     public static void crearNuevoGrupo(String nombreG) {
             try {
                 conectar();
-                String sql = "CREATE TABLE " + quitarEspacios(nombreG) + "(Movil TEXT PRIMARY KEY NOT NULL)";
+                String sql = "CREATE TABLE IF NOT EXISTS " + quitarEspacios(nombreG) + "(Movil TEXT PRIMARY KEY NOT NULL)";
                 stmt.executeUpdate(sql);
                 sql = "INSERT INTO grupos VALUES('" + nombreG + "','" + lblNombreUsr.getText() + "');";
                 stmt.executeUpdate(sql);
@@ -83,8 +85,8 @@ public class CrearGrupo extends javax.swing.JFrame {
             rs = stmt.executeQuery(sql);
             comboElegirGrupo.removeAllItems();
             comboAñadirAlGrupo.removeAllItems();
-            comboElegirGrupo.addItem("Todos");
-            comboAñadirAlGrupo.addItem("Todos");
+//            comboElegirGrupo.addItem("Todos");
+//            comboAñadirAlGrupo.addItem("Todos");
             while (rs.next()) {
                 comboElegirGrupo.addItem(rs.getString("nGrupo"));
                 comboAñadirAlGrupo.addItem(rs.getString("nGrupo"));
@@ -117,7 +119,7 @@ public class CrearGrupo extends javax.swing.JFrame {
         try {
             desconectar();
             String sql = "Delete from grupos where nGrupo='" + tabla + "';";
-            String sql2 = "Drop table " + tabla;
+            String sql2 = "Drop table IF EXISTS " + tabla;
             stmt.executeUpdate(sql);
             stmt.executeUpdate(sql2);
             System.out.println("Borrado " + tabla);
@@ -145,8 +147,8 @@ public class CrearGrupo extends javax.swing.JFrame {
     public static void cambiosEnLasTablas() {
         try {
             conectar();
-            String sql1 = "DROP TABLE grupos;";
-            String sql2 = "DROP TABLE contactos;";
+            String sql1 = "DROP TABLE IF EXISTS grupos;";
+            String sql2 = "DROP TABLE IF EXISTS contactos;";
             stmt.executeUpdate(sql1);
             System.out.println("Borrada grupos");
             stmt.executeUpdate(sql2);

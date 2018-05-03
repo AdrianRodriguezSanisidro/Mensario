@@ -635,8 +635,6 @@ public class Envios extends javax.swing.JFrame {
         panelContactos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panelContactos.setPreferredSize(new java.awt.Dimension(705, 777));
 
-        comboElegirGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
-
         lblNombreTabla.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNombreTabla.setText("Grupo");
 
@@ -1476,7 +1474,7 @@ public class Envios extends javax.swing.JFrame {
     public static void crearTablaLicencias() {
         try {
             conectar();
-            String sql = "CREATE TABLE licencias "
+            String sql = "CREATE TABLE IF NOT EXISTS licencias "
                     + "(nlicencia TEXT PRIMARY KEY NOT NULL,"
                     + "usuario TEXT UNIQUE NOT NULL,"
                     + "clave TEXT UNIQUE NOT NULL, "
@@ -1493,13 +1491,12 @@ public class Envios extends javax.swing.JFrame {
     public static void crearTablaContactos() {
         try {
             conectar();
-            String sql = "CREATE TABLE contactos "
+            String sql = "CREATE TABLE IF NOT EXISTS contactos "
                     + "(Movil TEXT PRIMARY KEY NOT NULL,"
                     + "Nombre TEXT NOT NULL,"
                     + "País TEXT NOT NULL);";
             stmt.executeUpdate(sql);
             c.commit();
-            System.out.println("contactos creada");
             desconectar();
         } catch (SQLException ex) {
             System.err.println("ERROR EN CREAR TABLA CONTACTOS");
@@ -2046,7 +2043,7 @@ public class Envios extends javax.swing.JFrame {
                 String sql = "DELETE FROM grupos where nGrupo='" + comboElegirGrupo.getSelectedItem().toString() + "';";
                 stmt.executeUpdate(sql);
                 c.commit();
-                sql = "DROP TABLE " + quitarEspacios(comboElegirGrupo.getSelectedItem().toString()) + ";";
+                sql = "DROP TABLE IF EXISTS " + quitarEspacios(comboElegirGrupo.getSelectedItem().toString()) + ";";
                 stmt.executeUpdate(sql);
                 c.commit();
                 desconectar();
@@ -2238,7 +2235,7 @@ public class Envios extends javax.swing.JFrame {
     public static void borrarT() {
         try {
             conectar();
-            String sql = "DROP TABLE contactos";
+            String sql = "DROP TABLE IF EXISTS contactos";
             stmt.executeUpdate(sql);
             c.commit();
             desconectar();
@@ -2331,7 +2328,7 @@ public class Envios extends javax.swing.JFrame {
     public static void crearCopiaTabla(){
         try {
             conectar();
-            String sql="CREATE TABLE copia "+datosCrearCopiaTabla();
+            String sql="CREATE TABLE IF NOT EXISTS copia "+datosCrearCopiaTabla();
             stmt.executeUpdate(sql);
             c.commit();
             desconectar();
