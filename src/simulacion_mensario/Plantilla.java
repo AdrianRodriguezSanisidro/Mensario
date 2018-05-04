@@ -6,6 +6,8 @@
 package simulacion_mensario;
 
 import com.sun.glass.events.KeyEvent;
+import java.awt.Font;
+import java.awt.Toolkit;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,6 +41,8 @@ public class Plantilla extends javax.swing.JFrame {
      */
     public Plantilla(int eleccion, String nombreP, String textoP) {
         initComponents();
+        this.setLocationRelativeTo(null);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
         Plantilla.eleccion = eleccion;
         Plantilla.nombreP = nombreP;
         Plantilla.textoP = textoP;
@@ -70,9 +74,12 @@ public class Plantilla extends javax.swing.JFrame {
         btnAddVariablePlantilla = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 102, 204));
 
-        panelEscribirPlanilla.setBackground(new java.awt.Color(153, 153, 153));
+        panelEscribirPlanilla.setBackground(new java.awt.Color(153, 255, 255));
+        panelEscribirPlanilla.setForeground(new java.awt.Color(255, 102, 0));
 
+        lblNombrePlantilla.setBackground(new java.awt.Color(0, 102, 204));
         lblNombrePlantilla.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNombrePlantilla.setText("Nombre de la plantilla:");
 
@@ -82,7 +89,8 @@ public class Plantilla extends javax.swing.JFrame {
             }
         });
 
-        jScrollPaneEscribirTextoPlantilla.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 255), new java.awt.Color(0, 153, 153)), "Texto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        jScrollPaneEscribirTextoPlantilla.setBackground(new java.awt.Color(153, 255, 255));
+        jScrollPaneEscribirTextoPlantilla.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(255, 102, 0), new java.awt.Color(255, 102, 0)), "Texto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         jScrollPaneEscribirTextoPlantilla.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         txtAreaEscribirTextoPlantilla.setColumns(20);
@@ -90,6 +98,7 @@ public class Plantilla extends javax.swing.JFrame {
         txtAreaEscribirTextoPlantilla.setRows(5);
         jScrollPaneEscribirTextoPlantilla.setViewportView(txtAreaEscribirTextoPlantilla);
 
+        btnAceptarPlantilla.setBackground(new java.awt.Color(153, 255, 255));
         btnAceptarPlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
         btnAceptarPlantilla.setText("Aceptar");
         btnAceptarPlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -99,8 +108,9 @@ public class Plantilla extends javax.swing.JFrame {
             }
         });
 
-        btnLimpiarTextoPlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
-        btnLimpiarTextoPlantilla.setText("Limpiar");
+        btnLimpiarTextoPlantilla.setBackground(new java.awt.Color(153, 255, 255));
+        btnLimpiarTextoPlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.png")); // NOI18N
+        btnLimpiarTextoPlantilla.setToolTipText("Limpia todo el texto de la plantilla");
         btnLimpiarTextoPlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLimpiarTextoPlantilla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -108,7 +118,9 @@ public class Plantilla extends javax.swing.JFrame {
             }
         });
 
-        btnLimpiarNombrePlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
+        btnLimpiarNombrePlantilla.setBackground(new java.awt.Color(153, 255, 255));
+        btnLimpiarNombrePlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.png")); // NOI18N
+        btnLimpiarNombrePlantilla.setToolTipText("Limpia el nombre de la plantilla");
         btnLimpiarNombrePlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLimpiarNombrePlantilla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -118,7 +130,8 @@ public class Plantilla extends javax.swing.JFrame {
 
         comboVariablesPlantilla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "{#Nombre}", "{#País}", "{#Remitente}", "{#Teléfono}" }));
 
-        btnAddVariablePlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
+        btnAddVariablePlantilla.setBackground(new java.awt.Color(153, 255, 255));
+        btnAddVariablePlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add.png")); // NOI18N
         btnAddVariablePlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddVariablePlantilla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -133,47 +146,56 @@ public class Plantilla extends javax.swing.JFrame {
             .addGroup(panelEscribirPlanillaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneEscribirTextoPlantilla)
                     .addGroup(panelEscribirPlanillaLayout.createSequentialGroup()
-                        .addComponent(lblNombrePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombrePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLimpiarNombrePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPaneEscribirTextoPlantilla)
+                            .addGroup(panelEscribirPlanillaLayout.createSequentialGroup()
+                                .addComponent(lblNombrePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNombrePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnLimpiarNombrePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
                     .addGroup(panelEscribirPlanillaLayout.createSequentialGroup()
                         .addComponent(btnAceptarPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                        .addComponent(comboVariablesPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddVariablePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                        .addComponent(btnLimpiarTextoPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEscribirPlanillaLayout.createSequentialGroup()
+                                .addComponent(comboVariablesPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAddVariablePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(238, 238, 238))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEscribirPlanillaLayout.createSequentialGroup()
+                                .addComponent(btnLimpiarTextoPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
         );
         panelEscribirPlanillaLayout.setVerticalGroup(
             panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEscribirPlanillaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLimpiarNombrePlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblNombrePlantilla)
-                        .addComponent(txtNombrePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombrePlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLimpiarNombrePlantilla))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPaneEscribirTextoPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
                 .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelEscribirPlanillaLayout.createSequentialGroup()
-                        .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAceptarPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLimpiarTextoPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEscribirPlanillaLayout.createSequentialGroup()
-                        .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnAddVariablePlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboVariablesPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24))))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEscribirPlanillaLayout.createSequentialGroup()
+                                .addGroup(panelEscribirPlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btnAddVariablePlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(comboVariablesPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(24, 24, 24))
+                            .addGroup(panelEscribirPlanillaLayout.createSequentialGroup()
+                                .addComponent(btnAceptarPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(panelEscribirPlanillaLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(btnLimpiarTextoPlantilla))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -217,11 +239,11 @@ public class Plantilla extends javax.swing.JFrame {
 
     public static void nuevaPlantilla() {
         if (!"".equals(txtNombrePlantilla.getText())) {
-            if(empiezaPorLetra(txtAreaPlantilla.getText())==true){
+            if(empiezaPorLetra(txtNombrePlantilla.getText())==true){
                 if (eleccion == 0) {
                     try {
                         conectar();
-                        String sql = "INSERT INTO plantillas VALUES('" + txtNombrePlantilla.getText() + "','" + txtAreaEscribirTextoPlantilla.getText() + "','" + Envios.lblNombreUsr.getText() + "');";
+                        String sql = "INSERT INTO plantillas VALUES('" + txtNombrePlantilla.getText() + "','" + txtAreaEscribirTextoPlantilla.getText() + "');";
                         stmt.executeUpdate(sql);
                         c.commit();
                         desconectar();
@@ -231,9 +253,9 @@ public class Plantilla extends javax.swing.JFrame {
                     }
                 } else {
                     try {
-                        conectar();
-                        String sql = "INSERT INTO plantillas VALUES('" + txtNombrePlantilla.getText() + "','" + txtAreaEscribirTextoPlantilla.getText() + "','" + Envios.lblNombreUsr.getText() + "');";
                         borrarPlantilla(nombreP);
+                        conectar();
+                        String sql = "INSERT INTO plantillas VALUES('" + txtNombrePlantilla.getText() + "','" + txtAreaEscribirTextoPlantilla.getText() + "');";
                         if (auxBorrado == true) {
                             stmt.executeUpdate(sql);
                             auxBorrado = false;
@@ -241,8 +263,13 @@ public class Plantilla extends javax.swing.JFrame {
                         c.commit();
                         desconectar();
                         mostrarTablaPlantillas();
+                        tablaPlantillas.setRowSelectionInterval(buscarPlantilla(), buscarPlantilla());
+                        scrollToSelectedRow(tablaPlantillas);
+                        txtAreaPlantilla.setText((String) tablaPlantillas.getValueAt(tablaPlantillas.getSelectedRow(), 1));
+                        
                     } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Ya existe una plantilla con ese nombre", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
+                        //JOptionPane.showMessageDialog(null, "Ya existe una plantilla con ese nombre", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
+                        Logger.getLogger(Plantilla.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }else{
@@ -264,6 +291,15 @@ public class Plantilla extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Plantilla.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public static int buscarPlantilla(){
+        for(int i=0;i<tablaPlantillas.getRowCount();i++){
+            String aux=(String)tablaPlantillas.getValueAt(i,0);
+            if(aux.equals(txtNombrePlantilla.getText())){
+                return i;
+            }
+        }
+        return -1;
     }
 
     public static void crearTablaPlantillas() {
@@ -310,9 +346,12 @@ public class Plantilla extends javax.swing.JFrame {
                 }
                 tablaPlantillas.setModel(modelo);
                 desconectar();
+                tablaPlantillas.getTableHeader().setBackground(colorAzul);
+                tablaPlantillas.getTableHeader().setForeground(colorNaranja);
+                tablaPlantillas.getTableHeader().setFont(new Font("Tahoma",1,14));
 
             } catch (SQLException ex) {
-                System.err.println("ERROR EN MOSTRAR DATOS T CONTACTOS");
+                System.err.println("ERROR EN MOSTRAR Tabla plantillas");
                 Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
                 System.exit(0);
             }

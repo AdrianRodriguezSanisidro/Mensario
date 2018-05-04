@@ -6,6 +6,7 @@
 package simulacion_mensario;
 
 import com.sun.glass.events.KeyEvent;
+import java.awt.Toolkit;
 
 /**
  *
@@ -19,6 +20,7 @@ public class NuevaColumna extends javax.swing.JFrame {
     public NuevaColumna() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
     }
 
     /**
@@ -37,10 +39,12 @@ public class NuevaColumna extends javax.swing.JFrame {
         btnCancelarNuevaColumna = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 102, 204));
 
-        panelNuevaColumna.setBackground(new java.awt.Color(204, 204, 204));
+        panelNuevaColumna.setBackground(new java.awt.Color(153, 255, 255));
 
-        lblNombreNuevaColumna.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblNombreNuevaColumna.setBackground(new java.awt.Color(0, 102, 204));
+        lblNombreNuevaColumna.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblNombreNuevaColumna.setText("Nombre de la nueva columna:");
 
         txtNombreNuevaColumna.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -49,8 +53,9 @@ public class NuevaColumna extends javax.swing.JFrame {
             }
         });
 
+        btnAceptarNuevaColumna.setBackground(new java.awt.Color(153, 255, 255));
         btnAceptarNuevaColumna.setForeground(new java.awt.Color(0, 153, 0));
-        btnAceptarNuevaColumna.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
+        btnAceptarNuevaColumna.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.png")); // NOI18N
         btnAceptarNuevaColumna.setText("Aceptar");
         btnAceptarNuevaColumna.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -58,7 +63,8 @@ public class NuevaColumna extends javax.swing.JFrame {
             }
         });
 
-        btnCancelarNuevaColumna.setForeground(new java.awt.Color(204, 0, 0));
+        btnCancelarNuevaColumna.setBackground(new java.awt.Color(153, 255, 255));
+        btnCancelarNuevaColumna.setForeground(new java.awt.Color(255, 0, 0));
         btnCancelarNuevaColumna.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\cancel.png")); // NOI18N
         btnCancelarNuevaColumna.setText("Cancelar");
         btnCancelarNuevaColumna.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -74,27 +80,25 @@ public class NuevaColumna extends javax.swing.JFrame {
             .addGroup(panelNuevaColumnaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelNuevaColumnaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombreNuevaColumna, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtNombreNuevaColumna))
+                    .addComponent(lblNombreNuevaColumna, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
+                    .addComponent(txtNombreNuevaColumna)
+                    .addGroup(panelNuevaColumnaLayout.createSequentialGroup()
+                        .addComponent(btnAceptarNuevaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelarNuevaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(panelNuevaColumnaLayout.createSequentialGroup()
-                .addContainerGap(92, Short.MAX_VALUE)
-                .addComponent(btnAceptarNuevaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
-                .addComponent(btnCancelarNuevaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(111, Short.MAX_VALUE))
         );
         panelNuevaColumnaLayout.setVerticalGroup(
             panelNuevaColumnaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelNuevaColumnaLayout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(lblNombreNuevaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtNombreNuevaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtNombreNuevaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(panelNuevaColumnaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAceptarNuevaColumna, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                    .addComponent(btnCancelarNuevaColumna, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+                .addGroup(panelNuevaColumnaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelarNuevaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAceptarNuevaColumna, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 

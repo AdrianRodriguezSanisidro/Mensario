@@ -5,6 +5,8 @@
  */
 package simulacion_mensario;
 
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -12,11 +14,14 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import static simulacion_mensario.Envios.c;
 import static simulacion_mensario.Envios.cambioMovilElegido;
+import static simulacion_mensario.Envios.colorAzul;
+import static simulacion_mensario.Envios.colorNaranja;
 import static simulacion_mensario.Envios.conectar;
 import static simulacion_mensario.Envios.desconectar;
 import static simulacion_mensario.Envios.rs;
 import static simulacion_mensario.Envios.stmt;
 import static simulacion_mensario.Envios.tablaContactos;
+import static simulacion_mensario.Envios.tablaLicencias;
 
 /**
  *
@@ -34,8 +39,12 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
         initComponents();
         AñadirNuevoContacto.eleccion = eleccion;
         this.setLocationRelativeTo(null);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
         mostrarTablaARellenar();
         tablaNuevoContacto.getTableHeader().setReorderingAllowed(false);
+        tablaNuevoContacto.getTableHeader().setBackground(colorAzul);
+        tablaNuevoContacto.getTableHeader().setForeground(colorNaranja);
+        tablaNuevoContacto.getTableHeader().setFont(new Font("Tahoma",1,11));
     }
 
     /**
@@ -55,9 +64,12 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
         btnCancelarNuevoContacto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 102, 204));
 
-        panelAñadirNuevoContacto.setBackground(new java.awt.Color(204, 204, 204));
+        panelAñadirNuevoContacto.setBackground(new java.awt.Color(153, 255, 255));
+        panelAñadirNuevoContacto.setForeground(new java.awt.Color(255, 102, 0));
 
+        tablaNuevoContacto.setBackground(new java.awt.Color(153, 255, 255));
         tablaNuevoContacto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null}
@@ -66,13 +78,17 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3"
             }
         ));
+        tablaNuevoContacto.setGridColor(new java.awt.Color(0, 102, 204));
+        tablaNuevoContacto.setSelectionBackground(new java.awt.Color(255, 102, 0));
         scrollAñadirNuevoContacto.setViewportView(tablaNuevoContacto);
 
+        lblTitulo.setBackground(new java.awt.Color(153, 255, 255));
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTitulo.setText("Quieres añadir datos al resto de los campos o dejarlos vacíos? (Aparecerán como null si están vacíos):");
+        lblTitulo.setText("Quieres añadir datos al resto de los campos o dejarlos vacíos? ");
 
+        btnAceptarNuevoContacto.setBackground(new java.awt.Color(153, 255, 255));
         btnAceptarNuevoContacto.setForeground(new java.awt.Color(0, 153, 0));
-        btnAceptarNuevoContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
+        btnAceptarNuevoContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.png")); // NOI18N
         btnAceptarNuevoContacto.setText("Aceptar");
         btnAceptarNuevoContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAceptarNuevoContacto.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -81,7 +97,8 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
             }
         });
 
-        btnCancelarNuevoContacto.setForeground(new java.awt.Color(204, 0, 0));
+        btnCancelarNuevoContacto.setBackground(new java.awt.Color(153, 255, 255));
+        btnCancelarNuevoContacto.setForeground(new java.awt.Color(255, 0, 0));
         btnCancelarNuevoContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\cancel.png")); // NOI18N
         btnCancelarNuevoContacto.setText("Cancelar");
         btnCancelarNuevoContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

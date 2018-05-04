@@ -7,6 +7,8 @@ package simulacion_mensario;
 
 import es.xilon.semApi.*;
 import es.xilon.semApi.beans.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -58,7 +60,8 @@ public class Envios extends javax.swing.JFrame {
     public static String cambioMovilElegido;
     public static String columnaABorrar;
     public static int numColumnaABorrar;
-
+    public static final Color colorAzul=new Color(51, 255, 255);
+    public static final Color colorNaranja=new Color(255,102,0);
     /**
      * Creates new form Envios
      */
@@ -193,20 +196,23 @@ public class Envios extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mensario 2");
-        setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(880, 880));
-        setSize(new java.awt.Dimension(720, 777));
+        setBackground(new java.awt.Color(153, 255, 255));
+        setPreferredSize(new java.awt.Dimension(880, 915));
+        setSize(new java.awt.Dimension(1280, 1280));
 
-        TPEscribirSms.setBackground(new java.awt.Color(255, 255, 255));
+        TPEscribirSms.setBackground(new java.awt.Color(153, 255, 255));
         TPEscribirSms.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         TPEscribirSms.setOpaque(true);
         TPEscribirSms.setPreferredSize(new java.awt.Dimension(710, 777));
 
+        panelEnvios.setBackground(new java.awt.Color(153, 255, 255));
         panelEnvios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panelEnvios.setPreferredSize(new java.awt.Dimension(705, 777));
 
+        lblNombreUsr.setBackground(new java.awt.Color(0, 102, 204));
+        lblNombreUsr.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblNombreUsr.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblNombreUsr.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Está utilizando la licencia:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 11))); // NOI18N
+        lblNombreUsr.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Está utilizando la licencia:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
 
         lblNombreRemitente.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNombreRemitente.setText("Nombre de remitente:");
@@ -214,11 +220,15 @@ public class Envios extends javax.swing.JFrame {
         lblSaldoName.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblSaldoName.setText("Saldo disponible:");
 
+        lblSaldo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+
         txtNombreRemitente.setToolTipText("");
 
+        IFDestinatario.setBackground(new java.awt.Color(153, 255, 255));
         IFDestinatario.setTitle("Destianatario");
         IFDestinatario.setVisible(true);
 
+        lblMoviles.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMoviles.setText("Móviles:");
 
         txtAreaMoviles.setColumns(20);
@@ -233,14 +243,19 @@ public class Envios extends javax.swing.JFrame {
         lblMovilesInsertadosName.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMovilesInsertadosName.setText("Número de moviles insertados:");
 
-        btnEliminarMoviles.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
-        btnEliminarMoviles.setText("Limpiar texto");
+        btnEliminarMoviles.setBackground(new java.awt.Color(153, 255, 255));
+        btnEliminarMoviles.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.png")); // NOI18N
+        btnEliminarMoviles.setToolTipText("Limpiar todos los móviles");
+        btnEliminarMoviles.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(91, 114, 134), 3, true));
         btnEliminarMoviles.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarMoviles.setFocusPainted(false);
         btnEliminarMoviles.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarMovilesMouseClicked(evt);
             }
         });
+
+        lblMovilesInsertados.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 
         javax.swing.GroupLayout IFDestinatarioLayout = new javax.swing.GroupLayout(IFDestinatario.getContentPane());
         IFDestinatario.getContentPane().setLayout(IFDestinatarioLayout);
@@ -255,7 +270,7 @@ public class Envios extends javax.swing.JFrame {
                         .addGap(5, 5, 5)
                         .addComponent(lblMovilesInsertados, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEliminarMoviles, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEliminarMoviles, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5))
                     .addGroup(IFDestinatarioLayout.createSequentialGroup()
                         .addComponent(lblMoviles)
@@ -275,20 +290,27 @@ public class Envios extends javax.swing.JFrame {
                 .addGap(5, 5, 5))
         );
 
+        IFMensaje.setBackground(new java.awt.Color(153, 255, 255));
         IFMensaje.setTitle("Mensaje");
         IFMensaje.setVisible(true);
 
+        lblTexto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblTexto.setText("Texto:");
 
         txtAreaMensaje.setColumns(20);
         txtAreaMensaje.setRows(5);
         jScrollPaneTexto.setViewportView(txtAreaMensaje);
 
+        lblNumMensajesName.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNumMensajesName.setText("Número de mensajes:");
 
+        lblNumCaracteresName.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNumCaracteresName.setText("Número de caracteres: ");
 
-        btnEliminarTexto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
+        btnEliminarTexto.setBackground(new java.awt.Color(153, 255, 255));
+        btnEliminarTexto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.png")); // NOI18N
+        btnEliminarTexto.setToolTipText("Limpiar todo el texto");
+        btnEliminarTexto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(91, 114, 134), 3, true));
         btnEliminarTexto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarTexto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -296,12 +318,17 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        lblNumMensajes.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNumMensajes.setText("1");
+
+        lblNumCaracteres.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 
         comboVariablesTexto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "{#Nombre}", "{#Paìs}", "{#Remitente}", "{#Teléfono}" }));
 
-        btnAñadirVariable.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
+        btnAñadirVariable.setBackground(new java.awt.Color(153, 255, 255));
+        btnAñadirVariable.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add.png")); // NOI18N
         btnAñadirVariable.setText("Añadir");
+        btnAñadirVariable.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(91, 114, 134), 3, true));
         btnAñadirVariable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAñadirVariable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -324,42 +351,40 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(lblNumMensajesName)
                         .addGap(5, 5, 5)
                         .addComponent(lblNumMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                         .addComponent(lblNumCaracteresName)
-                        .addGap(5, 5, 5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblNumCaracteres, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                        .addGap(120, 120, 120)
                         .addComponent(comboVariablesTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAñadirVariable, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                        .addGap(47, 47, 47)
                         .addComponent(btnEliminarTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5))))
+                        .addContainerGap())))
         );
         IFMensajeLayout.setVerticalGroup(
             IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(IFMensajeLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, IFMensajeLayout.createSequentialGroup()
                 .addComponent(lblTexto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addGroup(IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(comboVariablesTexto)
-                        .addComponent(btnAñadirVariable))
-                    .addGroup(IFMensajeLayout.createSequentialGroup()
-                        .addGroup(IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lblNumCaracteres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblNumMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblNumMensajesName)
-                                    .addComponent(lblNumCaracteresName)))
-                            .addComponent(btnEliminarTexto))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(5, 5, 5))
+                .addComponent(jScrollPaneTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNumCaracteres, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboVariablesTexto)
+                            .addComponent(btnAñadirVariable))
+                        .addGroup(IFMensajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNumMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNumMensajesName)
+                            .addComponent(lblNumCaracteresName))
+                        .addComponent(btnEliminarTexto)))
+                .addContainerGap())
         );
 
+        CheckEnvioProgramado.setBackground(new java.awt.Color(153, 255, 255));
         CheckEnvioProgramado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         CheckEnvioProgramado.setText("Envio programado");
         CheckEnvioProgramado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -367,8 +392,11 @@ public class Envios extends javax.swing.JFrame {
         lblHoraEnvio.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblHoraEnvio.setText("Hora de envio:");
 
+        btnEnviar.setBackground(new java.awt.Color(153, 255, 255));
+        btnEnviar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnEnviar.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\enviar.png")); // NOI18N
         btnEnviar.setText("Enviar");
+        btnEnviar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(91, 114, 134), 3, true));
         btnEnviar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEnviar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -382,6 +410,7 @@ public class Envios extends javax.swing.JFrame {
 
         comboSegEnvio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" }));
 
+        jCalendar1.setBackground(new java.awt.Color(0, 102, 204));
         jCalendar1.setDecorationBordersVisible(true);
 
         javax.swing.GroupLayout panelEnviosLayout = new javax.swing.GroupLayout(panelEnvios);
@@ -389,6 +418,21 @@ public class Envios extends javax.swing.JFrame {
         panelEnviosLayout.setHorizontalGroup(
             panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblNombreUsr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEnviosLayout.createSequentialGroup()
+                .addComponent(CheckEnvioProgramado)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblHoraEnvio)
+                .addGap(11, 11, 11)
+                .addComponent(comboHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboMinEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboSegEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(panelEnviosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,25 +446,9 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39))
                     .addGroup(panelEnviosLayout.createSequentialGroup()
-                        .addComponent(CheckEnvioProgramado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblHoraEnvio)
-                        .addGap(11, 11, 11)
-                        .addComponent(comboHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboMinEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboSegEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(IFDestinatario)
                         .addContainerGap())
-                    .addGroup(panelEnviosLayout.createSequentialGroup()
-                        .addGroup(panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(IFMensaje)
-                            .addComponent(IFDestinatario))
-                        .addContainerGap())))
+                    .addComponent(IFMensaje)))
         );
         panelEnviosLayout.setVerticalGroup(
             panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -435,35 +463,42 @@ public class Envios extends javax.swing.JFrame {
                     .addGroup(panelEnviosLayout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(IFDestinatario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IFMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelEnviosLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEnviar)
-                            .addComponent(comboSegEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboMinEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblHoraEnvio)))
+                        .addGroup(panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelEnviosLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                                .addComponent(CheckEnvioProgramado))
+                            .addGroup(panelEnviosLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                                .addGroup(panelEnviosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(comboSegEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(comboMinEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(comboHoraEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblHoraEnvio)
+                                    .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(75, Short.MAX_VALUE))
                     .addGroup(panelEnviosLayout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(CheckEnvioProgramado))
-                    .addGroup(panelEnviosLayout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        TPEscribirSms.addTab("Enviar", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_envios.jpg"), panelEnvios); // NOI18N
+        TPEscribirSms.addTab("Enviar", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\message.png"), panelEnvios, "Pestaña desde donde se escribirá el mensaje a mandar"); // NOI18N
 
+        panelLicencias.setBackground(new java.awt.Color(153, 255, 255));
         panelLicencias.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panelLicencias.setPreferredSize(new java.awt.Dimension(705, 777));
 
+        scrollTable.setBackground(new java.awt.Color(0, 102, 204));
         scrollTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        tablaLicencias.setBackground(new java.awt.Color(204, 255, 255));
+        tablaLicencias.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         tablaLicencias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -481,6 +516,8 @@ public class Envios extends javax.swing.JFrame {
             }
         });
         tablaLicencias.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tablaLicencias.setGridColor(new java.awt.Color(0, 102, 204));
+        tablaLicencias.setSelectionBackground(new java.awt.Color(255, 102, 0));
         tablaLicencias.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaLicenciasMouseClicked(evt);
@@ -500,8 +537,10 @@ public class Envios extends javax.swing.JFrame {
         lblClave.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblClave.setText("Clave:");
 
-        btnAñadirLicencia.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
+        btnAñadirLicencia.setBackground(new java.awt.Color(153, 255, 255));
+        btnAñadirLicencia.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add.png")); // NOI18N
         btnAñadirLicencia.setText("Añadir licencia");
+        btnAñadirLicencia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(91, 114, 134), 3, true));
         btnAñadirLicencia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAñadirLicencia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -509,8 +548,10 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        btnBuscarLicencia.setBackground(new java.awt.Color(153, 255, 255));
         btnBuscarLicencia.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\lupa.png")); // NOI18N
         btnBuscarLicencia.setText("Buscar nombre");
+        btnBuscarLicencia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(91, 114, 134), 3, true));
         btnBuscarLicencia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarLicencia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -518,8 +559,10 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnLimpiar.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
-        btnLimpiar.setText("Limpiar campos");
+        btnLimpiar.setBackground(new java.awt.Color(153, 255, 255));
+        btnLimpiar.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.png")); // NOI18N
+        btnLimpiar.setToolTipText("Limpiar los campos");
+        btnLimpiar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(91, 114, 134), 3, true));
         btnLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -527,8 +570,10 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnUtilizarLicencia.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
+        btnUtilizarLicencia.setBackground(new java.awt.Color(153, 255, 255));
+        btnUtilizarLicencia.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.png")); // NOI18N
         btnUtilizarLicencia.setText("Utilizar licencia");
+        btnUtilizarLicencia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(91, 114, 134), 3, true));
         btnUtilizarLicencia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUtilizarLicencia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -536,9 +581,11 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        btnEliminar.setBackground(new java.awt.Color(153, 255, 255));
         btnEliminar.setForeground(new java.awt.Color(255, 0, 0));
-        btnEliminar.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\papelera.jpg")); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\garbage.png")); // NOI18N
         btnEliminar.setText("Eliminar licencia");
+        btnEliminar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(91, 114, 134), 3, true));
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -546,101 +593,105 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        jSeparator3.setForeground(new java.awt.Color(255, 102, 0));
+
         javax.swing.GroupLayout panelLicenciasLayout = new javax.swing.GroupLayout(panelLicencias);
         panelLicencias.setLayout(panelLicenciasLayout);
         panelLicenciasLayout.setHorizontalGroup(
             panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLicenciasLayout.createSequentialGroup()
-                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLicenciasLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator3))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLicenciasLayout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(scrollTable))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLicenciasLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtLicencia)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblClave, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtClave)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 87, Short.MAX_VALUE)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 69, Short.MAX_VALUE)))
-                .addGap(5, 5, 5))
             .addGroup(panelLicenciasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelLicenciasLayout.createSequentialGroup()
+                        .addContainerGap(148, Short.MAX_VALUE)
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE))
+                    .addComponent(scrollTable, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLicenciasLayout.createSequentialGroup()
+                .addContainerGap(138, Short.MAX_VALUE)
+                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtLicencia)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblNombre)
+                    .addComponent(lblClave, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtClave)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(114, Short.MAX_VALUE))
         );
         panelLicenciasLayout.setVerticalGroup(
             panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLicenciasLayout.createSequentialGroup()
-                .addComponent(scrollTable, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(scrollTable, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLicenciasLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                         .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLicenciasLayout.createSequentialGroup()
-                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(panelLicenciasLayout.createSequentialGroup()
                                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblClave, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE))
+                            .addGroup(panelLicenciasLayout.createSequentialGroup()
+                                .addGap(0, 60, Short.MAX_VALUE)
+                                .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnLimpiar)
+                                    .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblClave, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(panelLicenciasLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUtilizarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(panelLicenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAñadirLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
 
-        TPEscribirSms.addTab("Licencias", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\licencia.png"), panelLicencias); // NOI18N
+        TPEscribirSms.addTab("Licencias", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\licencia.png"), panelLicencias, "Pestaña desde donde se añaden nuevas licencias o se utilizan las ya exisistentes"); // NOI18N
 
+        panelContactos.setBackground(new java.awt.Color(153, 255, 255));
         panelContactos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panelContactos.setPreferredSize(new java.awt.Dimension(705, 777));
 
         lblNombreTabla.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblNombreTabla.setText("Grupo");
+        lblNombreTabla.setText("Grupo:");
 
+        scrollContactos.setBackground(new java.awt.Color(0, 102, 204));
+        scrollContactos.setForeground(new java.awt.Color(255, 102, 0));
         scrollContactos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        tablaContactos.setBackground(new java.awt.Color(204, 255, 255));
+        tablaContactos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         tablaContactos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -664,6 +715,8 @@ public class Envios extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaContactos.setGridColor(new java.awt.Color(0, 102, 204));
+        tablaContactos.setSelectionBackground(new java.awt.Color(255, 102, 0));
         tablaContactos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaContactosMouseClicked(evt);
@@ -671,8 +724,9 @@ public class Envios extends javax.swing.JFrame {
         });
         scrollContactos.setViewportView(tablaContactos);
 
-        btnBorrarGrupo.setForeground(new java.awt.Color(204, 0, 0));
-        btnBorrarGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\papelera.jpg")); // NOI18N
+        btnBorrarGrupo.setBackground(new java.awt.Color(153, 255, 255));
+        btnBorrarGrupo.setForeground(new java.awt.Color(255, 0, 0));
+        btnBorrarGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\garbage.png")); // NOI18N
         btnBorrarGrupo.setText("Eliminar grupo");
         btnBorrarGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBorrarGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -681,7 +735,8 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnCrearGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
+        btnCrearGrupo.setBackground(new java.awt.Color(153, 255, 255));
+        btnCrearGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add.png")); // NOI18N
         btnCrearGrupo.setText("Crear grupo");
         btnCrearGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCrearGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -690,9 +745,11 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        IFContactos.setBackground(new java.awt.Color(153, 255, 255));
         IFContactos.setTitle("Contacto");
         IFContactos.setVisible(true);
 
+        btnAñadirContacto.setBackground(new java.awt.Color(153, 255, 255));
         btnAñadirContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_user.png")); // NOI18N
         btnAñadirContacto.setText("Añadir contacto");
         btnAñadirContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -702,7 +759,8 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnEliminarContacto.setForeground(new java.awt.Color(204, 0, 0));
+        btnEliminarContacto.setBackground(new java.awt.Color(153, 255, 255));
+        btnEliminarContacto.setForeground(new java.awt.Color(255, 0, 0));
         btnEliminarContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\borrar_contacto.png")); // NOI18N
         btnEliminarContacto.setText("Eliminar contacto");
         btnEliminarContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -729,7 +787,9 @@ public class Envios extends javax.swing.JFrame {
         lblNombreContacto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNombreContacto.setText("Nombre:");
 
-        btnLimpiarNombreC.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
+        btnLimpiarNombreC.setBackground(new java.awt.Color(153, 255, 255));
+        btnLimpiarNombreC.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.png")); // NOI18N
+        btnLimpiarNombreC.setToolTipText("Limpiar el campo \"Nombre:\"");
         btnLimpiarNombreC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLimpiarNombreC.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -737,7 +797,9 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnLimpiarMovilC.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.jpg")); // NOI18N
+        btnLimpiarMovilC.setBackground(new java.awt.Color(153, 255, 255));
+        btnLimpiarMovilC.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_limpiar.png")); // NOI18N
+        btnLimpiarMovilC.setToolTipText("Limpiar el campo \"Móvil:\"");
         btnLimpiarMovilC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLimpiarMovilC.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -745,7 +807,8 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnModificarContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\user.png")); // NOI18N
+        btnModificarContacto.setBackground(new java.awt.Color(153, 255, 255));
+        btnModificarContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\alter user.png")); // NOI18N
         btnModificarContacto.setText("Modificar contacto");
         btnModificarContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnModificarContacto.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -754,7 +817,9 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        btnBuscarMovil.setBackground(new java.awt.Color(153, 255, 255));
         btnBuscarMovil.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\lupa.png")); // NOI18N
+        btnBuscarMovil.setToolTipText("Buscar el móvil en la tabla");
         btnBuscarMovil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarMovil.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -819,9 +884,12 @@ public class Envios extends javax.swing.JFrame {
                 .addGap(5, 5, 5))
         );
 
+        jSeparator2.setBackground(new java.awt.Color(153, 255, 255));
+        jSeparator2.setForeground(new java.awt.Color(255, 153, 0));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        btnEscribirContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_envios.jpg")); // NOI18N
+        btnEscribirContacto.setBackground(new java.awt.Color(153, 255, 255));
+        btnEscribirContacto.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\message.png")); // NOI18N
         btnEscribirContacto.setText("Escribir al contacto");
         btnEscribirContacto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEscribirContacto.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -830,7 +898,8 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnEscribirGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_envios.jpg")); // NOI18N
+        btnEscribirGrupo.setBackground(new java.awt.Color(153, 255, 255));
+        btnEscribirGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\message.png")); // NOI18N
         btnEscribirGrupo.setText("Escribir a todo el grupo");
         btnEscribirGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEscribirGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -839,6 +908,8 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        btnDesordenar.setBackground(new java.awt.Color(153, 255, 255));
+        btnDesordenar.setToolTipText("Quitar la opción de ordenar");
         btnDesordenar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDesordenar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -846,11 +917,14 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        jInternalFrame1.setBackground(new java.awt.Color(153, 255, 255));
         jInternalFrame1.setTitle("Grupo");
         jInternalFrame1.setVisible(true);
 
+        btnAñadirAlGrupo.setBackground(new java.awt.Color(153, 255, 255));
         btnAñadirAlGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_user.png")); // NOI18N
         btnAñadirAlGrupo.setText("Añadir contacto/s al grupo:");
+        btnAñadirAlGrupo.setToolTipText("Añade el contacto seleccionado al grupo seleccionado en la derecha");
         btnAñadirAlGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAñadirAlGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -858,9 +932,11 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnEliminarDelGrupo.setForeground(new java.awt.Color(204, 0, 0));
+        btnEliminarDelGrupo.setBackground(new java.awt.Color(153, 255, 255));
+        btnEliminarDelGrupo.setForeground(new java.awt.Color(255, 0, 0));
         btnEliminarDelGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_echarcon.jpg")); // NOI18N
         btnEliminarDelGrupo.setText("Echar contacto/s del grupo");
+        btnEliminarDelGrupo.setToolTipText("Echa al contacto seleccionado del grupo que se está viendo");
         btnEliminarDelGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarDelGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -877,7 +953,7 @@ public class Envios extends javax.swing.JFrame {
                 .addComponent(btnAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboAñadirAlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
                 .addComponent(btnEliminarDelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -892,8 +968,8 @@ public class Envios extends javax.swing.JFrame {
                 .addGap(5, 5, 5))
         );
 
-        btnBorrarColumna.setBackground(new java.awt.Color(255, 255, 255));
-        btnBorrarColumna.setForeground(new java.awt.Color(204, 0, 0));
+        btnBorrarColumna.setBackground(new java.awt.Color(153, 255, 255));
+        btnBorrarColumna.setForeground(new java.awt.Color(255, 0, 0));
         btnBorrarColumna.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\delete_column.png")); // NOI18N
         btnBorrarColumna.setText("Borrar columna");
         btnBorrarColumna.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -903,6 +979,7 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        btnAñadirColumna.setBackground(new java.awt.Color(153, 255, 255));
         btnAñadirColumna.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add_column.png")); // NOI18N
         btnAñadirColumna.setText("Añadir columna");
         btnAñadirColumna.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -959,35 +1036,34 @@ public class Envios extends javax.swing.JFrame {
                         .addComponent(btnCrearGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnBorrarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAñadirColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBorrarColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnDesordenar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(scrollContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IFContactos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelContactosLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContactosLayout.createSequentialGroup()
-                        .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(btnEscribirGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEscribirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        TPEscribirSms.addTab("Contactos", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\usuarios.jpg"), panelContactos); // NOI18N
+        TPEscribirSms.addTab("Contactos", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\user.png"), panelContactos, "Pestaña donde se encuentran los contactos y las acciones que se pueden realizar con ellos."); // NOI18N
 
+        panelPlantillas.setBackground(new java.awt.Color(153, 255, 255));
         panelPlantillas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panelPlantillas.setPreferredSize(new java.awt.Dimension(705, 777));
 
-        jScrollPaneTablaPlantillas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 255), new java.awt.Color(0, 153, 153)), "Plantillas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        jScrollPaneTablaPlantillas.setBackground(new java.awt.Color(153, 255, 255));
+        jScrollPaneTablaPlantillas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(255, 102, 0), new java.awt.Color(255, 102, 0)), "Plantillas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
+        tablaPlantillas.setBackground(new java.awt.Color(204, 255, 255));
         tablaPlantillas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1004,6 +1080,8 @@ public class Envios extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaPlantillas.setGridColor(new java.awt.Color(0, 102, 204));
+        tablaPlantillas.setSelectionBackground(new java.awt.Color(255, 102, 0));
         tablaPlantillas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaPlantillasMouseClicked(evt);
@@ -1011,7 +1089,8 @@ public class Envios extends javax.swing.JFrame {
         });
         jScrollPaneTablaPlantillas.setViewportView(tablaPlantillas);
 
-        jScrollPaneTextoPlantilla.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(0, 153, 255), new java.awt.Color(0, 153, 153)), "Texto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        jScrollPaneTextoPlantilla.setBackground(new java.awt.Color(153, 255, 255));
+        jScrollPaneTextoPlantilla.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(255, 102, 0), new java.awt.Color(255, 102, 0)), "Texto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         jScrollPaneTextoPlantilla.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         txtAreaPlantilla.setEditable(false);
@@ -1019,7 +1098,8 @@ public class Envios extends javax.swing.JFrame {
         txtAreaPlantilla.setRows(5);
         jScrollPaneTextoPlantilla.setViewportView(txtAreaPlantilla);
 
-        btnNuevaPlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_plus.jpg")); // NOI18N
+        btnNuevaPlantilla.setBackground(new java.awt.Color(153, 255, 255));
+        btnNuevaPlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\add.png")); // NOI18N
         btnNuevaPlantilla.setText("Nueva plantilla");
         btnNuevaPlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNuevaPlantilla.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1028,6 +1108,7 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        btnModificarPlantilla.setBackground(new java.awt.Color(153, 255, 255));
         btnModificarPlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\modify.png")); // NOI18N
         btnModificarPlantilla.setText("Modificar plantilla");
         btnModificarPlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -1037,6 +1118,8 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
+        btnEliminarPlantilla.setBackground(new java.awt.Color(153, 255, 255));
+        btnEliminarPlantilla.setForeground(new java.awt.Color(255, 0, 0));
         btnEliminarPlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\minus.png")); // NOI18N
         btnEliminarPlantilla.setText("Eliminar plantilla");
         btnEliminarPlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -1046,7 +1129,8 @@ public class Envios extends javax.swing.JFrame {
             }
         });
 
-        btnUtilizarPlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
+        btnUtilizarPlantilla.setBackground(new java.awt.Color(153, 255, 255));
+        btnUtilizarPlantilla.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.png")); // NOI18N
         btnUtilizarPlantilla.setText("Utilizar");
         btnUtilizarPlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUtilizarPlantilla.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1090,17 +1174,17 @@ public class Envios extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        TPEscribirSms.addTab("Plantillas", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\notepad.png"), panelPlantillas); // NOI18N
+        TPEscribirSms.addTab("Plantillas", new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\notepad.png"), panelPlantillas, "Pestaña donde están las plantillas y las acciones que se pueden realizar con ellas"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TPEscribirSms, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE)
+            .addComponent(TPEscribirSms, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TPEscribirSms, javax.swing.GroupLayout.PREFERRED_SIZE, 839, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(TPEscribirSms, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         TPEscribirSms.getAccessibleContext().setAccessibleName("Envios");
@@ -1520,6 +1604,9 @@ public class Envios extends javax.swing.JFrame {
                 tablaLicencias.setModel(modelo);
             }
             desconectar();
+            tablaLicencias.getTableHeader().setBackground(colorAzul);
+            tablaLicencias.getTableHeader().setForeground(colorNaranja);
+            tablaLicencias.getTableHeader().setFont(new Font("Tahoma",1,14));
         } catch (SQLException e) {
             System.err.println("ERROR EN MOSTRAR DATOS T LICENCIAS");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -1535,6 +1622,10 @@ public class Envios extends javax.swing.JFrame {
             tablaContactos.setModel(resultSetToTableModelUneditable(rs));
             desconectar();
             sustituirNull(tablaContactos);
+            tablaContactos.getTableHeader().setBackground(colorAzul);
+            tablaContactos.getTableHeader().setForeground(colorNaranja);
+            tablaContactos.getTableHeader().setFont(new Font("Tahoma",1,14));
+            
         } catch (SQLException ex) {
                 Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2430,6 +2521,8 @@ public class Envios extends javax.swing.JFrame {
         }
         return -1;
     }
+    
+    
     public static int buscarLicencia(){
         for(int i=0;i<tablaLicencias.getRowCount();i++){
             String aux=(String) tablaLicencias.getValueAt(i, 3);

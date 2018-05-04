@@ -6,6 +6,7 @@
 package simulacion_mensario;
 
 import com.sun.glass.events.KeyEvent;
+import java.awt.Toolkit;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -27,6 +28,7 @@ public class CrearGrupo extends javax.swing.JFrame {
     public CrearGrupo() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
     }
 
     public static void crearGruposT() {
@@ -181,9 +183,12 @@ public class CrearGrupo extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Crear grupo");
+        setBackground(new java.awt.Color(0, 102, 204));
 
-        panelCrearGrupo.setBackground(new java.awt.Color(204, 204, 204));
+        panelCrearGrupo.setBackground(new java.awt.Color(153, 255, 255));
+        panelCrearGrupo.setForeground(new java.awt.Color(255, 102, 0));
 
+        lblNuevoGrupo.setBackground(new java.awt.Color(0, 102, 204));
         lblNuevoGrupo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblNuevoGrupo.setText("Nombre del nuevo grupo:");
         lblNuevoGrupo.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 4, 0));
@@ -194,8 +199,9 @@ public class CrearGrupo extends javax.swing.JFrame {
             }
         });
 
+        btnAceptarNuevoGrupo.setBackground(new java.awt.Color(153, 255, 255));
         btnAceptarNuevoGrupo.setForeground(new java.awt.Color(0, 153, 0));
-        btnAceptarNuevoGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.jpg")); // NOI18N
+        btnAceptarNuevoGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\rsz_check.png")); // NOI18N
         btnAceptarNuevoGrupo.setText("Aceptar");
         btnAceptarNuevoGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAceptarNuevoGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -204,7 +210,8 @@ public class CrearGrupo extends javax.swing.JFrame {
             }
         });
 
-        btnCancelarNuevoGrupo.setForeground(new java.awt.Color(204, 0, 0));
+        btnCancelarNuevoGrupo.setBackground(new java.awt.Color(153, 255, 255));
+        btnCancelarNuevoGrupo.setForeground(new java.awt.Color(255, 0, 0));
         btnCancelarNuevoGrupo.setIcon(new javax.swing.ImageIcon("C:\\Users\\adrys\\Documents\\NetBeansProjects\\Simulacion_Mensario\\iconos\\cancel.png")); // NOI18N
         btnCancelarNuevoGrupo.setText("Cancelar");
         btnCancelarNuevoGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -219,25 +226,23 @@ public class CrearGrupo extends javax.swing.JFrame {
         panelCrearGrupoLayout.setHorizontalGroup(
             panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCrearGrupoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelCrearGrupoLayout.createSequentialGroup()
-                        .addGroup(panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNuevoGrupo)
-                            .addComponent(txtNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelCrearGrupoLayout.createSequentialGroup()
                         .addComponent(btnAceptarNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancelarNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(btnCancelarNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblNuevoGrupo)
+                        .addComponent(txtNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelCrearGrupoLayout.setVerticalGroup(
             panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCrearGrupoLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(lblNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtNuevoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(panelCrearGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,7 +255,7 @@ public class CrearGrupo extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelCrearGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelCrearGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,6 +335,7 @@ public class CrearGrupo extends javax.swing.JFrame {
         });
     }
     public static boolean empiezaPorLetra(String palabraAComprobar){
+        String palabraAux=palabraAComprobar;
         char[]alfabetoArray=Envios.alfabeto.toCharArray();
         char[]aux=palabraAComprobar.toCharArray();
         for(int i=0;i<alfabetoArray.length;i++){
