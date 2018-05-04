@@ -347,7 +347,7 @@ public class Plantilla extends javax.swing.JFrame {
                 tablaPlantillas.setModel(modelo);
                 desconectar();
                 tablaPlantillas.getTableHeader().setBackground(colorAzul);
-                tablaPlantillas.getTableHeader().setForeground(colorNaranja);
+                tablaPlantillas.getTableHeader().setForeground(colorNegro);
                 tablaPlantillas.getTableHeader().setFont(new Font("Tahoma",1,14));
 
             } catch (SQLException ex) {

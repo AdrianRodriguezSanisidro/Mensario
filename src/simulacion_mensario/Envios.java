@@ -61,7 +61,7 @@ public class Envios extends javax.swing.JFrame {
     public static String columnaABorrar;
     public static int numColumnaABorrar;
     public static final Color colorAzul=new Color(51, 255, 255);
-    public static final Color colorNaranja=new Color(255,102,0);
+    public static final Color colorNegro=new Color(0,0,0);
     /**
      * Creates new form Envios
      */
@@ -1064,6 +1064,7 @@ public class Envios extends javax.swing.JFrame {
         jScrollPaneTablaPlantillas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(255, 102, 0), new java.awt.Color(255, 102, 0)), "Plantillas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
         tablaPlantillas.setBackground(new java.awt.Color(204, 255, 255));
+        tablaPlantillas.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         tablaPlantillas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1605,7 +1606,7 @@ public class Envios extends javax.swing.JFrame {
             }
             desconectar();
             tablaLicencias.getTableHeader().setBackground(colorAzul);
-            tablaLicencias.getTableHeader().setForeground(colorNaranja);
+            tablaLicencias.getTableHeader().setForeground(colorNegro);
             tablaLicencias.getTableHeader().setFont(new Font("Tahoma",1,14));
         } catch (SQLException e) {
             System.err.println("ERROR EN MOSTRAR DATOS T LICENCIAS");
@@ -1623,7 +1624,7 @@ public class Envios extends javax.swing.JFrame {
             desconectar();
             sustituirNull(tablaContactos);
             tablaContactos.getTableHeader().setBackground(colorAzul);
-            tablaContactos.getTableHeader().setForeground(colorNaranja);
+            tablaContactos.getTableHeader().setForeground(colorNegro);
             tablaContactos.getTableHeader().setFont(new Font("Tahoma",1,14));
             
         } catch (SQLException ex) {

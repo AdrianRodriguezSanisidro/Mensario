@@ -15,13 +15,13 @@ import javax.swing.table.DefaultTableModel;
 import static simulacion_mensario.Envios.c;
 import static simulacion_mensario.Envios.cambioMovilElegido;
 import static simulacion_mensario.Envios.colorAzul;
-import static simulacion_mensario.Envios.colorNaranja;
 import static simulacion_mensario.Envios.conectar;
 import static simulacion_mensario.Envios.desconectar;
 import static simulacion_mensario.Envios.rs;
 import static simulacion_mensario.Envios.stmt;
 import static simulacion_mensario.Envios.tablaContactos;
 import static simulacion_mensario.Envios.tablaLicencias;
+import static simulacion_mensario.Envios.colorNegro;
 
 /**
  *
@@ -43,7 +43,7 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
         mostrarTablaARellenar();
         tablaNuevoContacto.getTableHeader().setReorderingAllowed(false);
         tablaNuevoContacto.getTableHeader().setBackground(colorAzul);
-        tablaNuevoContacto.getTableHeader().setForeground(colorNaranja);
+        tablaNuevoContacto.getTableHeader().setForeground(colorNegro);
         tablaNuevoContacto.getTableHeader().setFont(new Font("Tahoma",1,11));
     }
 
@@ -70,6 +70,7 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
         panelAñadirNuevoContacto.setForeground(new java.awt.Color(255, 102, 0));
 
         tablaNuevoContacto.setBackground(new java.awt.Color(153, 255, 255));
+        tablaNuevoContacto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         tablaNuevoContacto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null}
