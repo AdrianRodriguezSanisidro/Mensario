@@ -11,7 +11,7 @@ import static simulacion_mensario.Plantilla.crearTablaPlantillas;
 
 /**
  *
- * @author adrys
+ * @author Adrián Rodríguez Sanisidro
  */
 public class Simulacion_Mensario {
 

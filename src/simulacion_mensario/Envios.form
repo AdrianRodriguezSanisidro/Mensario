@@ -148,32 +148,21 @@
                       <Component id="IFDestinatario" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="IFMensaje" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace pref="109" max="32767" attributes="0"/>
-                                      <Component id="CheckEnvioProgramado" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace pref="87" max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="comboSegEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="comboMinEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="comboHoraEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblHoraEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="btnEnviar" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                              <Component id="CheckEnvioProgramado" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                                  <Component id="comboSegEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboMinEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboHoraEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblHoraEnvio" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnEnviar" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="75" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace type="separate" max="32767" attributes="0"/>
-                              <Component id="jCalendar1" min="-2" pref="129" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="jCalendar1" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -878,12 +867,14 @@
                               <EmptySpace pref="48" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="lblNombre" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
-                                          <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                               <Component id="lblLicencia" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
                                               <Component id="txtLicencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="lblNombre" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
+                                              <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace pref="63" max="32767" attributes="0"/>
@@ -1809,9 +1800,6 @@
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="0" green="0" red="ff" type="rgb"/>
-                    </Property>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="2" name="C:\Users\adrys\Documents\NetBeansProjects\Simulacion_Mensario\iconos\rsz_echarcon.jpg"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Echar contacto/s del grupo"/>
                     <Property name="toolTipText" type="java.lang.String" value="Echa al contacto seleccionado del grupo que se est&#xe1; viendo"/>

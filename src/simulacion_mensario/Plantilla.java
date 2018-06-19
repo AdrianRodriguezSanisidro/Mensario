@@ -23,11 +23,11 @@ import static simulacion_mensario.Envios.*;
 
 /**
  *
- * @author adrys
+ * @author Adrián Rodríguez Sanisidro
  */
 public class Plantilla extends javax.swing.JFrame {
 
-    public static int eleccion;
+    public static int eleccion;//Su valor depende si se pulsó el boton de añadir plantilla(0) o el de modificar plantilla(1).
     public static String nombreP;
     public static String textoP;
     public static boolean auxBorrado = false;
@@ -41,16 +41,16 @@ public class Plantilla extends javax.swing.JFrame {
      */
     public Plantilla(int eleccion, String nombreP, String textoP) {
         initComponents();
-        this.setLocationRelativeTo(null);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
+        this.setLocationRelativeTo(null);//Centra la ventana
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));//Añade un icono a la ventana.
         Plantilla.eleccion = eleccion;
         Plantilla.nombreP = nombreP;
         Plantilla.textoP = textoP;
-        txtNombrePlantilla.setText(nombreP);
-        txtAreaEscribirTextoPlantilla.setText(textoP);
-        txtAreaEscribirTextoPlantilla.setLineWrap(true);
-        txtAreaEscribirTextoPlantilla.setWrapStyleWord(true);
-        Envios.mostrarVariablesCombo(comboVariablesPlantilla);
+        txtNombrePlantilla.setText(nombreP);//Añade el nombre de la plantilla seleccionada(si es nueva no añade nada).
+        txtAreaEscribirTextoPlantilla.setText(textoP);//Añade el texto de la plantilla seleccionada(si es nueva no añade nada).
+        txtAreaEscribirTextoPlantilla.setLineWrap(true);//Añade automaticamente el salto de linea al llegar al borde.
+        txtAreaEscribirTextoPlantilla.setWrapStyleWord(true);//Hace que el salto de linea no corte una palabra.
+        Envios.mostrarVariablesCombo(comboVariablesPlantilla);//Añade las variables a la comboBox.
     }
 
     /**
@@ -211,32 +211,46 @@ public class Plantilla extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /*
+    Permite pulsar solo letras,digitos y borrar siempre que el numero de caracteres sea menor de 64.
+    */
     private void txtNombrePlantillaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombrePlantillaKeyTyped
         char c = evt.getKeyChar();
 
-        if (!(Character.isAlphabetic(c) || Character.isDigit(c) || c == KeyEvent.VK_DELETE) || txtNombrePlantilla.getText().length() >= 64) {
+        if (!(Character.isAlphabetic(c) || Character.isDigit(c) || c == KeyEvent.VK_DELETE) || (txtNombrePlantilla.getText().length() >= 64 && c == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombrePlantillaKeyTyped
-
+    /*
+    Vacia el area de texto de la plantilla.
+    */
     private void btnLimpiarTextoPlantillaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarTextoPlantillaMouseClicked
         txtAreaEscribirTextoPlantilla.setText("");
     }//GEN-LAST:event_btnLimpiarTextoPlantillaMouseClicked
-
+    /*
+    Vacia la caja de texto del nombre de la plantilla.
+    */
     private void btnLimpiarNombrePlantillaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarNombrePlantillaMouseClicked
         txtNombrePlantilla.setText("");
     }//GEN-LAST:event_btnLimpiarNombrePlantillaMouseClicked
-
+    /*
+    Si todo esta correcto crea o modifica la plantilla
+    */
     private void btnAceptarPlantillaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarPlantillaMouseClicked
         nuevaPlantilla();
         this.dispose();
     }//GEN-LAST:event_btnAceptarPlantillaMouseClicked
-
+    /*
+    Añade la variable al texto en la posicion que se encuentre en ese momento.
+    */
     private void btnAddVariablePlantillaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddVariablePlantillaMouseClicked
         txtAreaEscribirTextoPlantilla.insert(comboVariablesPlantilla.getSelectedItem().toString(), txtAreaEscribirTextoPlantilla.getCaretPosition());
     }//GEN-LAST:event_btnAddVariablePlantillaMouseClicked
-
+    /*
+    Dependiendo de la eleccion crea una nueva plantilla(0) o modifica la plantilla seleccionada(1).
+    Cierra la ventana y muestra la tabla de plantilla actualizada situandose donde esté la nueva plantilla
+    y mostrando la previw de ella.
+    */
     public static void nuevaPlantilla() {
         if (!"".equals(txtNombrePlantilla.getText())) {
             if(empiezaPorLetra(txtNombrePlantilla.getText())==true){
@@ -279,7 +293,9 @@ public class Plantilla extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El nombre no puede estar en blanco", "¡ATENCIÓN!", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    /*
+    Borra la plantilla seleccionada.
+    */
     public static void borrarPlantilla(String plantilla) {
         try {
             conectar();
@@ -292,6 +308,9 @@ public class Plantilla extends javax.swing.JFrame {
             Logger.getLogger(Plantilla.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    /*
+    Busca una plantilla por su nombre.
+    */
     public static int buscarPlantilla(){
         for(int i=0;i<tablaPlantillas.getRowCount();i++){
             String aux=(String)tablaPlantillas.getValueAt(i,0);
@@ -301,7 +320,9 @@ public class Plantilla extends javax.swing.JFrame {
         }
         return -1;
     }
-
+    /*
+    
+    */
     public static void crearTablaPlantillas() {
         try {
             conectar();

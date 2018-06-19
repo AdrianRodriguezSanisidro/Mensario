@@ -25,11 +25,11 @@ import static simulacion_mensario.Envios.colorNegro;
 
 /**
  *
- * @author adrys
+ * @author Adrián Rodríguez Sanisidro
  */
 public class AñadirNuevoContacto extends javax.swing.JFrame {
 
-    public static int eleccion;
+    public static int eleccion;//Su valor depende si se pulsó el botón añadir nuevo contacto(0) o modificar contacto(1).
 
     /**
      * Creates new form AñadirNuevoContacto
@@ -38,13 +38,13 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
     public AñadirNuevoContacto(int eleccion) {
         initComponents();
         AñadirNuevoContacto.eleccion = eleccion;
-        this.setLocationRelativeTo(null);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
+        this.setLocationRelativeTo(null);//Centra la ventana.
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));//Añade un icono a la ventana
         mostrarTablaARellenar();
-        tablaNuevoContacto.getTableHeader().setReorderingAllowed(false);
-        tablaNuevoContacto.getTableHeader().setBackground(colorAzul);
-        tablaNuevoContacto.getTableHeader().setForeground(colorNegro);
-        tablaNuevoContacto.getTableHeader().setFont(new Font("Tahoma",1,11));
+        tablaNuevoContacto.getTableHeader().setReorderingAllowed(false);//Impide que se puedan reordenar las columnas.
+        tablaNuevoContacto.getTableHeader().setBackground(colorAzul);//Cambia el color de fondo.
+        tablaNuevoContacto.getTableHeader().setForeground(colorNegro);//Cambia el color de las letras.
+        tablaNuevoContacto.getTableHeader().setFont(new Font("Tahoma",1,11));//Cambia la fuente.
     }
 
     /**
@@ -149,7 +149,10 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /*
+    Si eleccion es igual a 0 añadirá el nuevo contacto a la base de datos.
+    Si eleccion es igual a 1 borrara de la base el contacto elegido y añadira el contacto con los cambios realizados.
+    */
     private void btnAceptarNuevoContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarNuevoContactoMouseClicked
         if(eleccion==0){
             añadirContacto();
@@ -163,7 +166,9 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
         Envios.mostrarDatosTContactos();
         this.dispose();
     }//GEN-LAST:event_btnAceptarNuevoContactoMouseClicked
-
+    /*
+    Cirra la ventana
+    */
     private void btnCancelarNuevoContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarNuevoContactoMouseClicked
         this.dispose();
     }//GEN-LAST:event_btnCancelarNuevoContactoMouseClicked
@@ -202,6 +207,11 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
             }
         });
     }
+    /*
+    Muestra la tabla,si eleccion es igual a 0 la muestra con los datos rellenados y permite cambiarlos
+    o añadir nuevos si hay creadas mas columnaas de las predeterminadas,si eleccion es igual a 1 muestra
+    la tabla con el contacto seleccionado para modificar.
+    */
     public static void mostrarTablaARellenar(){
         try {
             conectar();
@@ -246,6 +256,9 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
             }
  
     }
+    /*
+    Añade el contacto a la base de datos
+    */
     public static void añadirContacto() {
         try {
             conectar();
@@ -257,6 +270,10 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
             Logger.getLogger(AñadirNuevoContacto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    /*
+    Crea un String con los valores de la tabla sin importar el número de columnas que tenga
+    para despues poder hacer una consulta con el o añadirlo a la base de datos.
+    */
     public static String añadirSinSaberLargo(){
         String aux="";
         for(int i=0;i<tablaNuevoContacto.getColumnCount();i++){
@@ -270,6 +287,9 @@ public class AñadirNuevoContacto extends javax.swing.JFrame {
         }
         return aux;
     }
+    /*
+    Borra el contacto y lo añade con los cambios que se le han hecho
+    */
     public static void guardarCambiosContacto(String movil){
         try {
             conectar();

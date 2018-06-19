@@ -12,7 +12,7 @@ import static simulacion_mensario.CrearGrupo.quitarEspacios;
 
 /**
  *
- * @author adrys
+ * @author Adrián Rodríguez Sanisidro
  */
 public class Hilo extends Thread {
 

@@ -16,21 +16,23 @@ import static simulacion_mensario.Envios.*;
 
 /**
  *
- * @author adrys
+ * @author Adrián Rodríguez Sanisidro
  */
 public class CrearGrupo extends javax.swing.JFrame {
 
-    public static String cValidos = "abcdefghijklmnñopkrstuvwxyz ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+    public static String cValidos = "abcdefghijklmnñopkrstuvwxyz ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";//Caracteres aceptados.
 
     /**
      * Creates new form CrearGrupo
      */
     public CrearGrupo() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
+        this.setLocationRelativeTo(null);//Centra la ventana
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));//Añade un icono a la ventana.
     }
-
+    /*
+    Crea la tabla 'grupos' en la base de datos si esta no existe y añade '(Todos,SYSTEM)' si no existieran en ella.
+    */
     public static void crearGruposT() {
         try {
             conectar();
@@ -49,7 +51,10 @@ public class CrearGrupo extends javax.swing.JFrame {
             Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    /*
+    Crea un nuevo grupo y una tabla con su nombre si no existe y guarda el nombre del grupo en la tabla 'grupos'
+    y lo muestra en las comboBox.
+    */
     public static void crearNuevoGrupo(String nombreG) {
             try {
                 conectar();
@@ -64,7 +69,9 @@ public class CrearGrupo extends javax.swing.JFrame {
                 Logger.getLogger(Envios.class.getName()).log(Level.SEVERE, null, ex);  
         }
     }
-
+    /*
+    Comprueba que el nombre del grupo no tenga caracteres no aceptados.
+    */
     public static boolean comprobarNombreG(String nombreG) {
         char[] charArray = nombreG.toCharArray();
         for (int i = 0; i < charArray.length; i++) {
@@ -74,12 +81,16 @@ public class CrearGrupo extends javax.swing.JFrame {
         }
         return true;
     }
-
+    /*
+    Substituye los espacios por una barra baja.
+    */
     public static String quitarEspacios(String nombreG) {
         String sinEspacios = nombreG.replaceAll(" ", "_");
         return sinEspacios;
     }
-
+    /*
+    Añade a las el nuevo grupo a las 2 comboBox donde deben aparecer.
+    */
     public static void mostrarGruposCombo() {
         try {
             conectar();
@@ -87,8 +98,6 @@ public class CrearGrupo extends javax.swing.JFrame {
             rs = stmt.executeQuery(sql);
             comboElegirGrupo.removeAllItems();
             comboAñadirAlGrupo.removeAllItems();
-//            comboElegirGrupo.addItem("Todos");
-//            comboAñadirAlGrupo.addItem("Todos");
             while (rs.next()) {
                 comboElegirGrupo.addItem(rs.getString("nGrupo"));
                 comboAñadirAlGrupo.addItem(rs.getString("nGrupo"));
@@ -99,24 +108,9 @@ public class CrearGrupo extends javax.swing.JFrame {
             Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public static void mostarTodo() {
-        try {
-            conectar();
-            String sql2 = "SELECT * FROM contactos;";
-
-            String sql = "SELECT * FROM contactos WHERE Movil=(SELECT * FROM familia WHERE contactos.Movil=familia.Movil);";
-            rs = stmt.executeQuery(sql2);
-            while (rs.next()) {
-                System.out.println(rs.getString(1));
-            }
-            c.commit();
-            desconectar();
-        } catch (SQLException ex) {
-            Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
+    /*
+    Elimina el grupo borrando su tabla y nombre de la tabla 'grupos'.
+    */
     public static void borrarT(String tabla) {
         try {
             desconectar();
@@ -131,21 +125,9 @@ public class CrearGrupo extends javax.swing.JFrame {
             Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public static void modificarTodos() {
-        try {
-            conectar();
-            String sql = "INSERT INTO grupos VALUES('Todos','" + lblNombreUsr.getText() + "');";
-            stmt.executeUpdate(sql);
-            System.out.println("AÑADIDO todos");
-            c.commit();
-            desconectar();
-        } catch (SQLException ex) {
-            Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-
+    /*
+    Borra la tabla grupos y contactos y las vuelve a crear
+    */
     public static void cambiosEnLasTablas() {
         try {
             conectar();
@@ -161,7 +143,6 @@ public class CrearGrupo extends javax.swing.JFrame {
             crearGruposT();
 
         } catch (SQLException ex) {
-            System.err.println("AQUI");
             Logger.getLogger(CrearGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -264,7 +245,9 @@ public class CrearGrupo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /*
+    Permite pulsar los caracteres aceptados y borrar
+    */
     private void txtNuevoGrupoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNuevoGrupoKeyTyped
         char c = evt.getKeyChar();
 
@@ -273,7 +256,9 @@ public class CrearGrupo extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_txtNuevoGrupoKeyTyped
-
+    /*
+    Si el nombre es correcto crea el grupo y cierra la ventana
+    */
     private void btnAceptarNuevoGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarNuevoGrupoMouseClicked
         boolean auxOK = true;
         if(!txtNuevoGrupo.getText().equals("")){
@@ -297,7 +282,9 @@ public class CrearGrupo extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnAceptarNuevoGrupoMouseClicked
-
+    /*
+    Cierra la ventana al cancelar
+    */
     private void btnCancelarNuevoGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarNuevoGrupoMouseClicked
         this.dispose();
     }//GEN-LAST:event_btnCancelarNuevoGrupoMouseClicked
@@ -334,6 +321,9 @@ public class CrearGrupo extends javax.swing.JFrame {
             new CrearGrupo().setVisible(true);
         });
     }
+    /*
+    Comprueba que el primer caracter del grupo es una letra
+    */
     public static boolean empiezaPorLetra(String palabraAComprobar){
         String palabraAux=palabraAComprobar;
         char[]alfabetoArray=Envios.alfabeto.toCharArray();

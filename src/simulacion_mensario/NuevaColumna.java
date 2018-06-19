@@ -10,7 +10,7 @@ import java.awt.Toolkit;
 
 /**
  *
- * @author adrys
+ * @author Adrián Rodríguez Sanisidro
  */
 public class NuevaColumna extends javax.swing.JFrame {
 
@@ -19,8 +19,8 @@ public class NuevaColumna extends javax.swing.JFrame {
      */
     public NuevaColumna() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
+        this.setLocationRelativeTo(null);//Centra la ventana.
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));//Añade un icono a la ventana.
     }
 
     /**
@@ -115,18 +115,25 @@ public class NuevaColumna extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /*
+    Crea una nueva columna en la tabla 'contactos',muestra la nueva tabla y crea y añade una nueva variable a la comboBox
+    de las variables de los mensajes.
+    */
     private void btnAceptarNuevaColumnaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarNuevaColumnaMouseClicked
         Envios.añadirColumna(txtNombreNuevaColumna.getText());
         Envios.mostrarDatosTContactos();
         Envios.mostrarVariablesCombo(Envios.comboVariablesTexto);
         this.dispose();
     }//GEN-LAST:event_btnAceptarNuevaColumnaMouseClicked
-
+    /*
+    Cierra la ventana si se cancela
+    */
     private void btnCancelarNuevaColumnaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarNuevaColumnaMouseClicked
         this.dispose();
     }//GEN-LAST:event_btnCancelarNuevaColumnaMouseClicked
-
+    /*
+    Permite teclear solo digitos,letras y borrar
+    */
     private void txtNombreNuevaColumnaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreNuevaColumnaKeyTyped
         char c = evt.getKeyChar();
 
